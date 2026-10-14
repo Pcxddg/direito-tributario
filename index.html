@@ -1,0 +1,2285 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Prova de Direito Tributário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: cuaderno de estudio fiscal. Barra lateral fija en escritorio y barra inferior en el móvil;
+   columna de lectura de ~70ch con marca-texto amarillo en los términos clave y sellos ("carimbos") para los estados. */
+:root{
+  --paper:#F2F5F3; --surface:#FFFFFF; --surface-2:#E8EEEB; --ink:#13221E; --ink-2:#51625C; --line:#D2DBD6;
+  --accent:#0A6B6B; --accent-ink:#FFFFFF; --accent-soft:#D6EBE8;
+  --marker:#F6D84C; --marker-ink:#13221E;
+  --good:#1D7A46; --good-soft:#DDF0E4; --bad:#B42318; --bad-soft:#F9E3E0; --warn:#8C5E05; --warn-soft:#F5EBD2;
+  --sp-imp:#0A6B6B; --sp-tax:#9A5B12; --sp-cm:#5A48A8;
+  --shadow:0 1px 0 rgba(19,34,30,.05), 0 10px 24px -16px rgba(19,34,30,.35);
+  --font-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --r:14px; --r-sm:9px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0E1513; --surface:#151F1C; --surface-2:#1B2723; --ink:#E3ECE8; --ink-2:#9BADA6; --line:#2B3A35;
+    --accent:#3DB5AC; --accent-ink:#04201E; --accent-soft:#16332F;
+    --marker:#6F5B13; --marker-ink:#FFF5CC;
+    --good:#4CC183; --good-soft:#132D1E; --bad:#F27B6E; --bad-soft:#381915; --warn:#E4B04C; --warn-soft:#32280F;
+    --sp-imp:#3DB5AC; --sp-tax:#E0A458; --sp-cm:#A898F0;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 24px -16px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0E1513; --surface:#151F1C; --surface-2:#1B2723; --ink:#E3ECE8; --ink-2:#9BADA6; --line:#2B3A35;
+  --accent:#3DB5AC; --accent-ink:#04201E; --accent-soft:#16332F;
+  --marker:#6F5B13; --marker-ink:#FFF5CC;
+  --good:#4CC183; --good-soft:#132D1E; --bad:#F27B6E; --bad-soft:#381915; --warn:#E4B04C; --warn-soft:#32280F;
+  --sp-imp:#3DB5AC; --sp-tax:#E0A458; --sp-cm:#A898F0;
+  --shadow:0 1px 0 rgba(0,0,0,.3), 0 10px 24px -16px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55}
+a{color:var(--accent)}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2.5px solid var(--accent);outline-offset:2px;border-radius:6px}
+b,strong{font-weight:700}
+
+/* ---------- Shell ---------- */
+.app{min-height:100%;display:grid;grid-template-columns:minmax(0,1fr)}
+.rail{display:none}
+.mtop{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-mark{flex:none;width:36px;height:36px;border-radius:9px;display:grid;place-items:center;background:var(--ink);color:var(--paper);font-family:var(--font-display);font-weight:800;font-stretch:110%;font-size:15px;letter-spacing:.02em}
+.brand b{display:block;font-family:var(--font-display);font-stretch:108%;font-weight:800;font-size:15px;line-height:1.1}
+.brand span.brand-s{display:block;font-size:12px;color:var(--ink-2)}
+.sync{font-family:var(--font-mono);font-size:11px;flex:none;color:var(--ink-2);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.sync::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ink-2)}
+.sync[data-mode="cloud"]::before{background:var(--good)}
+.sync[data-mode="local"]::before{background:var(--warn)}
+.sync[data-mode="error"]::before{background:var(--bad)}
+
+.main{min-width:0;padding-inline:16px;padding-block:24px 112px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 9px;font-size:11px;color:var(--ink-2);text-decoration:none}
+.tabbar a[aria-current="page"]{color:var(--accent);font-weight:700}
+.tabbar svg,.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+@media (min-width:960px){
+  .app{grid-template-columns:252px minmax(0,1fr)}
+  .mtop,.tabbar{display:none}
+  .rail{display:flex;flex-direction:column;gap:24px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;padding:24px 18px;border-right:1px solid var(--line);background:var(--surface)}
+  .nav{display:flex;flex-direction:column;gap:4px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--ink);text-decoration:none;font-weight:700}
+  .nav a:hover{background:var(--surface-2)}
+  .nav a[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+  .rail-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px}
+  .rail-foot p{margin:0;font-size:12px;color:var(--ink-2)}
+  .main{padding-block:40px 64px;padding-inline:32px}
+}
+
+/* ---------- Type ---------- */
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0}
+h1{font-weight:800;font-stretch:112%;font-size:clamp(30px,6vw,46px);line-height:1.02;letter-spacing:-.015em}
+h2{font-weight:800;font-stretch:106%;font-size:22px;line-height:1.15}
+h3{font-weight:700;font-stretch:104%;font-size:19px;line-height:1.2}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);font-weight:500}
+.muted{color:var(--ink-2)}
+.sub{color:var(--ink-2);font-size:17px;max-width:60ch}
+mark{background:linear-gradient(transparent 14%,var(--marker) 14%,var(--marker) 90%,transparent 90%);color:var(--marker-ink);padding:0 .12em;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.art{display:inline-block;font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:1px 9px;white-space:nowrap;vertical-align:.12em;letter-spacing:0;font-stretch:100%}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- Buttons & controls ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:11px;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-weight:700;text-decoration:none;cursor:pointer;line-height:1.2;text-align:center}
+.btn:hover{border-color:var(--ink-2)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{filter:brightness(1.07);border-color:var(--accent)}
+.btn-quiet{border-color:transparent;background:transparent;color:var(--accent);padding-inline:10px}
+.btn-quiet:hover{background:var(--accent-soft);border-color:transparent}
+.btn-sm{min-height:36px;padding:6px 12px;font-size:14px;border-radius:9px}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.row-between{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+input[type="date"],select,textarea{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 12px;min-height:44px;max-width:100%}
+textarea{width:100%;min-height:120px;resize:vertical;line-height:1.5}
+input[type="date"]:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+label.check{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-2);cursor:pointer}
+label.check input{width:18px;height:18px;accent-color:var(--accent)}
+
+/* ---------- Cards ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.section-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+
+/* Sello (carimbo) */
+.stamp{display:inline-block;font-family:var(--font-mono);font-weight:600;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--stamp,var(--accent));border:2px solid currentColor;outline:1px solid currentColor;outline-offset:2px;border-radius:4px;padding:2px 8px;transform:rotate(-3deg);white-space:nowrap}
+
+/* ---------- Panel ---------- */
+.hero{display:grid;gap:14px;position:relative}
+.hero-sub{color:var(--ink-2);font-size:17px;max-width:58ch}
+.count{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:16px 18px;border:1.5px dashed var(--line);border-radius:var(--r)}
+.count-big{display:flex;align-items:baseline;gap:8px;font-family:var(--font-display);font-weight:800;font-stretch:112%;font-size:44px;line-height:1;color:var(--bad)}
+.count-big small{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.count p{font-size:14px;color:var(--ink-2)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:6px}
+.tile-n{font-family:var(--font-display);font-weight:800;font-stretch:108%;font-size:32px;line-height:1;font-variant-numeric:tabular-nums}
+.tile-n small{font-size:16px;color:var(--ink-2);font-weight:700}
+.tile-l{font-size:13px;color:var(--ink-2)}
+.meter{height:6px;border-radius:6px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;background:var(--accent);border-radius:6px}
+.next{display:grid;gap:12px;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.next .eyebrow{color:color-mix(in srgb,var(--paper) 70%,transparent)}
+.next h2{color:var(--paper)}
+.next p{color:color-mix(in srgb,var(--paper) 78%,transparent)}
+.next .btn-primary{background:var(--marker);border-color:var(--marker);color:var(--marker-ink)}
+.prof-list{display:grid;gap:14px}
+.prof-row{display:grid;gap:8px}
+.prof-row .eyebrow{display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;flex:none}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.lnk{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-size:14px;font-weight:700}
+.lnk:hover{border-color:var(--accent);color:var(--accent)}
+.lnk.done::after{content:"✓";color:var(--good)}
+.lnk.plain{font-weight:400;color:var(--ink-2);cursor:default}
+.mastery{display:grid;gap:10px}
+.m-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.m-name{font-weight:700;font-size:15px;min-width:0}
+.m-pct{font-family:var(--font-mono);font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.m-bar{grid-column:1/-1;height:8px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.m-bar i{display:block;height:100%;border-radius:8px}
+.m-act{grid-column:1/-1;justify-self:start}
+@media (min-width:640px){
+  .m-row{grid-template-columns:200px minmax(0,1fr) 92px auto}
+  .m-bar{grid-column:auto}
+  .m-act{grid-column:auto}
+}
+.chart{width:100%;height:auto;display:block}
+.chart .grid{stroke:var(--line);stroke-width:1}
+.chart .axis{fill:var(--ink-2);font-family:var(--font-mono);font-size:11px}
+.chart .ln{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.chart .area{fill:var(--accent);opacity:.1}
+.chart .pt{fill:var(--surface);stroke:var(--accent);stroke-width:2}
+.chart .pt-last{fill:var(--accent)}
+.chart .val{fill:var(--ink);font-family:var(--font-mono);font-size:12px;font-weight:600}
+.hist{display:grid;gap:0;margin-top:8px}
+.hist-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line);font-size:14px}
+.hist-row b{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.empty{padding:18px;border:1.5px dashed var(--line);border-radius:var(--r);color:var(--ink-2);font-size:15px}
+
+/* ---------- Lista de módulos ---------- */
+.mlist{display:grid;gap:10px}
+.mrow{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;align-items:start;padding:16px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.mrow:hover{border-color:var(--accent)}
+.mrow-n{grid-row:span 3;width:40px;height:40px;border-radius:10px;display:grid;place-items:center;font-family:var(--font-display);font-weight:800;font-size:18px;background:var(--surface-2);color:var(--ink)}
+.mrow.done .mrow-n{background:var(--accent);color:var(--accent-ink)}
+.mrow-t{font-family:var(--font-display);font-weight:800;font-stretch:104%;font-size:18px;line-height:1.2}
+.mrow-s{font-size:14px;color:var(--ink-2)}
+.mrow-m{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px}
+.prio{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:5px}
+.prio-3{background:var(--bad-soft);color:var(--bad)}
+.prio-2{background:var(--warn-soft);color:var(--warn)}
+.tag{font-family:var(--font-mono);font-size:12px;color:var(--ink-2)}
+.fast{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px;color:var(--ink-2)}
+.fast a{font-family:var(--font-mono);font-weight:600;text-decoration:none;padding:2px 8px;border-radius:6px;background:var(--surface-2);color:var(--ink)}
+
+/* ---------- Módulo ---------- */
+.crumbs{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mod-head{display:grid;gap:10px}
+.summary{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.summary h2{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.summary ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:s}
+.summary li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;counter-increment:s}
+.summary li::before{content:counter(s);font-family:var(--font-mono);font-weight:600;font-size:13px;color:var(--accent);padding-top:2px}
+.lesson{display:grid;gap:16px;font-size:17px;line-height:1.62}
+.lesson > *{min-width:0}
+.lesson h3{margin-top:14px;display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px}
+.lesson p{max-width:70ch}
+.lead{font-size:19px;line-height:1.55}
+.lesson ul.clean{margin:0;padding-left:20px;display:grid;gap:8px}
+.box{border-radius:var(--r);padding:16px 18px;display:grid;gap:8px;font-size:16px}
+.box p{max-width:none}
+.box-h{justify-self:start;display:inline-block;font-family:var(--font-mono);font-weight:600;font-size:11px;letter-spacing:.11em;text-transform:uppercase;border:1.5px solid currentColor;border-radius:4px;padding:1px 8px;transform:rotate(-1.5deg)}
+.box.prof{background:var(--accent-soft)} .box.prof .box-h{color:var(--accent)}
+.box.trap{background:var(--bad-soft)} .box.trap .box-h{color:var(--bad)}
+.box.tech{background:var(--warn-soft)} .box.tech .box-h{color:var(--warn)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table.cmp{width:100%;border-collapse:collapse;font-size:15px;min-width:460px}
+.cmp th,.cmp td{padding:11px 14px;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
+.cmp thead th{border-top:0;font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600;background:var(--surface-2)}
+.cmp tbody th{color:var(--ink-2);font-weight:700;font-size:14px;width:28%}
+.sides{display:grid;gap:10px;grid-template-columns:minmax(0,1fr)}
+.side{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:4px;font-size:15px}
+.side b{font-family:var(--font-display);font-size:18px;font-stretch:104%}
+.side-link{display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);text-align:center}
+.side-link span{border-top:1.5px dashed var(--line);border-bottom:1.5px dashed var(--line);padding:4px 8px}
+@media (min-width:640px){.sides{grid-template-columns:minmax(0,1fr) 120px minmax(0,1fr);align-items:center}}
+.balance{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:22px}
+.balance::before{content:"";position:absolute;top:6px;left:18%;right:18%;height:4px;border-radius:4px;background:var(--ink)}
+.pan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:4px;font-size:15px}
+.pan::before{content:"";position:absolute;top:-16px;left:50%;width:2px;height:16px;background:var(--ink-2)}
+.pan b{font-family:var(--font-display);font-size:17px}
+.fulcrum{grid-column:1/-1;display:grid;justify-items:center;gap:2px;text-align:center;font-size:15px;padding-top:4px}
+.fulcrum::before{content:"";width:0;height:0;border-left:16px solid transparent;border-right:16px solid transparent;border-bottom:22px solid var(--ink);margin-bottom:6px}
+.fulcrum b{font-family:var(--font-display);font-size:17px}
+.fulcrum span{color:var(--ink-2)}
+ol.flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;counter-reset:f}
+ol.flow li{counter-increment:f;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:4px;font-size:15px}
+ol.flow li::before{content:"0" counter(f);font-family:var(--font-mono);font-size:12px;color:var(--accent);font-weight:600}
+ol.flow li b{font-family:var(--font-display);font-size:17px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.kc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:4px;font-size:15px;align-content:start}
+.kc b{font-family:var(--font-display);font-size:17px;font-stretch:104%}
+.kc > span:not(.eyebrow){color:var(--ink-2)}
+.chips,.chips-rows > div{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.chips-rows{display:grid;gap:8px}
+.chips-rows .eyebrow{min-width:96px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-family:var(--font-mono);font-size:12.5px;font-weight:500;padding:3px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);white-space:nowrap}
+.chip small{color:var(--ink-2);font-size:10.5px}
+.chip-ghost{border-style:dashed;color:var(--ink-2)}
+.tree{display:grid;gap:12px}
+.tree-q{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:14px 16px;font-weight:700;text-align:center}
+.tree-branches{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.tree-b{display:grid;gap:6px;align-content:start}
+.tree-a{font-family:var(--font-mono);font-size:12px;color:var(--ink-2);text-align:center}
+.tree-a::before{content:"↓ ";color:var(--ink)}
+.tree-r{border-radius:var(--r);padding:14px;display:grid;gap:4px;font-size:15px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.tree-r b{font-family:var(--font-display);font-size:18px;color:var(--c)}
+.t-imp{--c:var(--sp-imp)} .t-tax{--c:var(--sp-tax)} .t-cm{--c:var(--sp-cm)}
+.pcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.pc{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;align-content:start;font-size:15.5px}
+.pc-h{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.pc-h b{font-family:var(--font-display);font-size:19px;font-stretch:106%}
+.pc .muted{font-size:14.5px}
+ol.story{margin:0;padding-left:22px;display:grid;gap:8px}
+.filters{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:14px}
+.f-row{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.f-stage{flex:none;font-family:var(--font-mono);font-size:12px;padding:4px 10px;border-radius:6px;background:var(--surface-2);white-space:nowrap}
+.f-stage + .f-stage::before{content:"→ ";color:var(--ink-2)}
+.f-list{margin:0;padding:0;list-style:none;display:grid;gap:10px;font-size:15.5px}
+.f-pin{display:block;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:2px}
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;align-content:start;font-size:15.5px}
+.mod-h{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.mod-h b{font-family:var(--font-display);font-size:18px}
+.mod-h b .muted{font-family:var(--font-body);font-weight:400;font-size:14px}
+.who{display:flex;height:28px;border-radius:7px;overflow:hidden;background:var(--surface-2);font-family:var(--font-mono);font-size:11px;font-weight:600}
+.who span{display:flex;align-items:center;padding:0 10px;white-space:nowrap;overflow:hidden}
+.who-f{background:var(--accent);color:var(--accent-ink)}
+.who-c{background:var(--sp-tax);color:var(--surface)}
+.who-x{background:repeating-linear-gradient(135deg,var(--accent) 0 8px,color-mix(in srgb,var(--accent) 75%,var(--surface)) 8px 16px)}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.col{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px 16px 16px;display:grid;gap:6px;align-content:start;font-size:15px}
+.col > b{font-family:var(--font-display);font-size:20px;font-stretch:106%}
+.col .stamp{position:absolute;top:12px;right:12px}
+.col ul.clean{padding-left:18px;margin:4px 0 0}
+.c-sus{--stamp:var(--warn)} .c-ext{--stamp:var(--good)} .c-exc{--stamp:var(--sp-cm)}
+.acro{display:grid;gap:8px}
+.acro div{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;font-size:15.5px}
+.acro b{font-family:var(--font-display);font-weight:800;font-stretch:115%;font-size:24px;color:var(--warn)}
+.dp{overflow-x:auto}
+.dp-row{display:flex;align-items:stretch;gap:6px;min-width:560px}
+.dp-pt{flex:none;align-self:center;font-family:var(--font-mono);font-size:11.5px;padding:6px 8px;border-radius:6px;background:var(--ink);color:var(--paper);text-align:center;max-width:110px}
+.dp-seg{flex:1;border-radius:8px;padding:8px 10px;font-size:14px;display:grid;align-content:center;gap:2px;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 12%,var(--surface))}
+.dp-seg b{color:var(--c);font-family:var(--font-display);font-size:16px}
+.dp-d{--c:var(--sp-tax)} .dp-p{--c:var(--sp-cm)}
+.migr{display:grid;gap:10px}
+.mg-row{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.mg-old{display:flex;flex-wrap:wrap;gap:6px}
+.mg-arrow{font-family:var(--font-display);font-weight:800;color:var(--accent);font-size:20px;line-height:1;transform:rotate(90deg);justify-self:start;padding-left:6px}
+.mg-new{display:grid;gap:2px;font-size:15px}
+.mg-new b{font-family:var(--font-display);font-weight:800;font-size:22px;font-stretch:110%;color:var(--accent);line-height:1}
+.mg-dim b{color:var(--ink-2)}
+@media (min-width:640px){.mg-row{grid-template-columns:200px 32px minmax(0,1fr);align-items:center}.mg-arrow{transform:none;justify-self:center;padding:0}}
+ol.tl{list-style:none;margin:0;padding:0;display:grid;gap:0;position:relative}
+ol.tl li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;padding:10px 0 10px 18px;position:relative;font-size:15.5px;border-left:2px solid var(--line)}
+ol.tl li::before{content:"";position:absolute;left:-7px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--ink-2)}
+.tl-y{font-family:var(--font-mono);font-weight:600;font-size:14px}
+ol.tl li.tl-now::before{background:var(--accent);border-color:var(--accent)}
+ol.tl li.tl-now .tl-y{color:var(--accent)}
+ol.tl li.tl-now .tl-y::after{content:"estamos aquí";display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+
+/* Widgets */
+.art3{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px}
+.art3-text{font-size:18.5px;line-height:1.85}
+.term{border:0;padding:1px 3px;margin:0;border-radius:3px;cursor:pointer;background:linear-gradient(transparent 14%,var(--marker) 14%,var(--marker) 90%,transparent 90%);color:var(--marker-ink);font-size:inherit;line-height:inherit;text-decoration:underline dotted 1.5px;text-underline-offset:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.term[aria-pressed="true"]{background:var(--ink);color:var(--paper);text-decoration:none}
+.art3-tip{min-height:52px;padding:12px 14px;border-radius:var(--r-sm);background:var(--surface-2);font-size:16px}
+.ciclo{display:grid;gap:12px}
+.ciclo-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media (min-width:640px){.ciclo-steps{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.cstep{display:grid;gap:2px;justify-items:start;text-align:left;padding:10px;border-radius:var(--r-sm);border:1.5px solid var(--line);background:var(--surface);cursor:pointer;min-height:64px}
+.cstep span{font-family:var(--font-mono);font-size:11px;color:var(--ink-2)}
+.cstep b{font-size:13.5px;line-height:1.2}
+.cstep[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cstep[aria-pressed="true"] span{color:var(--accent-ink);opacity:.8}
+.cdetail{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:8px}
+.cdetail h4{margin:0;font-family:var(--font-display);font-size:22px;font-stretch:108%}
+.cdetail .ex{font-size:15px;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:8px}
+.clsf{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:14px}
+.clsf-item{font-size:18px;font-weight:700;min-height:2.8em;display:flex;align-items:center}
+.clsf-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+.clsf-fb{padding:12px 14px;border-radius:var(--r-sm);font-size:15.5px}
+.clsf-fb.ok{background:var(--good-soft)} .clsf-fb.no{background:var(--bad-soft)}
+.clsf-fb b{display:block}
+
+/* ---------- Preguntas ---------- */
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:14px;box-shadow:var(--shadow)}
+.q-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.badge-prof{font-family:var(--font-mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:2px 8px;border-radius:5px}
+.q-text{font-size:18px;font-weight:700;line-height:1.45}
+.opts{display:grid;gap:8px}
+.opt{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:start;text-align:left;padding:12px 14px;border-radius:11px;border:1.5px solid var(--line);background:var(--surface);cursor:pointer;font-size:16px;line-height:1.45}
+.opt:hover:not([disabled]){border-color:var(--ink-2)}
+.opt-l{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-mono);font-weight:600;font-size:13px;background:var(--surface-2)}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.sel .opt-l{background:var(--accent);color:var(--accent-ink)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.ok .opt-l{background:var(--good);color:var(--surface)}
+.opt.no{border-color:var(--bad);background:var(--bad-soft)}
+.opt.no .opt-l{background:var(--bad);color:var(--surface)}
+.opt[disabled]{cursor:default}
+.opt.fade{opacity:.55}
+.fb{border-radius:var(--r-sm);padding:12px 14px;display:grid;gap:4px;font-size:15.5px}
+.fb.ok{background:var(--good-soft)} .fb.no{background:var(--bad-soft)}
+.fb-h{font-weight:700}
+.fb.ok .fb-h{color:var(--good)} .fb.no .fb-h{color:var(--bad)}
+.mini{display:grid;gap:14px}
+
+/* Runner */
+.runner{display:grid;gap:16px}
+.run-top{display:grid;gap:10px}
+.run-bar{height:8px;border-radius:8px;background:var(--surface-2);overflow:hidden}
+.run-bar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.timer{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:14px;color:var(--ink-2)}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px}
+.qn{height:40px;border-radius:9px;border:1.5px solid var(--line);background:var(--surface);font-family:var(--font-mono);font-weight:600;font-size:13px;cursor:pointer}
+.qn.ans{background:var(--surface-2);border-color:var(--ink-2)}
+.qn.cur{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.qn.ok{background:var(--good-soft);border-color:var(--good)}
+.qn.no{background:var(--bad-soft);border-color:var(--bad)}
+.confirm{background:var(--warn-soft);border-radius:var(--r);padding:14px 16px;display:grid;gap:10px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:10px;align-content:start}
+.mode h3{font-size:20px}
+.mode p{color:var(--ink-2);font-size:15px}
+.mode.main-mode{border:2px solid var(--accent)}
+.result-head{display:grid;gap:14px;justify-items:start}
+.score{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap}
+.score-n{font-family:var(--font-display);font-weight:800;font-stretch:112%;font-size:72px;line-height:.9;font-variant-numeric:tabular-nums}
+.score-n small{font-size:24px;color:var(--ink-2)}
+.score .stamp{font-size:13px;transform:rotate(-5deg);margin-bottom:10px}
+.review{display:grid;gap:12px}
+.rv{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;font-size:15.5px}
+.rv-h{display:flex;gap:10px;align-items:baseline}
+.rv-n{font-family:var(--font-mono);font-weight:600;font-size:13px;flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center}
+.rv.ok .rv-n{background:var(--good-soft);color:var(--good)}
+.rv.no .rv-n{background:var(--bad-soft);color:var(--bad)}
+.rv-a{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;font-size:15px}
+.rv-a span:nth-child(odd){font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);padding-top:3px}
+.rv-exp{color:var(--ink-2);font-size:15px}
+
+/* Tarjetas */
+.flash-wrap{display:grid;gap:14px}
+.flash{perspective:1200px;min-height:250px}
+.flash-in{position:relative;min-height:250px;transition:transform .45s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.flash.flip .flash-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:24px;display:grid;align-content:center;justify-items:center;gap:12px;text-align:center;border:1px solid var(--line);box-shadow:var(--shadow);cursor:pointer;width:100%;font:inherit;color:inherit}
+.face-front{background:var(--surface)}
+.face-front b{font-family:var(--font-display);font-weight:800;font-stretch:110%;font-size:clamp(24px,6vw,34px);line-height:1.1}
+.face-back{background:var(--ink);color:var(--paper);transform:rotateY(180deg);font-size:18px;line-height:1.5}
+.face .eyebrow{color:inherit;opacity:.7}
+.face-hint{font-size:13px;color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){.flash-in{transition:none}.run-bar i{transition:none}}
+.notes-grid{display:grid;gap:16px}
+.note-item{display:grid;gap:8px}
+.note-item label{font-weight:700;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.saved{font-family:var(--font-mono);font-size:11px;color:var(--ink-2)}
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:10px;font-size:14px;z-index:30;box-shadow:var(--shadow)}
+@media (min-width:960px){.toast{bottom:28px}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:520px){.mtop .brand-s{display:none}.mtop .brand b{font-size:14px}}
+
+</style>
+<div class="app">
+  <header class="mtop">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">DT</span><div><b>Direito Tributário</b><span class="brand-s">Prova · 20 questões</span></div></div>
+    <span class="sync" data-sync data-mode="connecting">Conectando…</span>
+  </header>
+  <aside class="rail">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">DT</span><div><b>Direito Tributário</b><span class="brand-s">Prova · 20 questões</span></div></div>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#panel" data-nav="panel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="9" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.5"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.5"/></svg>Panel</a>
+      <a href="#estudiar" data-nav="estudiar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/><path d="M9 7.5h7"/></svg>Estudiar</a>
+      <a href="#simulado" data-nav="simulado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="M3.5 6.5l1.5 1.5 2.5-3M3.5 12l1.5 1.5 2.5-3M3.5 17.5l1.5 1.5 2.5-3"/></svg>Simulacros</a>
+      <a href="#tarjetas" data-nav="tarjetas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M8 3.5h11a2 2 0 0 1 2 2V17"/></svg>Tarjetas</a>
+      <a href="#notas" data-nav="notas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.5L19.5 9 15 4.5 4 15.5z"/><path d="M13 6.5l4.5 4.5"/></svg>Notas</a>
+    </nav>
+    <div class="rail-foot">
+      <span class="sync" data-sync data-mode="connecting">Conectando…</span>
+      <p>Tu progreso y tus notas se guardan solos.</p>
+    </div>
+  </aside>
+  <main id="view" class="main" tabindex="-1"></main>
+  <nav class="tabbar" aria-label="Secciones">
+    <a href="#panel" data-nav="panel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="9" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="5" rx="1.5"/><rect x="13.5" y="11.5" width="7" height="9" rx="1.5"/><rect x="3.5" y="15.5" width="7" height="5" rx="1.5"/></svg>Panel</a>
+    <a href="#estudiar" data-nav="estudiar"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20v3H6.5"/><path d="M9 7.5h7"/></svg>Estudiar</a>
+    <a href="#simulado" data-nav="simulado"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6.5h10M10 12h10M10 17.5h10"/><path d="M3.5 6.5l1.5 1.5 2.5-3M3.5 12l1.5 1.5 2.5-3M3.5 17.5l1.5 1.5 2.5-3"/></svg>Simulacros</a>
+    <a href="#tarjetas" data-nav="tarjetas"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="13" height="14" rx="2"/><path d="M8 3.5h11a2 2 0 0 1 2 2V17"/></svg>Tarjetas</a>
+    <a href="#notas" data-nav="notas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.5L19.5 9 15 4.5 4 15.5z"/><path d="M13 6.5l4.5 4.5"/></svg>Notas</a>
+  </nav>
+</div>
+<script>
+/* Contenido de los módulos. Explicaciones en español; términos jurídicos en portugués (como en la prueba). */
+window.MODULES = [
+{
+  id: 'fundamentos', n: 1, prio: 2, min: 6,
+  title: 'Qué es el Direito Tributário',
+  sub: 'Balança de dupla função, trilogia, receitas y lo que trae la Constitución',
+  topics: ['fund'],
+  summary: [
+    'Es una rama del <b>Direito Público</b>: regula la relación entre el <b>fisco</b> (Estado) y el <b>contribuinte</b>. Su objeto son los tributos: creación, cobranza y control.',
+    '<b>Balança de dupla função</b>: autoriza al Estado a cobrar y, al mismo tiempo, limita ese poder.',
+    '<b>Trilogia</b>: instituição, arrecadação y fiscalização.',
+    'Receitas <b>originárias</b> (patrimonio del Estado, ej. alquiler de un bien público) × <b>derivadas</b> (impuestas al particular: los tributos).',
+    'La CF trae: <b>princípios, competências, imunidades y repartição de receitas</b>.'
+  ],
+  body: `
+<p class="lead">El Derecho Tributario es la rama del <mark>Direito Público</mark> que regula la relación entre el <b>fisco</b> (el Estado que cobra) y el <b>contribuinte</b> (quien paga). Su objeto central son los tributos: cómo se <b>crean</b>, cómo se <b>cobran</b> y cómo se <b>controlan</b>.</p>
+
+<h3>Los dos lados de la relación</h3>
+<div class="sides">
+  <div class="side"><span class="eyebrow">Sujeito passivo</span><b>Contribuinte</b><p>Persona física, MEI, sociedad anónima, sociedad de hecho, sociedad en cuenta de participación: todos son contribuyentes.</p></div>
+  <div class="side-link" aria-hidden="true"><span>relação jurídico-tributária</span></div>
+  <div class="side"><span class="eyebrow">Sujeito ativo</span><b>Ente público</b><p>União, Estados, Distrito Federal o Municípios: quien tiene el derecho de cobrar.</p></div>
+</div>
+
+<h3>La balança de dupla função</h3>
+<p>Funciona como una balanza con dos funciones a la vez: <b>autoriza</b> al Estado a crear y cobrar tributos y, al mismo tiempo, <b>limita</b> ese poder para proteger al ciudadano.</p>
+<div class="balance">
+  <div class="pan"><span class="eyebrow">Un plato</span><b>Poder do Estado</b><p>Competencia para instituir y cobrar los tributos previstos en la Constitución.</p></div>
+  <div class="pan"><span class="eyebrow">El otro plato</span><b>Limite ao poder</b><p>Principios que protegen al contribuinte: legalidade, anterioridade, irretroatividade, capacidade contributiva.</p></div>
+  <div class="fulcrum"><b>Equilíbrio</b><span>Relación definida en ley, con derechos y deberes para los dos lados.</span></div>
+</div>
+
+<h3>La "trilogia": el objeto del Direito Tributário</h3>
+<ol class="flow">
+  <li><b>Instituição</b><span>Crear el tributo por ley: fato gerador, base de cálculo y alíquota.</span></li>
+  <li><b>Arrecadação</b><span>Recaudar lo que los contribuyentes deben.</span></li>
+  <li><b>Fiscalização</b><span>Controlar que se cumplan las obligaciones.</span></li>
+</ol>
+
+<h3>¿De dónde saca dinero el Estado?</h3>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th></th><th>Receitas originárias</th><th>Receitas derivadas</th></tr></thead>
+  <tbody>
+    <tr><th>Origen</th><td>Explotación del propio patrimonio del Estado</td><td>Imposición del Estado sobre el patrimonio de los particulares</td></tr>
+    <tr><th>Ejemplo</th><td>Alquiler de un inmueble público, dividendos de una estatal</td><td><mark>Los tributos</mark></td></tr>
+    <tr><th>Régimen</th><td>Mayormente derecho privado</td><td>Derecho público y tributario</td></tr>
+  </tbody>
+</table></div>
+<div class="box trap"><b class="box-h">Pegadinha</b><p>Si el municipio <b>alquila</b> un inmueble suyo, cobra una receita <b>originária</b>. Si <b>cobra un tributo</b>, la receita es <b>derivada</b>: deriva del patrimonio del particular, por imposición.</p></div>
+
+<h3>Lo que la Constitución trae en materia tributaria</h3>
+<div class="grid4">
+  <div class="kc"><b>Princípios limitadores</b><span>Legalidade, anterioridade, irretroatividade, isonomia, capacidade contributiva.</span></div>
+  <div class="kc"><b>Competências</b><span>Qué tributos puede crear cada ente (União, Estados, Municípios).</span></div>
+  <div class="kc"><b>Imunidades</b><span>Situaciones en que el Estado está impedido de tributar.</span></div>
+  <div class="kc"><b>Repartição de receitas</b><span>Cómo se reparte lo recaudado entre los entes.</span></div>
+</div>
+<p>Debajo de la Constitución está el <b>CTN</b> (Lei nº 5.172/1966), que tiene estatus de <b>lei complementar</b> y fija las normas generales: cómo se cobra cada tributo, qué es el lançamento, el crédito, etc.</p>
+
+<div class="box prof"><b class="box-h">Lo que dijo el profesor</b><p>Sobre la balanza: <i>"vai que cai uma pergunta dessa"</i>. A lo que trae la CF lo llamó <i>"perguntinha boa"</i>. La pirámide de fuentes la saltó: <i>"não vou perder tempo com isso"</i>. Basta saber que la CF está arriba y que el CTN es lei complementar.</p></div>
+`
+},
+{
+  id: 'tributo', n: 2, prio: 3, min: 7,
+  title: 'Tributo × multa',
+  sub: 'El art. 3º del CTN y la diferencia que, según el profesor, "ganha a prova"',
+  topics: ['trib'],
+  summary: [
+    'Art. 3º CTN: prestação <b>pecuniária compulsória</b>, em moeda, que <b>não constitui sanção de ato ilícito</b>, <b>instituída em lei</b> e cobrada por <b>atividade administrativa plenamente vinculada</b>.',
+    'Tributo nace de un <b>fato gerador lícito</b>; multa nace del <b>descumprimento</b> de una obligación.',
+    'La diferencia clave es la <b>finalidad</b>: tributo = <b>arrecadatória</b>; multa = <b>punitiva</b>.',
+    'Ejemplos: IPTU por ser propietario (tributo) × multa por atraso en el pago (sanción).',
+    'La naturaleza del tributo la define el <b>fato gerador</b>, no el nombre ni el destino del dinero (art. 4º).'
+  ],
+  body: `
+<p class="lead">La definición legal está en el <span class="art">Art. 3º CTN</span>. Toca cada parte resaltada para ver qué significa:</p>
+<div data-widget="art3"></div>
+
+<h3>Tributo × multa: el contraste que decide preguntas</h3>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th></th><th>Tributo</th><th>Multa</th></tr></thead>
+  <tbody>
+    <tr><th>Nace de</th><td>Un fato gerador <b>lícito</b> previsto en ley</td><td>El <b>descumprimento</b> de una obligación</td></tr>
+    <tr><th>Naturaleza</th><td>Obligación prevista en ley</td><td><b>Sanção</b> por ato ilícito</td></tr>
+    <tr><th>Finalidad</th><td><mark>Arrecadatória</mark> (recaudar)</td><td><mark>Punitiva</mark> (castigar)</td></tr>
+    <tr><th>Ejemplo</th><td>Pagar IPTU por ser propietario de un inmueble</td><td>Multa por atraso en el pago de un tributo</td></tr>
+  </tbody>
+</table></div>
+
+<div class="box trap"><b class="box-h">Pegadinha del profesor</b><p>Preguntó en clase: <i>"Qual é a finalidade? O que diferencia a multa do tributo?"</i>. La respuesta es la <b>finalidad</b>: el tributo recauda, la multa castiga. La multa <b>no es</b> tributo, aunque también se pague al Estado.</p></div>
+
+<h3>Qué define la naturaleza de un tributo</h3>
+<p>Según el <span class="art">Art. 4º CTN</span>, lo que define si algo es imposto, taxa o contribuição es su <b>fato gerador</b>. No importa el <b>nombre</b> que le dé la ley ni el <b>destino</b> del dinero recaudado.</p>
+
+<h3>¿Por qué "compulsória"?</h3>
+<p>En un contrato las partes negocian y aceptan. En el tributo no: si ocurre el hecho previsto en la ley, el tributo se debe, sin acuerdo ni negociación. Por eso el tributo es una <b>receita derivada</b>.</p>
+
+<div class="box prof"><b class="box-h">Lo que dijo el profesor</b><p><i>"A grande diferença entre tributo e multa, você que vai ganhar a prova."</i> Repasó el art. 3º palabra por palabra: pecuniária (en dinero), compulsória (obligatoria), no es sanción, instituida en ley, cobrada por acto administrativo.</p></div>
+`
+},
+{
+  id: 'especies', n: 3, prio: 3, min: 9,
+  title: 'Imposto, taxa e contribuição de melhoria',
+  sub: 'Las tres especies del art. 5º del CTN: "com certeza vão cair"',
+  topics: ['esp'],
+  summary: [
+    '<b>Imposto</b> (art. 16): <b>no vinculado</b>. El fato gerador es una situación del propio contribuinte. Ej.: IPTU, IR.',
+    '<b>Taxa</b> (art. 77): <b>vinculada</b> al <b>poder de polícia</b> (fiscalizar: alvará, vigilância sanitária) o a un <b>serviço público específico e divisível</b> (coleta de lixo).',
+    'La taxa <b>no puede</b> tener la misma base de cálculo que un imposto.',
+    '<b>Contribuição de melhoria</b> (art. 81): obra pública que <b>valoriza</b> el inmueble. Límite total = costo de la obra; límite individual = valorización de cada inmueble.',
+    'Función <b>extrafiscal</b>: intervenir en la economía (ej. Imposto de Importação protege la industria nacional).'
+  ],
+  body: `
+<p class="lead">El <span class="art">Art. 5º CTN</span> reconoce tres especies: <mark>impostos, taxas e contribuições de melhoria</mark>. Son las tres que el profesor dijo que caen seguro.</p>
+
+<h3>La pregunta que resuelve casi todo</h3>
+<div class="tree">
+  <div class="tree-q">¿El Estado tiene que hacer algo específico para ti para poder cobrar?</div>
+  <div class="tree-branches">
+    <div class="tree-b"><span class="tree-a">No</span><div class="tree-r t-imp"><b>Imposto</b><span>No vinculado. Basta una situación tuya: tener renta, ser propietario.</span></div></div>
+    <div class="tree-b"><span class="tree-a">Sí: me fiscaliza o me presta un servicio</span><div class="tree-r t-tax"><b>Taxa</b><span>Vinculada al poder de polícia o a un servicio público específico y divisible.</span></div></div>
+    <div class="tree-b"><span class="tree-a">Sí: hizo una obra que valorizó mi inmueble</span><div class="tree-r t-cm"><b>Contribuição de melhoria</b><span>Vinculada a obra pública con valorización inmobiliaria.</span></div></div>
+  </div>
+</div>
+
+<h3>Imposto <span class="art">Art. 16 CTN</span></h3>
+<p>Su fato gerador es una situación <b>independiente de cualquier actividad estatal específica</b> relativa al contribuinte. El Estado no te da nada concreto a cambio.</p>
+<p>Ejemplo clásico: el <b>IPTU</b>. Pagas por ser propietario, aunque el municipio no te preste ningún servicio específico.</p>
+<div class="chips-rows">
+  <div><span class="eyebrow">Federales</span><span class="chip">IR</span><span class="chip">IPI</span><span class="chip">IOF</span><span class="chip">II</span><span class="chip">IE</span><span class="chip">ITR</span></div>
+  <div><span class="eyebrow">Estaduales</span><span class="chip">ICMS</span><span class="chip">IPVA</span><span class="chip">ITCMD</span></div>
+  <div><span class="eyebrow">Municipales</span><span class="chip">IPTU</span><span class="chip">ISS</span><span class="chip">ITBI</span></div>
+</div>
+
+<h3>Taxa <span class="art">Art. 77 CTN</span></h3>
+<div class="two">
+  <div class="kc"><b>Poder de polícia</b><span>El Estado fiscaliza, controla y limita actividades privadas en interés público. Ej.: alvará de funcionamento o de localização, vigilância sanitária, licencia ambiental.</span></div>
+  <div class="kc"><b>Serviço público específico e divisível</b><span>Servicio usado o puesto a tu disposición. <i>Específico</i> = identificable; <i>divisible</i> = medible por usuario. Ej.: coleta de lixo domiciliar, emisión de pasaporte.</span></div>
+</div>
+<div class="box tech"><b class="box-h">Requisitos de la taxa</b><p>El servicio o la fiscalización deben existir; la actividad debe ser específica y divisible; la taxa debe estar en ley del ente competente; y <b>no puede tener la base de cálculo propia de un imposto</b>.</p></div>
+<div class="box prof"><b class="box-h">Ojo con este ejemplo</b><p>En clase el profesor usó la <b>taxa de iluminação pública</b> como ejemplo de servicio público, y su slide la marca como "controversa". Lo técnico: la Súmula Vinculante 41 del STF dice que la iluminación pública no puede cobrarse como taxa; hoy se cobra como COSIP. Si en la prueba aparece como ejemplo de taxa dentro de su explicación, probablemente la da por correcta.</p></div>
+
+<h3>Contribuição de melhoria <span class="art">Arts. 81–82 CTN</span></h3>
+<ol class="flow">
+  <li><b>Obra pública</b><span>Pavimentación, parque, saneamiento.</span></li>
+  <li><b>Valorização</b><span>Los inmuebles cercanos suben de valor por la obra.</span></li>
+  <li><b>Cobrança con duplo limite</b><span>Total: el costo de la obra. Individual: la valorización de cada inmueble.</span></li>
+</ol>
+<p>Ejemplo: la prefeitura pavimenta una calle de tierra y las casas de esa calle se valorizan; puede cobrar contribuição de melhoria a esos propietarios. Según el profesor, se reparte en proporción al tamaño del lote y tiene fecha de inicio y de fin.</p>
+
+<h3>Practica: ¿qué especie es?</h3>
+<div data-widget="classify" data-key="especies"></div>
+
+<h3>Otras clasificaciones</h3>
+<ul class="clean">
+  <li><b>Por el fato gerador:</b> vinculados (taxa, contribuição de melhoria) × no vinculados (imposto).</li>
+  <li><b>Por la competencia:</b> federal, estadual o municipal (IPTU municipal, IR federal, ICMS estadual).</li>
+  <li><b>Por la función:</b> fiscal (recaudar) × extrafiscal (intervenir en la economía o en conductas; ej. el Imposto de Importação protege la industria nacional).</li>
+</ul>
+
+<div class="box prof"><b class="box-h">Lo que dijo el profesor</b><p><i>"Esses aí com certeza vão cair."</i> Y aclaró: <i>"tem um tributo que eu não vou pedir"</i>. El STF reconoce cinco especies (agrega empréstimos compulsórios y contribuições especiais), pero para esta prueba concéntrate en las tres del art. 5º.</p></div>
+`
+},
+{
+  id: 'principios', n: 4, prio: 2, min: 8,
+  title: 'Princípios e competência',
+  sub: 'Legalidade, isonomia, anterioridade, irretroatividade y quién cobra qué',
+  topics: ['princ'],
+  summary: [
+    '<b>Legalidade</b>: sin ley no hay tributo nuevo ni aumento (el prefeito no puede crearlo por anuncio o decreto).',
+    '<b>Isonomia</b>: misma situación, mismo tratamiento. El profesor la explicó con las faixas progresivas del IR (en el material: capacidade contributiva).',
+    '<b>Irretroatividade</b>: la ley no alcanza hechos anteriores a su vigencia.',
+    '<b>Anterioridade</b>: anual (ejercicio siguiente) + noventena (90 días). II, IE e IOF son excepción a las dos.',
+    'Competência: IPTU, ISS, ITBI municipales; ICMS, IPVA, ITCMD estaduales; IR, IPI, IOF, II, IE, ITR federales. Taxas y contribuição de melhoria: competencia <b>comum</b>.'
+  ],
+  body: `
+<p class="lead">Los principios son los frenos que la Constitución pone al poder de tributar. El profesor explicó cuatro con ejemplos: <mark>legalidade, isonomia, irretroatividade y anterioridade</mark>.</p>
+
+<div class="pcards">
+  <div class="pc"><div class="pc-h"><b>Legalidade</b><span class="art">Art. 150, I CF</span></div>
+    <p>Ningún tributo se crea ni se aumenta sin <b>ley</b>.</p>
+    <p class="muted">Ejemplo del profesor: si el prefeito anuncia que desde mañana todos pagan un tributo nuevo, no puede. Necesita ley aprobada por la Câmara de Vereadores, sancionada y publicada en el diario oficial.</p>
+    <p class="muted">Matiz: el Ejecutivo puede alterar las alícuotas de II, IE, IPI e IOF dentro de los límites de la ley.</p></div>
+  <div class="pc"><div class="pc-h"><b>Isonomia</b><span class="art">Art. 150, II CF</span></div>
+    <p>Contribuyentes en la misma situación pagan igual. No se puede tratar distinto a la empresa A y a la B solo porque son de dueños distintos.</p>
+    <p class="muted">El profesor la explicó con las faixas del IR: quien gana más paga una alícuota mayor (5%, 7%, 10%…). En el material, esa graduación se llama <b>capacidade contributiva / progressividade</b> (Art. 145, §1º CF).</p></div>
+  <div class="pc"><div class="pc-h"><b>Irretroatividade</b><span class="art">Art. 150, III, a CF</span></div>
+    <p>La ley tributaria no cobra tributos sobre hechos ocurridos antes de existir.</p>
+    <p class="muted">Excepción: puede retroagir para <b>beneficiar</b> (dejar de considerar un acto como infracción o reducir una multa).</p></div>
+  <div class="pc"><div class="pc-h"><b>Anterioridade</b><span class="art">Art. 150, III, b y c CF</span></div>
+    <p><b>Anual:</b> no se cobra en el mismo ejercicio (año) en que se publicó la ley que creó o aumentó el tributo. <b>Nonagesimal:</b> mínimo 90 días entre la publicación y la cobranza. Se aplican juntas.</p>
+    <p class="muted">Ejemplo del profesor: Cabo Frio cobró IPTU de menos durante años por un error y quiso corregirlo de golpe en 2026. No puede volver atrás; la corrección vale para el ejercicio siguiente.</p></div>
+  <div class="pc"><div class="pc-h"><b>Não confisco</b><span class="art">Art. 150, IV CF</span></div>
+    <p>El tributo no puede ser tan alto que destruya el patrimonio o inviabilice el negocio.</p></div>
+</div>
+
+<h3>Excepciones a la anterioridade</h3>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th>Excepción a…</th><th>Tributos</th></tr></thead>
+  <tbody>
+    <tr><th>Las dos (se cobran de inmediato)</th><td><mark>II, IE, IOF</mark>, impuesto extraordinario de guerra, empréstimo compulsório (guerra o calamidad)</td></tr>
+    <tr><th>Solo la anual (respetan 90 días)</th><td>IPI, contribuições da seguridade social</td></tr>
+    <tr><th>Solo la noventena (respetan el año)</th><td>IR, fijación de la base de cálculo de IPTU e IPVA</td></tr>
+  </tbody>
+</table></div>
+<p class="muted">La apostila (Guia Prático) cita IOF, II e IE como excepciones: son las más probables en la prueba.</p>
+
+<h3>Competência: quién cobra qué</h3>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th>Ente</th><th>Impuestos propios</th><th>Foco</th></tr></thead>
+  <tbody>
+    <tr><th>União</th><td>IR, IPI, IOF, ITR, II, IE</td><td>Renta, productos industrializados, operaciones financieras</td></tr>
+    <tr><th>Estados y DF</th><td>ICMS, IPVA, ITCMD</td><td>Mercaderías, vehículos, herencias y donaciones</td></tr>
+    <tr><th>Municípios y DF</th><td>IPTU, ISS, ITBI</td><td>Servicios e inmuebles urbanos</td></tr>
+  </tbody>
+</table></div>
+<ul class="clean">
+  <li><b>Privativa</b> (el profesor dijo "exclusiva"): solo un ente puede crear ese impuesto. Ej.: solo el Município crea el IPTU.</li>
+  <li><b>Comum</b>: todos los entes pueden cobrar <b>taxas</b> y <b>contribuições de melhoria</b>.</li>
+  <li><b>Residual</b>: solo la <b>União</b> crea impuestos nuevos, por <b>lei complementar</b>.</li>
+  <li><b>Cumulativa</b>: el <b>DF</b> cobra impuestos estaduales y municipales.</li>
+</ul>
+
+<h3>Qué tipo de norma hace qué</h3>
+<div class="grid4">
+  <div class="kc"><b>Lei ordinária</b><span>Crea o aumenta el tributo. Lo más común. Mayoría simple.</span></div>
+  <div class="kc"><b>Lei complementar</b><span>Mayoría absoluta. Normas generales. Ej.: el CTN.</span></div>
+  <div class="kc"><b>Medida provisória</b><span>Del Presidente. Fuerza de ley inmediata; el Congreso debe convertirla en ley.</span></div>
+  <div class="kc"><b>Decreto</b><span>Regula la ley. No puede crear tributo.</span></div>
+</div>
+
+<h3>Caso mostrado en clase: IPTU de Chapecó</h3>
+<p>El profesor mostró una decisión del STF, con repercusión general, sobre una ley de Chapecó que aplicaba 1% de IPTU a inmuebles con área construida de 400 m² o más. El STF reafirmó que la progresividad del IPTU debe considerar el <b>valor</b> del inmueble, no su <b>tamaño</b>. Puede haber alícuotas distintas según localización y uso.</p>
+`
+},
+{
+  id: 'obrigacao', n: 5, prio: 2, min: 7,
+  title: 'Obrigação tributária',
+  sub: 'Hipótese × fato gerador, principal × acessória y los sujetos',
+  topics: ['obr'],
+  summary: [
+    '<b>Hipótese de incidência</b> = lo que la ley prevé (abstracto). <b>Fato gerador</b> = cuando ocurre en el mundo real.',
+    'Con el fato gerador nace, <b>automáticamente</b>, la obrigação tributária.',
+    '<b>Principal</b> = pagar (tributo o multa). <b>Acessória</b> = burocracia (emitir nota, SPED, declaraciones).',
+    'Acessória incumplida → multa → se convierte en <b>principal</b> (art. 113, §3º).',
+    '<b>Sujeito ativo</b> = ente público (credor). <b>Sujeito passivo</b> = contribuinte o responsável (devedor).'
+  ],
+  body: `
+<p class="lead">La obrigação tributária es el vínculo jurídico que nace <mark>automáticamente</mark> entre el Estado (sujeito ativo) y el contribuinte (sujeito passivo) en el instante en que ocurre el fato gerador.</p>
+
+<h3>Hipótese de incidência × fato gerador</h3>
+<div class="two">
+  <div class="kc"><span class="eyebrow">La ley prevé</span><b>Hipótese de incidência</b><span>Lo que está escrito en la ley. Es abstracto. Ej.: "auferir renda gera IR".</span></div>
+  <div class="kc"><span class="eyebrow">El mundo real</span><b>Fato gerador</b><span>La hipótesis se vuelve realidad. Ej.: la empresa cierra el balance del 31/12 con R$ 100.000 de lucro.</span></div>
+</div>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th>Tributo</th><th>Cuándo nace la obligación</th></tr></thead>
+  <tbody>
+    <tr><th>IR / IRPJ</th><td>Al auferir renta (tener lucro)</td></tr>
+    <tr><th>ISS</th><td>Al prestar un servicio (ej.: consultoría)</td></tr>
+    <tr><th>IPVA</th><td>Al ser propietario de un vehículo el 1º de enero</td></tr>
+    <tr><th>IPTU</th><td>Propiedad de inmueble urbano; en general, el 1º de enero</td></tr>
+    <tr><th>ICMS</th><td>Al salir la mercadería del establecimiento (la NF-e documenta esa salida)</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Principal × acessória <span class="art">Art. 113 CTN</span></h3>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th></th><th>Principal</th><th>Acessória</th></tr></thead>
+  <tbody>
+    <tr><th>Qué es</th><td>El deber de <b>pagar</b>: tributo o multa</td><td>El deber de <b>hacer la burocracia</b> en interés de la fiscalización</td></tr>
+    <tr><th>Ejemplos</th><td>Pagar el DARF, el DAS del Simples, una multa por atraso</td><td>Emitir nota fiscal, entregar el SPED, enviar la declaración del IR</td></tr>
+  </tbody>
+</table></div>
+<div class="box trap"><b class="box-h">Regla de oro</b><p>Si incumples una obligación <b>acessória</b> (olvidas una declaración), te aplican una <b>multa</b>. Como la multa se paga en dinero, se convierte en obligación <b>principal</b> (Art. 113, §3º). Y la acessória existe aunque la empresa sea isenta del tributo.</p></div>
+
+<h3>Los sujetos</h3>
+<div class="sides">
+  <div class="side"><span class="eyebrow">Credor</span><b>Sujeito ativo</b><p>Persona jurídica de derecho público: União, Estado, DF o Município. En el día a día: Receita Federal, SEFAZ.</p></div>
+  <div class="side-link" aria-hidden="true"><span>debe a</span></div>
+  <div class="side"><span class="eyebrow">Devedor</span><b>Sujeito passivo</b><p><b>Contribuinte:</b> relación directa con el fato gerador (la empresa que tuvo lucro paga su IRPJ).<br><b>Responsável:</b> no practicó el fato gerador, pero la ley lo obliga (la empresa que retiene el IR del salario del empleado y lo repasa).</p></div>
+</div>
+
+<div class="box prof"><b class="box-h">Lo que dijo el profesor</b><p><i>"O contribuinte sempre será o sujeito passivo. O ente público é o ativo."</i> Recomendó la apostila azul (Guia Prático), sección 6, porque <i>"ela tá bem fácil"</i>.</p></div>
+`
+},
+{
+  id: 'ciclo', n: 6, prio: 3, min: 8,
+  title: 'Ciclo de vida do crédito tributário',
+  sub: 'El material propio del profesor: "a última que mais vai cair"',
+  topics: ['ciclo'],
+  summary: [
+    'Orden: <b>Hipótese de incidência → Fato gerador → Obrigação → Lançamento → Crédito → Extinção</b>.',
+    'Obrigação: vínculo <b>automático</b>; el contribuinte debe, pero aún no hay valor formalizado.',
+    'Lançamento: verifica el fato gerador, identifica al deudor, calcula el monto y aplica la penalidad.',
+    'Crédito: valor <b>líquido, certo e exigível</b>; el Estado ya puede cobrar.',
+    'Extinção: el fin, generalmente por pago (hay otras formas).'
+  ],
+  body: `
+<p class="lead">Es el material que el profesor hizo para ustedes y del que dijo: <mark>"a última que mais vai cair é esta aqui"</mark>. Aprende el orden y la frase clave de cada etapa. Toca cada etapa:</p>
+<div data-widget="ciclo"></div>
+
+<h3>El ejemplo del profesor: la compra en la cafetería</h3>
+<ol class="story">
+  <li><b>Fato gerador.</b> Compraste en la cafetería y el vendedor recibió el dinero.</li>
+  <li><b>Obrigação.</b> En ese momento nace el deber del vendedor con el fisco.</li>
+  <li><b>Lançamento.</b> Todo está informatizado: el sistema registra la venta.</li>
+  <li><b>Crédito.</b> El valor queda líquido, cierto y exigible; al mes siguiente se paga el tributo sobre esa venta.</li>
+  <li><b>Extinção.</b> Al pagar la guía, el crédito se extingue.</li>
+</ol>
+
+<div class="box prof"><b class="box-h">Cómo lo explica el profesor</b><p>El <b>lançamento</b> es el registro previo: tomar la base de cálculo, la alícuota y cargarlo en el sistema. El <b>crédito tributário</b> es cuando se genera la guía o el carnê de pago: ahí el Estado puede cobrar. Y sobre el final: <i>"Mas é só o pagamento? Não"</i>. Hay otras formas de extinción (módulo 8).</p></div>
+
+<h3>Dónde actúa cada filtro</h3>
+<div class="filters">
+  <div class="f-row">
+    <span class="f-stage">CF</span><span class="f-stage">Hipótese</span><span class="f-stage">Fato gerador</span><span class="f-stage">Obrigação</span><span class="f-stage">Lançamento</span><span class="f-stage">Crédito</span><span class="f-stage">Extinção</span>
+  </div>
+  <ul class="f-list">
+    <li><span class="f-pin">Antes de todo</span><b>Imunidade</b>: la CF quita la competencia; el tributo no puede nacer.</li>
+    <li><span class="f-pin">Entre obrigação y crédito</span><b>Isenção y anistia</b> (exclusão): la obligación nace, pero la ley impide que se constituya el crédito.</li>
+    <li><span class="f-pin">Sobre el crédito</span><b>Suspensão</b> (MODERCOPA): el crédito existe, pero queda en pausa.</li>
+    <li><span class="f-pin">Plazos</span><b>Decadência</b> corre hasta el lançamento; <b>prescrição</b> corre después de constituido el crédito.</li>
+  </ul>
+</div>
+
+<div class="box trap"><b class="box-h">Pegadinha</b><p>El lançamento <b>no crea</b> la obligación: esa nace con el fato gerador. El lançamento <b>constituye el crédito</b>.</p></div>
+`
+},
+{
+  id: 'lancamento', n: 7, prio: 3, min: 7,
+  title: 'As 4 modalidades de lançamento',
+  sub: 'De ofício, declaração, homologação y arbitramento: "isso vai cair, bota em certeza"',
+  topics: ['lanc'],
+  summary: [
+    '<b>De ofício (direto)</b>: el fisco hace todo; ya tiene los datos. IPVA, IPTU.',
+    '<b>Por declaração (misto)</b>: tú informas, el fisco calcula. ITBI, Imposto de Importação (y ITCMD, según el profesor).',
+    '<b>Por homologação (autolançamento)</b>: tú calculas, declaras y pagas; el fisco tiene <b>5 años</b> para homologar. IR, ICMS, ISS, PIS, COFINS, CBS, IBS.',
+    '<b>Por arbitramento</b>: el fisco estima cuando tus datos son omisos, falsos o hay fraude.',
+    'En esta prueba son <b>4</b> modalidades (el CTN técnicamente tiene 3).'
+  ],
+  body: `
+<p class="lead">El lançamento es el puente entre la obligación y el crédito. El profesor enseña <mark>4 modalidades</mark> y dijo: <i>"isso vai cair, bota em certeza"</i>.</p>
+
+<div class="mods">
+  <div class="mod">
+    <div class="mod-h"><b>De ofício <span class="muted">(direto)</span></b><span class="art">Art. 149</span></div>
+    <div class="who" aria-label="Quién trabaja: fisco 100%"><span class="who-f" style="width:100%">Fisco</span></div>
+    <p>Lo hace solo la autoridad fiscal, que ya tiene todos los datos. Tú solo pagas.</p>
+    <p class="muted">Ejemplo del profesor: compraste un carro; el Estado ya tiene los datos y genera la guía del IPVA.</p>
+    <div class="chips"><span class="chip">IPVA</span><span class="chip">IPTU</span><span class="chip">Auto de infração</span></div>
+  </div>
+  <div class="mod">
+    <div class="mod-h"><b>Por declaração <span class="muted">(misto)</span></b><span class="art">Art. 147</span></div>
+    <div class="who" aria-label="Quién trabaja: contribuinte informa, fisco calcula"><span class="who-c" style="width:50%">Tú informas</span><span class="who-f" style="width:50%">Fisco calcula</span></div>
+    <p>Tú informas los datos; la autoridad calcula el tributo y te notifica para pagar.</p>
+    <p class="muted">Ejemplo: compras un inmueble, informas a la prefeitura cuánto pagaste; ella evalúa, calcula y emite la guía del ITBI.</p>
+    <div class="chips"><span class="chip">ITBI</span><span class="chip">Imposto de Importação</span><span class="chip">ITCMD</span></div>
+  </div>
+  <div class="mod">
+    <div class="mod-h"><b>Por homologação <span class="muted">(autolançamento)</span></b><span class="art">Art. 150</span></div>
+    <div class="who" aria-label="Quién trabaja: contribuinte 100%, fisco revisa después"><span class="who-c" style="width:100%">Tú haces todo · el fisco revisa en 5 años</span></div>
+    <p>Calculas, declaras y pagas por adelantado, sin examen previo. El fisco tiene <b>5 años</b> para homologar o cobrar la diferencia con multa (por lançamento de ofício).</p>
+    <div class="chips"><span class="chip">IR</span><span class="chip">ICMS</span><span class="chip">ISS</span><span class="chip">IPI</span><span class="chip">PIS/COFINS</span><span class="chip">CBS e IBS</span></div>
+  </div>
+  <div class="mod">
+    <div class="mod-h"><b>Por arbitramento</b><span class="art">Art. 148</span></div>
+    <div class="who" aria-label="Quién trabaja: fisco estima"><span class="who-f who-x" style="width:100%">Fisco estima</span></div>
+    <p>Técnica supletiva: cuando las declaraciones o documentos del contribuinte son omisos, falhos, no merecen fe o hay fraude, el fisco "arbitra" (estima) el valor debido.</p>
+  </div>
+</div>
+
+<div class="box tech"><b class="box-h">Lo técnico y lo que vale en la prueba</b><p>El CTN prevé 3 modalidades (ofício, declaração y homologação) y trata el arbitramento como una técnica para fijar la base de cálculo. <b>En esta prueba, responde 4</b>, como en el material del profesor.</p></div>
+
+<h3>Practica: ¿qué modalidad?</h3>
+<div data-widget="classify" data-key="lancamento"></div>
+
+<div class="box trap"><b class="box-h">Para no confundirlas</b><p><b>Ofício</b>: el fisco hace todo. <b>Declaração</b>: tú informas, él calcula. <b>Homologação</b>: tú haces todo y él revisa después. <b>Arbitramento</b>: él estima porque tus datos fallan.</p></div>
+`
+},
+{
+  id: 'vida', n: 8, prio: 3, min: 10,
+  title: 'Suspensão, extinção e exclusão',
+  sub: 'MODERCOPA, las formas de extinción, decadência y prescrição',
+  topics: ['vida'],
+  summary: [
+    '<b>Suspensão</b> (art. 151) = pausa. El crédito existe, el Estado no puede cobrar. <b>MODERCOPA</b>: Moratória, Depósito integral, Reclamações e recursos, Concessão de liminar, Parcelamento.',
+    '<b>Extinção</b> (art. 156) = fin. Pagamento, compensação, transação, remissão, prescrição y decadência, dação em pagamento de imóveis, decisão judicial o administrativa definitiva.',
+    '<b>Exclusão</b> (art. 175) = el crédito no nace. Isenção y anistia.',
+    '<b>Decadência</b>: 5 años para <b>lançar</b>. <b>Prescrição</b>: 5 años para <b>cobrar en juicio</b>.',
+    '<b>Remissão</b> perdona la deuda (extinção). <b>Anistia</b> perdona solo multas (exclusão).'
+  ],
+  body: `
+<p class="lead">Una vez constituido, al crédito le pueden pasar tres cosas distintas: <b>pausarse</b>, <b>morir</b> o, antes de eso, <b>no llegar a nacer</b>. El profesor dijo que cae <mark>"toda essa parte de crédito tributário até a extinção"</mark>.</p>
+
+<div class="three">
+  <div class="col c-sus">
+    <span class="stamp">Suspenso</span>
+    <b>Suspensão</b><span class="art">Art. 151 CTN</span>
+    <p>El crédito <b>existe</b>, pero el Estado queda temporalmente impedido de cobrar.</p>
+    <ul class="clean"><li>Moratória</li><li>Depósito integral</li><li>Reclamações e recursos administrativos</li><li>Concessão de liminar</li><li>Parcelamento</li></ul>
+  </div>
+  <div class="col c-ext">
+    <span class="stamp">Extinto</span>
+    <b>Extinção</b><span class="art">Art. 156 CTN</span>
+    <p>El crédito <b>deja de existir</b> para siempre.</p>
+    <ul class="clean"><li>Pagamento</li><li>Compensação</li><li>Transação</li><li>Remissão</li><li>Prescrição y decadência</li><li>Dação em pagamento de bens imóveis</li><li>Decisão judicial o administrativa definitiva</li></ul>
+  </div>
+  <div class="col c-exc">
+    <span class="stamp">Excluído</span>
+    <b>Exclusão</b><span class="art">Art. 175 CTN</span>
+    <p>La obligación existió, pero la ley <b>impide que nazca</b> el crédito.</p>
+    <ul class="clean"><li>Isenção</li><li>Anistia</li></ul>
+  </div>
+</div>
+
+<h3>MODERCOPA, letra por letra</h3>
+<div class="acro">
+  <div><b>MO</b><span>Moratória: prórroga del plazo de pago dada por ley (ej.: pandemia).</span></div>
+  <div><b>DE</b><span>Depósito integral: depositas el valor en juicio para discutir la deuda.</span></div>
+  <div><b>R</b><span>Reclamações e recursos administrativos: mientras el fisco juzga tu defensa.</span></div>
+  <div><b>CO</b><span>Concessão de medida liminar: el juez ordena parar la cobranza (mandado de segurança u otras acciones).</span></div>
+  <div><b>PA</b><span>Parcelamento: divides la deuda; pagando en día, la cobranza queda suspendida.</span></div>
+</div>
+
+<h3>Decadência × prescrição</h3>
+<div class="dp">
+  <div class="dp-row">
+    <span class="dp-pt">Fato gerador</span>
+    <span class="dp-seg dp-d"><b>Decadência</b> 5 años para <b>lançar</b></span>
+    <span class="dp-pt">Lançamento · crédito</span>
+    <span class="dp-seg dp-p"><b>Prescrição</b> 5 años para <b>cobrar en juicio</b></span>
+    <span class="dp-pt">Execução fiscal</span>
+  </div>
+</div>
+<div class="box trap"><b class="box-h">Truco</b><p><b>D</b>ecadência viene antes, cuando todavía no hay lançamento. <b>P</b>rescrição viene después, cuando el crédito ya existe y falta cobrarlo. Las dos extinguen el crédito.</p></div>
+
+<h3>Remissão × anistia</h3>
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th></th><th>Remissão</th><th>Anistia</th></tr></thead>
+  <tbody>
+    <tr><th>Qué perdona</th><td>La deuda (el tributo), total o parcial</td><td>Solo las multas o infracciones, no el tributo</td></tr>
+    <tr><th>Categoría</th><td><mark>Extinção</mark></td><td><mark>Exclusão</mark></td></tr>
+  </tbody>
+</table></div>
+
+<h3>Practica: ¿suspende, extingue o excluye?</h3>
+<div data-widget="classify" data-key="vida"></div>
+
+<div class="box prof"><b class="box-h">Lo que dijo el profesor</b><p>Usó la palabra remissão como <i>"perdoar a dívida"</i> en el caso del IPTU de Cabo Frio. Y sobre la extinção: <i>"Mas é só o pagamento? Não."</i></p></div>
+`
+},
+{
+  id: 'imunidade', n: 9, prio: 2, min: 6,
+  title: 'Imunidade × isenção',
+  sub: 'Los filtros protectores: parecen iguales, actúan en momentos distintos',
+  topics: ['imun'],
+  summary: [
+    '<b>Imunidade</b>: está en la <b>Constitución</b>; quita la competencia. El tributo ni siquiera puede nacer.',
+    '<b>Isenção</b>: está en una <b>ley</b>; el fato gerador ocurre, la obligación nace, pero se dispensa el pago (exclusão do crédito).',
+    'Imunes: templos de qualquer culto, entes entre sí (recíproca), partidos, sindicatos de trabajadores, educación y asistencia sin fines de lucro, libros, diarios y su papel.',
+    'Isentos (ejemplos): enfermedad grave en el IR; IPVA de taxistas.'
+  ],
+  body: `
+<p class="lead">Parecen sinónimos, pero actúan en momentos distintos. La <mark>imunidade</mark> está en la Constitución y quita el poder de tributar. La <mark>isenção</mark> está en una ley común: el Estado tiene el poder, el fato gerador ocurre, pero la ley dispensa el pago.</p>
+
+<div class="table-wrap"><table class="cmp">
+  <thead><tr><th></th><th>Imunidade</th><th>Isenção</th></tr></thead>
+  <tbody>
+    <tr><th>Dónde está</th><td>Constitución Federal</td><td>Ley (infraconstitucional)</td></tr>
+    <tr><th>Qué hace</th><td>Quita la competencia: el tributo no puede nacer</td><td>El fato gerador ocurre y la obligación nace, pero se excluye el crédito</td></tr>
+    <tr><th>Categoría</th><td>Limitación constitucional al poder de tributar</td><td>Exclusão do crédito (Art. 175 CTN)</td></tr>
+    <tr><th>Ejemplo</th><td>Templos no pagan IPTU; libros no pagan impuestos</td><td>Enfermedad grave listada en ley: no paga IR. Taxistas: no pagan IPVA</td></tr>
+  </tbody>
+</table></div>
+
+<h3>Las imunidades del Art. 150, VI CF</h3>
+<ul class="clean">
+  <li><b>a) Recíproca:</b> União, Estados, DF y Municípios no se cobran impuestos entre sí. No vale para taxas.</li>
+  <li><b>b) Templos de qualquer culto:</b> patrimonio, renta y servicios ligados a sus fines esenciales.</li>
+  <li><b>c) Condicionada:</b> partidos políticos, sindicatos de trabajadores e instituciones de educación y asistencia social sin fines de lucro. Requisitos: no distribuir lucros, aplicar los recursos en el país y llevar contabilidad regular.</li>
+  <li><b>d) Cultural:</b> libros, diarios, periódicos y el papel para imprimirlos. Incluye e-books y lectores digitales (SV 57 del STF).</li>
+  <li><b>e) Musical:</b> fonogramas y videofonogramas musicales producidos en Brasil.</li>
+</ul>
+
+<div class="box tech"><b class="box-h">Dos figuras que se confunden</b><p><b>Não incidência:</b> el hecho simplemente no está en la ley; no hay fato gerador. <b>Alíquota zero:</b> la obligación nace pero vale cero, y el Ejecutivo la fija por decreto. Ojo: la apostila usa la alíquota zero del IPI de la linha branca como ejemplo de isenção; si aparece así en la prueba, probablemente lo cuenta como isenção.</p></div>
+
+<h3>Practica: ¿imunidade o isenção?</h3>
+<div data-widget="classify" data-key="imunidade"></div>
+
+<div class="box prof"><b class="box-h">Lo que dijo el profesor</b><p>Usó el ejemplo de los templos: <i>"qualquer tipo de templo, qualquer tipo de religião"</i>. En su material, la imunidade es "o filtro da Constituição" y la isenção es "exclusão do crédito".</p></div>
+`
+},
+{
+  id: 'reforma', n: 10, prio: 3, min: 9,
+  title: 'Reforma tributária',
+  sub: 'EC 132/2023, IVA dual y cronograma 2026–2033: "principalmente reforma tributária"',
+  topics: ['ref'],
+  summary: [
+    '<b>EC 132/2023</b>: IVA Dual. <b>CBS</b> (federal, Receita Federal) reemplaza <b>PIS y COFINS</b>. <b>IBS</b> (Estados y Municípios, Comitê Gestor) reemplaza <b>ICMS e ISS</b>.',
+    '<b>IS</b> (Imposto Seletivo, "imposto do pecado"): bienes y servicios dañinos a la salud o al medio ambiente.',
+    '<b>2026</b>: año de prueba con CBS <b>0,9%</b> e IBS <b>0,1%</b>, compensables con PIS/COFINS.',
+    '<b>2027</b>: CBS plena; fin de PIS y COFINS; IPI a cero (salvo Zona Franca de Manaus). <b>2029–2032</b>: ICMS e ISS bajan. <b>2033</b>: fin de ICMS e ISS; IBS pleno.',
+    'CBS e IBS funcionan por <b>lançamento por homologação</b>.'
+  ],
+  body: `
+<p class="lead">El profesor la marcó como tema principal: <i>"principalmente a reforma tributária"</i>. La <mark>EC 132/2023</mark> reemplaza los tributos sobre el consumo por un <b>IVA Dual</b> y crea un impuesto selectivo.</p>
+
+<h3>Qué reemplaza a qué</h3>
+<div class="migr">
+  <div class="mg-row">
+    <div class="mg-old"><span class="chip">PIS</span><span class="chip">COFINS</span></div>
+    <div class="mg-arrow" aria-hidden="true">→</div>
+    <div class="mg-new"><b>CBS</b><span>Contribuição sobre Bens e Serviços · <b>União</b> · Receita Federal</span></div>
+  </div>
+  <div class="mg-row">
+    <div class="mg-old"><span class="chip">ICMS <small>estadual</small></span><span class="chip">ISS <small>municipal</small></span></div>
+    <div class="mg-arrow" aria-hidden="true">→</div>
+    <div class="mg-new"><b>IBS</b><span>Imposto sobre Bens e Serviços · <b>Estados, DF y Municípios</b> · Comitê Gestor do IBS</span></div>
+  </div>
+  <div class="mg-row">
+    <div class="mg-old"><span class="chip chip-ghost">nuevo</span></div>
+    <div class="mg-arrow" aria-hidden="true">→</div>
+    <div class="mg-new"><b>IS</b><span>Imposto Seletivo, el "imposto do pecado": bienes y servicios dañinos a la salud o al medio ambiente</span></div>
+  </div>
+  <div class="mg-row">
+    <div class="mg-old"><span class="chip">IPI</span></div>
+    <div class="mg-arrow" aria-hidden="true">→</div>
+    <div class="mg-new mg-dim"><b>Alíquota zero</b><span>Desde 2027, salvo productos de la Zona Franca de Manaus</span></div>
+  </div>
+</div>
+<p>Es "dual" porque hay un IVA <b>federal</b> (CBS) y uno <b>subnacional</b> (IBS). Los dos funcionan por <b>lançamento por homologação</b>: la empresa calcula, declara y paga.</p>
+
+<h3>Cronograma</h3>
+<ol class="tl">
+  <li><span class="tl-y">2024–2025</span><span>Regulación por leis complementares (LC 214/2025).</span></li>
+  <li class="tl-now"><span class="tl-y">2026</span><span><b>Año de prueba:</b> CBS 0,9% + IBS 0,1%, compensables con PIS/COFINS.</span></li>
+  <li><span class="tl-y">2027</span><span><b>CBS plena</b> y empieza el IS. <b>Fin de PIS y COFINS.</b> IPI a cero (salvo ZFM).</span></li>
+  <li><span class="tl-y">2029–2032</span><span>ICMS e ISS bajan gradualmente cada año.</span></li>
+  <li><span class="tl-y">2033</span><span><b>IBS pleno. Fin del ICMS y del ISS.</b></span></li>
+</ol>
+<div class="box trap"><b class="box-h">Ojo con lo que se dijo en clase</b><p>El profesor comentó <i>"ano que vem não tem mais ICMS, vai virar IBS"</i>. El cronograma oficial y el Manual dicen que <b>ICMS e ISS se extinguen en 2033</b>. En 2027 lo que se extingue es <b>PIS y COFINS</b>. Si preguntan el año, usa el cronograma.</p></div>
+
+<h3>2026, el año de prueba</h3>
+<ul class="clean">
+  <li>Alícuotas simbólicas: <b>CBS 0,9%</b> (Receita Federal) e <b>IBS 0,1%</b> (Comitê Gestor).</li>
+  <li>Los valores se compensan con PIS/COFINS. La LC 214/2025 dispensa el pago a quien cumple las obligaciones acessórias, como destacar CBS e IBS en la nota fiscal.</li>
+  <li>Objetivo: probar los sistemas (ERP), las notas fiscales con los campos nuevos y la apuración antes de 2027.</li>
+  <li>Las empresas del Simples Nacional quedan fuera de esas alícuotas en 2026.</li>
+</ul>
+
+<h3>Lo que mencionó en clase</h3>
+<ul class="clean">
+  <li><b>Split payment:</b> el impuesto se separa automáticamente en el momento del pago de la operación.</li>
+  <li><b>IBS junta ICMS e ISS:</b> una sola nota para producto y servicio, informando la actividad principal.</li>
+  <li><b>IPVA cambia:</b> podrá alcanzar embarcaciones y aeronaves. El ITCMD pasa a ser progresivo.</li>
+</ul>
+
+<div class="box prof"><b class="box-h">Dónde mirar</b><p>Las preguntas de reforma probablemente salen del Manual (EC 132/2023): la tabla de migración, las alícuotas de 2026 y el cronograma.</p></div>
+`
+}
+];
+
+/* Datos de los widgets interactivos */
+window.WIDGETS = {
+  art3: [
+    { t: 'Tributo é toda ' },
+    { k: 'prestação pecuniária', d: 'Se paga en <b>dinero</b>. No se paga con trabajo ni con servicios.' },
+    { t: ' ' },
+    { k: 'compulsória', d: '<b>Obligatoria</b> por ley. No depende de tu voluntad, a diferencia de un contrato.' },
+    { t: ', ' },
+    { k: 'em moeda ou cujo valor nela se possa exprimir', d: 'En reales, o en un valor que pueda expresarse en dinero.' },
+    { t: ', ' },
+    { k: 'que não constitua sanção de ato ilícito', d: '<b>No es castigo.</b> Por eso la <b>multa no es tributo</b>: la multa sí es sanción.' },
+    { t: ', ' },
+    { k: 'instituída em lei', d: 'Principio de <b>legalidade</b>: sin ley, no hay tributo.' },
+    { t: ' e ' },
+    { k: 'cobrada mediante atividade administrativa plenamente vinculada', d: 'El fiscal <b>no elige</b> si cobra o no, ni negocia el valor: aplica la ley.' },
+    { t: '.' }
+  ],
+  ciclo: [
+    { k: 'Hipótese de incidência', tag: 'A regra', d: 'La situación descrita en la ley, en abstracto.', ex: 'La ley dice: "auferir renda" genera IR.' },
+    { k: 'Fato gerador', tag: 'O fato', d: 'La situación de la ley ocurre en el mundo real.', ex: 'La persona recibe su salario; la empresa tiene lucro.' },
+    { k: 'Obrigação tributária', tag: 'O vínculo', d: 'Nace <b>automáticamente</b> con el fato gerador. El contribuinte ya debe, pero el Estado todavía no tiene un valor formalizado para cobrar.', ex: 'Vínculo entre sujeito ativo (Estado) y sujeito passivo (contribuinte).' },
+    { k: 'Lançamento', tag: 'A formalização', d: 'Procedimiento administrativo que <b>verifica</b> el fato gerador, <b>identifica</b> al deudor, <b>calcula</b> el monto y <b>aplica</b> la penalidad si la hay (art. 142).', ex: '4 modalidades: ofício, declaração, homologação y arbitramento.' },
+    { k: 'Crédito tributário', tag: 'A exigibilidade', d: 'El lançamento le da vida. La obligación se vuelve un valor <b>líquido, certo e exigível</b>. El Estado puede cobrar formalmente.', ex: 'Para el profesor: es cuando se emite la guía o el carnê.' },
+    { k: 'Extinção', tag: 'O fim', d: 'El fin del ciclo: el deudor cumple (generalmente pagando) u ocurre otro hecho jurídico que elimina la deuda.', ex: 'Pago, compensación, prescripción, remisión…' }
+  ],
+  classify: {
+    especies: {
+      cats: [['imp', 'Imposto'], ['taxa', 'Taxa'], ['cm', 'Contrib. de melhoria']],
+      items: [
+        ['Ser propietario de un inmueble urbano (IPTU)', 'imp', 'Situación tuya, sin actuación estatal específica.'],
+        ['Recibir renta (IR)', 'imp', 'El fato gerador es una situación del contribuinte.'],
+        ['La vigilância sanitária inspecciona un restaurante para darle el alvará', 'taxa', 'Fiscalizar es poder de polícia.'],
+        ['Alvará de localização de la empresa, pagado cada año', 'taxa', 'Poder de polícia: el municipio fiscaliza dónde funciona la empresa.'],
+        ['Coleta de lixo domiciliar', 'taxa', 'Servicio público específico y divisible.'],
+        ['Emisión de pasaporte por la União', 'taxa', 'Servicio público específico prestado a ti.'],
+        ['La prefeitura pavimenta tu calle y tu casa se valoriza', 'cm', 'Obra pública con valorización inmobiliaria.'],
+        ['El municipio construye un parque y los inmuebles vecinos se valorizan', 'cm', 'Obra pública con valorización.'],
+        ['Ser propietario de un vehículo el 1º de enero (IPVA)', 'imp', 'Situación tuya: no hay servicio estatal a cambio.'],
+        ['Prestar un servicio de consultoría (ISS)', 'imp', 'Situación del contribuinte; el Estado no te presta nada.']
+      ]
+    },
+    lancamento: {
+      cats: [['of', 'De ofício'], ['dec', 'Declaração'], ['hom', 'Homologação'], ['arb', 'Arbitramento']],
+      items: [
+        ['IPVA', 'of', 'El Estado ya tiene los datos del vehículo.'],
+        ['IPTU', 'of', 'La prefeitura ya conoce el inmueble.'],
+        ['Auto de infração tras una fiscalización', 'of', 'Lo hace la autoridad, sin participación previa del contribuinte.'],
+        ['ITBI', 'dec', 'Informas la compra y el valor; la prefeitura calcula.'],
+        ['Imposto de Importação (declaración en la aduana)', 'dec', 'Ejemplo del material: tú declaras, la autoridad calcula.'],
+        ['ITCMD', 'dec', 'El profesor lo citó como declaração: informas la donación o herencia.'],
+        ['Imposto de Renda', 'hom', 'Calculas, declaras y pagas; el fisco revisa después.'],
+        ['ICMS', 'hom', 'La empresa apura y paga sola.'],
+        ['ISS de una empresa de servicios', 'hom', 'Autolançamento.'],
+        ['CBS e IBS (reforma)', 'hom', 'Funcionarán por homologação.'],
+        ['La empresa presenta libros contables falsos y el fisco estima la renta', 'arb', 'Datos que no merecen fe: el fisco arbitra.'],
+        ['La declaración es omisa y el fisco estima el valor', 'arb', 'Técnica supletiva por datos faltantes.']
+      ]
+    },
+    vida: {
+      cats: [['s', 'Suspende'], ['e', 'Extingue'], ['x', 'Excluye']],
+      items: [
+        ['Moratória', 's', 'MO de MODERCOPA.'],
+        ['Depósito integral del monto en juicio', 's', 'DE de MODERCOPA.'],
+        ['Reclamações e recursos administrativos', 's', 'R de MODERCOPA.'],
+        ['Concessão de medida liminar', 's', 'CO de MODERCOPA.'],
+        ['Parcelamento', 's', 'PA de MODERCOPA.'],
+        ['Pagamento', 'e', 'La forma más común de extinción.'],
+        ['Compensação', 'e', 'Acerto de contas: fisco y contribuinte se deben mutuamente.'],
+        ['Transação', 'e', 'Acuerdo con concesiones mutuas.'],
+        ['Remissão', 'e', 'Perdón de la deuda.'],
+        ['Prescrição', 'e', 'Pasaron 5 años sin cobrar en juicio.'],
+        ['Decadência', 'e', 'Pasaron 5 años sin lançar.'],
+        ['Dação em pagamento de um imóvel', 'e', 'Pagas entregando un inmueble.'],
+        ['Isenção', 'x', 'Exclusão: la ley dispensa el pago.'],
+        ['Anistia', 'x', 'Exclusão: perdona solo las multas.']
+      ]
+    },
+    imunidade: {
+      cats: [['imu', 'Imunidade'], ['ise', 'Isenção']],
+      items: [
+        ['Un templo no paga IPTU sobre el inmueble del culto', 'imu', 'Art. 150, VI, b CF.'],
+        ['Libros y el papel para imprimirlos no pagan impuestos', 'imu', 'Imunidade cultural, art. 150, VI, d.'],
+        ['La União no paga IPTU por un edificio suyo al municipio', 'imu', 'Imunidade recíproca.'],
+        ['Un partido político no paga impuestos sobre su renta', 'imu', 'Imunidade condicionada.'],
+        ['Una persona con enfermedad grave listada en ley no paga IR', 'ise', 'Lo dispensa una ley: isenção.'],
+        ['Un taxista no paga IPVA', 'ise', 'Ley estadual que dispensa el pago.'],
+        ['Un sindicato de trabajadores no paga impuestos sobre su patrimonio', 'imu', 'Imunidade condicionada.'],
+        ['Ley municipal dispensa el IPTU a jubilados de baja renta', 'ise', 'Viene de una ley común.'],
+        ['Un lector de e-books (Kindle) no paga impuestos', 'imu', 'SV 57: la imunidade cultural alcanza e-readers.']
+      ]
+    }
+  }
+};
+
+</script>
+<script>
+/* Banco de preguntas. Enunciados en portugués (como en la prueba real); explicación en español.
+   a[0] es siempre la correcta; las opciones se mezclan en cada intento.
+   prof: true marca preguntas donde la respuesta sigue el material/la clase del profesor. */
+(function () {
+  var Q = [];
+  function q(id, t, text, a, exp, prof) { Q.push({ id: id, t: t, q: text, a: a, exp: exp, prof: !!prof }); }
+
+  /* ---------- Fundamentos ---------- */
+  q('f1', 'fund', 'O Direito Tributário é ramo do:',
+    ['Direito Público, regulando a relação jurídica entre fisco e contribuinte.', 'Direito Privado, regulando contratos livremente negociados entre particulares.', 'Direito Civil, por tratar de obrigações entre pessoas físicas.', 'Direito Empresarial, por tratar apenas de empresas.'],
+    'Es Direito Público: el Estado actúa con supremacía y regula la relación fisco–contribuinte. Su objeto central son los tributos: creación, cobranza y control.');
+  q('f2', 'fund', 'As receitas obtidas pelo Estado por meio da imposição de tributos sobre o patrimônio dos particulares são chamadas de:',
+    ['Receitas derivadas.', 'Receitas originárias.', 'Receitas contratuais.', 'Receitas voluntárias.'],
+    'Derivadas: derivan del patrimonio del particular, por imposición del Estado. Los tributos son la principal receita derivada.');
+  q('f3', 'fund', 'O aluguel de um imóvel público pago a um município é exemplo de:',
+    ['Receita originária.', 'Receita derivada.', 'Taxa de serviço público.', 'Contribuição de melhoria.'],
+    'Cuando el Estado explota su propio patrimonio (alquila un inmueble suyo), la receita es originária.');
+  q('f4', 'fund', 'A chamada "balança de dupla função" do Direito Tributário significa que ele:',
+    ['Autoriza o Estado a instituir e cobrar tributos e, ao mesmo tempo, impõe limites a esse poder.', 'Divide a arrecadação igualmente entre União e Estados.', 'Equilibra receitas e despesas do orçamento anual.', 'Garante que o contribuinte pague sempre o menor valor possível.'],
+    'Dos funciones a la vez: poder del Estado (competencia para cobrar) y límite al poder (principios que protegen al contribuinte). El profesor: "vai que cai uma pergunta dessa".', true);
+  q('f5', 'fund', 'A "trilogia" que compõe o objeto do Direito Tributário é formada por:',
+    ['Instituição, arrecadação e fiscalização.', 'Lançamento, crédito e extinção.', 'Imposto, taxa e contribuição de melhoria.', 'Legalidade, anterioridade e isonomia.'],
+    'Trilogia: instituir (crear por ley), arrecadar (recaudar) y fiscalizar (controlar).');
+  q('f6', 'fund', 'Em matéria tributária, a Constituição Federal traz, entre outros pontos:',
+    ['Princípios limitadores, competências tributárias, imunidades e repartição de receitas.', 'As guias de pagamento de cada tributo.', 'O valor exato das alíquotas de todos os municípios.', 'Os modelos de nota fiscal eletrônica.'],
+    'La CF trae principios, competencias, imunidades y repartição de receitas. El profesor llamó a esto "perguntinha boa".', true);
+  q('f7', 'fund', 'Assinale a alternativa INCORRETA sobre o Direito Tributário:',
+    ['Por ser ramo do Direito Privado, permite que contribuinte e Estado negociem livremente o valor do tributo.', 'Regula a relação jurídica entre fisco e contribuinte.', 'Tem como objeto central a criação, a cobrança e o controle dos tributos.', 'Protege o contribuinte contra cobranças arbitrárias.'],
+    'La incorrecta es la que lo llama Direito Privado y habla de negociar: es Direito Público y el tributo es compulsório, no se negocia.');
+  q('f8', 'fund', 'Qual norma está no topo da hierarquia das fontes do Direito Tributário?',
+    ['A Constituição Federal.', 'O Código Tributário Nacional.', 'Os decretos do Poder Executivo.', 'As instruções normativas da Receita Federal.'],
+    'La CF está en la cima; ninguna ley tributaria puede contrariarla.');
+  q('f9', 'fund', 'O Código Tributário Nacional (Lei nº 5.172/1966) tem status de:',
+    ['Lei complementar, que estabelece normas gerais de Direito Tributário.', 'Lei ordinária municipal.', 'Decreto do Poder Executivo.', 'Emenda constitucional.'],
+    'El CTN funciona como lei complementar: normas generales para todo el sistema.');
+  q('f10', 'fund', 'São contribuintes, conforme visto em aula:',
+    ['Pessoas físicas, MEI e sociedades, como a sociedade anônima.', 'Apenas as pessoas jurídicas com fins lucrativos.', 'Apenas as pessoas físicas assalariadas.', 'Somente a União, os Estados e os Municípios.'],
+    'En clase: persona física, MEI, S.A., sociedad de hecho, sociedad en cuenta de participación… todos son contribuyentes. El ente público está del otro lado.', true);
+
+  /* ---------- Tributo × multa ---------- */
+  q('t1', 'trib', 'Segundo o art. 3º do CTN, tributo é toda prestação pecuniária compulsória, em moeda ou cujo valor nela se possa exprimir, que:',
+    ['não constitua sanção de ato ilícito, instituída em lei e cobrada mediante atividade administrativa plenamente vinculada.', 'constitua sanção de ato ilícito, instituída em lei e cobrada mediante atividade vinculada.', 'seja instituída por decreto e cobrada mediante atividade administrativa discricionária.', 'decorra de contrato firmado entre o contribuinte e o Estado.'],
+    'Es el texto del art. 3º. Ojo con las trampas: "constitua sanção" (eso es multa), "decreto" (viola legalidade) y "discricionária" (debe ser vinculada).');
+  q('t2', 'trib', 'Quanto à finalidade, a principal diferença entre tributo e multa é:',
+    ['O tributo tem finalidade arrecadatória; a multa tem finalidade punitiva.', 'O tributo tem finalidade punitiva; a multa tem finalidade arrecadatória.', 'Ambos têm finalidade punitiva.', 'Ambos têm finalidade arrecadatória e, por isso, são sinônimos.'],
+    'La pegadinha que marcó el profesor: la finalidad. Tributo recauda; multa castiga.', true);
+  q('t3', 'trib', 'Pagar IPTU por ser proprietário de imóvel urbano e pagar multa por atraso no pagamento de um tributo são, respectivamente:',
+    ['Tributo e sanção por ato ilícito.', 'Sanção por ato ilícito e tributo.', 'Dois tributos.', 'Duas sanções por ato ilícito.'],
+    'Son los dos ejemplos del slide del profesor: IPTU = tributo (fato gerador lícito); multa por atraso = sanción.', true);
+  q('t4', 'trib', 'Segundo o material da disciplina, o tributo nasce de:',
+    ['Um fato gerador lícito previsto em lei.', 'Um ato ilícito praticado pelo contribuinte.', 'Um contrato entre o contribuinte e o Estado.', 'Uma decisão discricionária do fiscal.'],
+    'El slide "Tributo não é multa": el tributo nace de un fato gerador lícito; la multa nace del descumprimento de una obligación.', true);
+  q('t5', 'trib', 'A expressão "compulsória", na definição de tributo, significa que:',
+    ['O pagamento é obrigatório por força de lei, independentemente da vontade do contribuinte.', 'O contribuinte pode escolher se deseja pagar.', 'O tributo só é devido se o contribuinte concordar com o valor.', 'O pagamento depende de acordo prévio com a autoridade fiscal.'],
+    'Compulsória = obligatoria. A diferencia de un contrato, no depende de tu voluntad.');
+  q('t6', 'trib', '"Cobrada mediante atividade administrativa plenamente vinculada" significa que:',
+    ['O fiscal não pode escolher se cobra ou não o tributo; deve aplicar a lei.', 'O fiscal pode negociar o valor com o contribuinte.', 'O fiscal decide por conveniência e oportunidade.', 'A cobrança depende de autorização judicial prévia.'],
+    'Vinculada = sin discrecionalidad. El fiscal aplica la ley; no negocia ni elige.');
+  q('t7', 'trib', 'A multa tributária nasce:',
+    ['Do descumprimento de uma obrigação, sendo sanção por ato ilícito.', 'De um fato gerador lícito.', 'Da vontade do contribuinte.', 'Da valorização de imóvel por obra pública.'],
+    'La multa nace del incumplimiento: no pagar en plazo, no entregar una declaración, etc.');
+  q('t8', 'trib', '"Prestação pecuniária" significa que o tributo:',
+    ['É pago em dinheiro, ou em valor que nele se possa exprimir.', 'É pago com prestação de serviços ao Estado.', 'É pago apenas com bens imóveis.', 'Pode ser pago com trabalho voluntário.'],
+    'Pecuniária = en dinero. Por eso no se paga con trabajo.');
+  q('t9', 'trib', 'Assinale a alternativa INCORRETA:',
+    ['A multa é uma espécie de tributo, pois também é paga ao Estado.', 'Tributo e multa têm naturezas jurídicas distintas.', 'A multa é sanção por ato ilícito.', 'O tributo deve ser instituído em lei.'],
+    'La incorrecta: la multa NO es tributo. Ambas se pagan al Estado, pero la naturaleza es distinta.');
+  q('t10', 'trib', 'A natureza jurídica específica do tributo é determinada pelo:',
+    ['Fato gerador da respectiva obrigação.', 'Nome dado pelo legislador.', 'Destino dado ao valor arrecadado.', 'Valor da alíquota aplicada.'],
+    'Art. 4º CTN: lo decide el fato gerador; el nombre y el destino del dinero no importan.');
+  q('t11', 'trib', 'Um tributo instituído por simples decreto do prefeito violaria qual elemento do art. 3º do CTN?',
+    ['"Instituída em lei".', '"Prestação pecuniária".', '"Em moeda".', '"Compulsória".'],
+    'Sin ley no hay tributo: "instituída em lei" = principio de legalidade.');
+
+  /* ---------- Espécies ---------- */
+  q('e1', 'esp', 'As três espécies tributárias previstas no art. 5º do CTN são:',
+    ['Impostos, taxas e contribuições de melhoria.', 'Impostos, multas e taxas.', 'Taxas, tarifas e preços públicos.', 'Impostos, contribuições sociais e empréstimos compulsórios.'],
+    'Art. 5º CTN: impostos, taxas y contribuições de melhoria. Las tres que el profesor dijo "com certeza vão cair".', true);
+  q('e2', 'esp', 'Imposto é o tributo:',
+    ['Cuja obrigação tem por fato gerador situação independente de qualquer atividade estatal específica relativa ao contribuinte.', 'Vinculado ao exercício do poder de polícia.', 'Vinculado à valorização de imóvel por obra pública.', 'Cobrado somente quando o Estado presta um serviço específico ao contribuinte.'],
+    'Art. 16 CTN: imposto es no vinculado. El Estado no tiene que hacer nada específico para ti.');
+  q('e3', 'esp', 'A taxa pode ter como fato gerador:',
+    ['O exercício regular do poder de polícia ou a utilização de serviço público específico e divisível.', 'A propriedade de imóvel urbano.', 'A obtenção de renda.', 'A valorização imobiliária decorrente de obra pública.'],
+    'Art. 77 CTN: dos hipótesis de taxa, poder de polícia o servicio específico y divisible.');
+  q('e4', 'esp', 'A contribuição de melhoria é cobrada em razão de:',
+    ['Obra pública que gera valorização do imóvel do contribuinte.', 'Serviço de coleta de lixo.', 'Fiscalização sanitária.', 'Propriedade de veículo automotor.'],
+    'Art. 81 CTN: obra pública + valorización inmobiliaria.');
+  q('e5', 'esp', 'Os limites da contribuição de melhoria são:',
+    ['Limite total: o custo da obra; limite individual: a valorização de cada imóvel.', 'Limite total: o valor venal de todos os imóveis da cidade.', 'Não há limites, pois é tributo não vinculado.', 'Limite total: 10% do orçamento municipal.'],
+    'Duplo limite: el total no supera el costo de la obra; cada propietario no paga más que lo que se valorizó su inmueble.');
+  q('e6', 'esp', 'Um restaurante paga um valor à Prefeitura para obter alvará de funcionamento, após vistoria da vigilância sanitária. Trata-se de:',
+    ['Taxa pelo exercício do poder de polícia.', 'Imposto sobre serviços.', 'Contribuição de melhoria.', 'Multa administrativa.'],
+    'Fiscalizar y autorizar es poder de polícia: genera taxa. Es el caso del slide del profesor.', true);
+  q('e7', 'esp', 'O IPTU é exemplo de:',
+    ['Imposto, pois o fato gerador é situação do próprio contribuinte (ser proprietário).', 'Taxa, pois o município presta serviços urbanos.', 'Contribuição de melhoria, pois valoriza o imóvel.', 'Multa, pois é cobrado anualmente.'],
+    'Pagas IPTU por ser propietario, sin contraprestación específica: imposto.');
+  q('e8', 'esp', 'A taxa de coleta de lixo domiciliar é exemplo de taxa:',
+    ['Pela utilização de serviço público específico e divisível.', 'Pelo exercício do poder de polícia.', 'Não vinculada.', 'De contribuição de melhoria.'],
+    'Servicio identificable y medible por usuario: específico y divisible.');
+  q('e9', 'esp', 'Sobre a base de cálculo da taxa, é correto afirmar que:',
+    ['Não pode ser idêntica à base de cálculo própria de imposto.', 'Deve ser sempre igual à do imposto correspondente.', 'Deve ser o valor venal do imóvel.', 'É livre, definida pelo fiscal.'],
+    'La taxa no puede tener la misma base de cálculo que un imposto (requisito del slide; SV 29 admite usar algunos elementos, nunca la identidad total).');
+  q('e10', 'esp', 'Tributos vinculados são aqueles que:',
+    ['Dependem de uma atuação estatal específica relativa ao contribuinte, como taxas e contribuições de melhoria.', 'Dependem apenas de uma situação do contribuinte, como os impostos.', 'Têm a receita obrigatoriamente destinada a um fundo.', 'Só podem ser criados por lei complementar.'],
+    'Vinculado = depende de que el Estado actúe (fiscalizar, servir, hacer una obra). Imposto es no vinculado.');
+  q('e11', 'esp', 'Uma prefeitura pavimenta uma rua de terra e os imóveis da rua se valorizam. Ela pode cobrar dos proprietários beneficiados:',
+    ['Contribuição de melhoria.', 'Taxa pelo poder de polícia.', 'IPTU adicional criado por decreto.', 'Imposto residual.'],
+    'Es el ejemplo exacto del slide: pavimentación + valorización = contribuição de melhoria.', true);
+  q('e12', 'esp', 'Quanto à função, o Imposto de Importação tem forte caráter:',
+    ['Extrafiscal, pois intervém na economia e protege a indústria nacional.', 'Exclusivamente fiscal.', 'Vinculado.', 'Punitivo.'],
+    'Extrafiscal: además de recaudar, sirve para intervenir en la economía.');
+  q('e13', 'esp', 'Assinale a alternativa INCORRETA sobre as espécies tributárias:',
+    ['A taxa é tributo não vinculado, cobrada sem qualquer atuação do Estado.', 'O imposto independe de atividade estatal específica.', 'A contribuição de melhoria pressupõe obra pública com valorização.', 'A taxa pode decorrer do poder de polícia.'],
+    'La incorrecta: la taxa es VINCULADA; exige que el Estado fiscalice o preste un servicio.');
+  q('e14', 'esp', 'No serviço público que justifica a cobrança de taxa, "divisível" significa:',
+    ['Que pode ser mensurado por usuário.', 'Que é dividido entre União e Estados.', 'Que pode ser pago em parcelas.', 'Que beneficia toda a coletividade de forma indistinta.'],
+    'Divisible = medible por usuario; específico = identificable.');
+
+  /* ---------- Princípios e competência ---------- */
+  q('p1', 'princ', 'Um prefeito anuncia que, a partir de amanhã, todos pagarão um novo tributo, criado por decreto. Essa cobrança viola principalmente o princípio da:',
+    ['Legalidade.', 'Capacidade contributiva.', 'Isonomia.', 'Imunidade recíproca.'],
+    'Ejemplo del profesor: sin ley aprobada por la Câmara, sancionada y publicada, no hay tributo.', true);
+  q('p2', 'princ', 'O princípio da irretroatividade determina que:',
+    ['A lei tributária não pode cobrar tributos sobre fatos ocorridos antes do início de sua vigência.', 'A lei tributária nunca pode ser alterada.', 'O tributo só pode ser cobrado 90 dias após a publicação da lei.', 'Todos devem pagar o mesmo valor de tributo.'],
+    'Irretroatividade: la ley no vuelve al pasado para cobrar.');
+  q('p3', 'princ', 'Pela anterioridade anual, um tributo criado ou aumentado por lei publicada em 2026:',
+    ['Só pode ser cobrado a partir do exercício seguinte, observada também a noventena.', 'Pode ser cobrado no dia seguinte à publicação.', 'Só pode ser cobrado após 5 anos.', 'Pode ser cobrado no mesmo exercício se o prefeito autorizar.'],
+    'Anual: no se cobra en el mismo año de publicación. Además debe respetar los 90 días.');
+  q('p4', 'princ', 'São exceções às anterioridades anual e nonagesimal, podendo ser cobrados de imediato:',
+    ['II, IE e IOF.', 'IPTU, IPVA e ITBI.', 'IR, ICMS e ISS.', 'Taxas e contribuições de melhoria.'],
+    'II, IE e IOF regulan la economía y pueden alterarse de inmediato (lo dice la apostila Guia Prático).');
+  q('p5', 'princ', 'A anterioridade nonagesimal (noventena) exige:',
+    ['Prazo mínimo de 90 dias entre a publicação da lei e a cobrança do tributo.', 'Prazo mínimo de 45 dias.', 'Prazo mínimo de 1 ano.', 'Prazo mínimo de 5 anos.'],
+    'Noventena = 90 días.');
+  q('p6', 'princ', 'O princípio da isonomia tributária proíbe:',
+    ['Tratamento desigual entre contribuintes que se encontrem em situação equivalente.', 'A cobrança de impostos progressivos.', 'Qualquer concessão de isenção.', 'A cobrança de tributos estaduais.'],
+    'Isonomia: misma situación, mismo trato. No se puede cobrar distinto a A y a B solo por quiénes son.');
+  q('p7', 'princ', 'A tabela progressiva do Imposto de Renda, em que quem ganha mais paga alíquota maior, é aplicação direta do princípio da:',
+    ['Capacidade contributiva.', 'Anterioridade.', 'Legalidade estrita.', 'Irretroatividade.'],
+    'En el material: capacidade contributiva / progressividade (art. 145, §1º). El profesor la explicó como forma de concretar la isonomia: si "capacidade contributiva" no está entre las opciones, piensa en isonomia.', true);
+  q('p8', 'princ', 'Em aula, a cobrança por faixas de renda (5%, 7%, 10%...) foi apresentada como forma de o Estado concretizar a:',
+    ['Isonomia, tratando de forma diferente quem tem capacidade econômica diferente.', 'Anterioridade nonagesimal.', 'Irretroatividade.', 'Imunidade.'],
+    'Así lo enseñó el profesor: las faixas son la forma que encontró el Estado de trabajar la isonomía. Técnicamente también es capacidade contributiva.', true);
+  q('p9', 'princ', 'O princípio do não confisco significa que:',
+    ['O tributo não pode ser tão elevado a ponto de destruir o patrimônio ou inviabilizar a atividade.', 'O Estado nunca pode tomar bens do contribuinte.', 'Empresas não podem ser tributadas.', 'Multas são proibidas.'],
+    'No confisco: el tributo no puede destruir el patrimonio ni inviabilizar el negocio.');
+  q('p10', 'princ', 'IPTU, IPVA e Imposto de Renda são de competência, respectivamente:',
+    ['Municipal, estadual e federal.', 'Estadual, municipal e federal.', 'Federal, estadual e municipal.', 'Municipal, federal e estadual.'],
+    'IPTU = Município; IPVA = Estado; IR = União.');
+  q('p11', 'princ', 'A competência residual, isto é, para criar novos impostos não previstos na Constituição, pertence:',
+    ['À União, mediante lei complementar.', 'Aos Municípios, mediante lei ordinária.', 'Aos Estados, mediante decreto.', 'A qualquer ente federativo.'],
+    'Residual: solo la União, por lei complementar, sin repetir base de cálculo de impuestos existentes.');
+  q('p12', 'princ', 'O instrumento normativo mais comum para criar ou majorar tributos é a:',
+    ['Lei ordinária.', 'Instrução normativa.', 'Portaria ministerial.', 'Resolução administrativa.'],
+    'Lei ordinária, por mayoría simple. El profesor: "a ordinária é a lei que cria o tributo".', true);
+  q('p13', 'princ', 'Taxas e contribuições de melhoria podem ser instituídas:',
+    ['Por todos os entes (União, Estados, DF e Municípios): competência comum.', 'Somente pela União.', 'Somente pelos Municípios.', 'Somente pelos Estados.'],
+    'Competencia comum: cada ente, dentro de sus atribuciones.');
+  q('p14', 'princ', 'Conforme a decisão do STF apresentada em aula (caso de Chapecó), a progressividade do IPTU deve considerar:',
+    ['O valor do imóvel, e não o seu tamanho (área).', 'A área construída do imóvel.', 'O número de moradores.', 'A renda declarada do proprietário.'],
+    'Lo que mostró el profesor: el STF reafirmó que la progresividad del IPTU sigue el valor del inmueble, no su área.', true);
+  q('p15', 'princ', 'A Medida Provisória, em matéria tributária:',
+    ['Tem força de lei imediata, mas precisa ser convertida em lei pelo Congresso.', 'É editada pelo Congresso Nacional.', 'Nunca pode tratar de matéria tributária.', 'Tem status de emenda constitucional.'],
+    'MP: la edita el Ejecutivo, vale de inmediato y el Congreso debe convertirla en ley.');
+  q('p16', 'princ', 'Competência privativa significa que:',
+    ['Apenas um ente pode instituir determinado imposto, como o Município com o IPTU.', 'Todos os entes podem instituir o mesmo imposto.', 'A União pode criar impostos novos.', 'O DF cobra impostos estaduais e municipais.'],
+    'Privativa (el profesor dijo "exclusiva"): solo un ente. Las otras opciones describen comum, residual y cumulativa.', true);
+
+  /* ---------- Obrigação ---------- */
+  q('o1', 'obr', 'A obrigação tributária principal consiste em:',
+    ['Pagar tributo ou penalidade pecuniária (multa).', 'Emitir nota fiscal.', 'Entregar declarações ao fisco.', 'Permitir a fiscalização.'],
+    'Principal = dar dinero (tributo o multa). Las otras son acessórias.');
+  q('o2', 'obr', 'Emitir nota fiscal e entregar o SPED são exemplos de:',
+    ['Obrigações acessórias.', 'Obrigações principais.', 'Crédito tributário.', 'Lançamento de ofício.'],
+    'Acessória = la burocracia en interés de la fiscalización.');
+  q('o3', 'obr', 'O descumprimento de uma obrigação acessória:',
+    ['Gera multa, que se converte em obrigação principal.', 'Não gera nenhuma consequência.', 'Extingue o crédito tributário.', 'Gera imunidade.'],
+    'Regla de oro (art. 113, §3º): acessória incumplida → multa → obligación principal.');
+  q('o4', 'obr', 'O sujeito ativo da obrigação tributária é:',
+    ['O ente público credor (União, Estado, DF ou Município).', 'O contribuinte.', 'O contador da empresa.', 'O banco que recebe o pagamento.'],
+    'Activo = el que cobra. "O contribuinte sempre será o sujeito passivo; o ente público é o ativo."', true);
+  q('o5', 'obr', 'O sujeito passivo que tem relação pessoal e direta com o fato gerador é chamado de:',
+    ['Contribuinte.', 'Responsável.', 'Sujeito ativo.', 'Substituto processual.'],
+    'Contribuinte: practicó el fato gerador. Responsável: la ley lo obliga sin haberlo practicado.');
+  q('o6', 'obr', 'Na retenção do Imposto de Renda na folha de pagamento, a empresa que desconta e repassa o imposto do salário do funcionário é:',
+    ['Responsável tributária.', 'Contribuinte do imposto.', 'Sujeito ativo.', 'Isenta.'],
+    'El empleado es el contribuinte (ganó el dinero); la empresa es responsável por retener y repasar.');
+  q('o7', 'obr', 'Hipótese de incidência e fato gerador diferem porque:',
+    ['A hipótese é a previsão abstrata na lei; o fato gerador é a sua ocorrência concreta no mundo real.', 'A hipótese é a ocorrência concreta; o fato gerador é a previsão na lei.', 'São expressões sem qualquer diferença.', 'A hipótese está em decreto; o fato gerador, na Constituição.'],
+    'HI = lo que dice la ley ("auferir renda"). FG = cuando pasa de verdad.');
+  q('o8', 'obr', 'Segundo o material, o fato gerador do IPTU ocorre, em regra:',
+    ['Em 1º de janeiro de cada ano.', 'Na data do pagamento do carnê.', 'Na data da compra do imóvel.', 'Em 31 de dezembro de cada ano.'],
+    'Generalmente el 1º de enero. Si compraste el 02/01, el contribuinte de ese año era el dueño anterior (aunque el comprador puede responder por la deuda).');
+  q('o9', 'obr', 'Ser proprietário de veículo em 1º de janeiro, prestar serviço de consultoria e auferir renda são, respectivamente, fatos geradores de:',
+    ['IPVA, ISS e IR.', 'IPTU, ICMS e IR.', 'IPVA, IR e ISS.', 'ITBI, ISS e IOF.'],
+    'Ejemplos de la apostila Guia Prático, sección 6.2.');
+  q('o10', 'obr', 'Sobre a obrigação acessória, é correto afirmar que:',
+    ['Existe mesmo que a empresa seja isenta do tributo principal.', 'Só existe se houver tributo a pagar.', 'É sempre paga em dinheiro.', 'Substitui a obrigação principal.'],
+    'La acessória es independiente: una empresa isenta igual emite nota y entrega declaraciones.');
+  q('o11', 'obr', 'A obrigação tributária nasce:',
+    ['No exato momento em que ocorre o fato gerador.', 'Quando o fisco emite a guia de pagamento.', 'Quando o contribuinte paga o tributo.', 'Cinco anos após o fato gerador.'],
+    'Nace automáticamente con el fato gerador. La guía es el crédito; el pago es la extinción.');
+
+  /* ---------- Ciclo de vida ---------- */
+  q('c1', 'ciclo', 'Assinale a ordem correta do ciclo de vida do crédito tributário:',
+    ['Hipótese de incidência → fato gerador → obrigação tributária → lançamento → crédito tributário → extinção.', 'Fato gerador → hipótese de incidência → lançamento → obrigação → crédito → extinção.', 'Hipótese de incidência → lançamento → fato gerador → crédito → obrigação → extinção.', 'Obrigação → fato gerador → crédito → lançamento → hipótese de incidência → extinção.'],
+    'Es la línea de tiempo del material del profesor: la ley prevé, ocurre el hecho, nace la obligación, se formaliza, se exige, termina.', true);
+  q('c2', 'ciclo', 'A obrigação tributária nasce:',
+    ['Automaticamente, com a ocorrência do fato gerador.', 'Com o lançamento.', 'Com o pagamento.', 'Com a inscrição em dívida ativa.'],
+    'Vínculo automático con el fato gerador.');
+  q('c3', 'ciclo', 'O crédito tributário é a obrigação tributária tornada:',
+    ['Líquida, certa e exigível.', 'Ilíquida e incerta.', 'Facultativa.', 'Prescrita.'],
+    'Frase clave del material: "valor líquido, certo e exigível. O Estado pode cobrar."', true);
+  q('c4', 'ciclo', 'O lançamento é o procedimento administrativo que:',
+    ['Verifica a ocorrência do fato gerador, identifica o devedor, calcula o montante devido e aplica a penalidade, se houver.', 'Extingue o crédito pelo pagamento.', 'Cria o tributo por meio de lei.', 'Julga os recursos do contribuinte.'],
+    'Art. 142 CTN y el material del profesor: verificar, identificar, calcular, aplicar penalidad.', true);
+  q('c5', 'ciclo', 'Na fase da obrigação tributária, antes do lançamento:',
+    ['O contribuinte já deve, mas o Estado ainda não tem um valor formalizado para cobrar.', 'Não existe nenhum vínculo entre Estado e contribuinte.', 'O Estado já pode ajuizar a execução fiscal.', 'A dívida está extinta.'],
+    'Frase del material: vínculo automático, pero sin valor formalizado.', true);
+  q('c6', 'ciclo', 'O que "dá vida" ao crédito tributário?',
+    ['O lançamento.', 'O fato gerador.', 'A hipótese de incidência.', 'A extinção.'],
+    '"O Lançamento dá vida ao Crédito Tributário." El fato gerador da vida a la obligación, no al crédito.', true);
+  q('c7', 'ciclo', 'Em aula, a emissão da guia (carnê) de pagamento foi associada a qual etapa?',
+    ['Crédito tributário: o Estado já pode cobrar.', 'Hipótese de incidência.', 'Fato gerador.', 'Imunidade.'],
+    'Para el profesor: lançamento = registro y cálculo; emisión de la guía = crédito tributário.', true);
+  q('c8', 'ciclo', 'A extinção do crédito tributário ocorre, na maioria das vezes, pelo:',
+    ['Pagamento.', 'Lançamento.', 'Parcelamento.', 'Depósito judicial.'],
+    'La forma más común es el pago. Parcelamiento y depósito suspenden, no extinguen.');
+  q('c9', 'ciclo', 'Uma loja vende uma mercadoria ao cliente. Nesse momento ocorre:',
+    ['O fato gerador do ICMS, nascendo a obrigação tributária.', 'A extinção do crédito tributário.', 'O lançamento de ofício do IPTU.', 'A imunidade tributária.'],
+    'La venta (salida de la mercadería) es el fato gerador del ICMS: nace la obligación.');
+  q('c10', 'ciclo', 'Sem o crédito tributário constituído, o Estado:',
+    ['Não pode realizar formalmente a cobrança, como a execução fiscal.', 'Pode penhorar bens imediatamente.', 'Pode cobrar o tributo em dobro.', 'Perde a competência tributária.'],
+    'Sin crédito constituido no hay execução fiscal: primero hay que formalizar.');
+  q('c11', 'ciclo', 'Assinale a alternativa INCORRETA sobre o ciclo do crédito:',
+    ['O lançamento cria a obrigação tributária.', 'A obrigação nasce com o fato gerador.', 'O lançamento constitui o crédito tributário.', 'O crédito tributário é exigível.'],
+    'Incorrecta: el lançamento NO crea la obligación (esa nace con el fato gerador); constituye el crédito.');
+  q('c12', 'ciclo', 'A extinção, última etapa do ciclo, ocorre quando:',
+    ['O devedor cumpre a obrigação, geralmente pelo pagamento, ou ocorre fenômeno jurídico que elimina a dívida.', 'O fisco emite a guia de pagamento.', 'O contribuinte apresenta recurso administrativo.', 'A lei descreve a hipótese de incidência.'],
+    'Frase del material: cumplimiento (pago) u otro fenómeno jurídico que elimina la deuda.', true);
+
+  /* ---------- Lançamento ---------- */
+  q('l1', 'lanc', 'Segundo o material da disciplina, as modalidades de lançamento são:',
+    ['De ofício, por declaração, por homologação e por arbitramento.', 'De ofício, por compensação, por remissão e por transação.', 'Por homologação, por moratória, por anistia e por isenção.', 'Direto, indireto, judicial e extrajudicial.'],
+    'El profesor enseña 4 y dijo: "isso vai cair, bota em certeza". Técnicamente el CTN tiene 3 y el arbitramento es técnica, pero en esta prueba son 4.', true);
+  q('l2', 'lanc', 'No lançamento de ofício (direto):',
+    ['A autoridade fiscal faz tudo sozinha, pois já possui os dados, como no IPVA e no IPTU.', 'O contribuinte calcula, declara e paga antecipadamente.', 'O contribuinte informa os dados e o fisco calcula.', 'O fisco estima o valor por falta de documentos.'],
+    'Ofício: el fisco ya tiene los datos y hace todo; tú solo pagas.');
+  q('l3', 'lanc', 'O ITBI é exemplo clássico de lançamento:',
+    ['Por declaração (misto).', 'De ofício.', 'Por homologação.', 'Por arbitramento.'],
+    'Informas a la prefeitura la compra y el valor; ella evalúa, calcula y emite la guía.');
+  q('l4', 'lanc', 'No lançamento por homologação:',
+    ['O contribuinte calcula, declara e paga antecipadamente; o fisco tem prazo de 5 anos para homologar ou cobrar a diferença.', 'O fisco faz todo o cálculo e envia o carnê.', 'O contribuinte informa e o fisco calcula antes do pagamento.', 'O fisco estima o valor porque os documentos são falsos.'],
+    'Homologação: tú haces todo; el fisco revisa después (5 años).');
+  q('l5', 'lanc', 'IR e ICMS são, em regra, lançados por:',
+    ['Homologação.', 'Ofício.', 'Declaração.', 'Arbitramento.'],
+    'Ejemplos del material del profesor: IR e ICMS = homologação.', true);
+  q('l6', 'lanc', 'O lançamento por arbitramento é utilizado quando:',
+    ['As declarações ou documentos do contribuinte são omissos, falhos, não merecem fé ou há fraude.', 'O contribuinte paga em dia.', 'O tributo é imune.', 'Há moratória concedida por lei.'],
+    'Arbitramento: el fisco estima porque los datos fallan.');
+  q('l7', 'lanc', 'No lançamento por homologação, o prazo do fisco para homologar é, em regra, de:',
+    ['5 anos.', '90 dias.', '1 ano.', '10 anos.'],
+    'Regla de 5 años.');
+  q('l8', 'lanc', 'O lançamento por homologação também é chamado de:',
+    ['Autolançamento.', 'Lançamento direto.', 'Lançamento misto.', 'Lançamento arbitrado.'],
+    'Homologação = autolançamento; ofício = direto; declaração = misto.');
+  q('l9', 'lanc', 'O lançamento por declaração também é chamado de:',
+    ['Misto.', 'Autolançamento.', 'Direto.', 'Supletivo.'],
+    'Misto, porque participan contribuinte (informa) y fisco (calcula).');
+  q('l10', 'lanc', 'As novas CBS e IBS da Reforma Tributária funcionarão sob a modalidade de lançamento:',
+    ['Por homologação.', 'De ofício.', 'Por declaração.', 'Por arbitramento.'],
+    'El Manual: CBS e IBS funcionarán integralmente por homologação.');
+  q('l11', 'lanc', 'Se, no lançamento por homologação, o contribuinte calculou o tributo a menor, o fisco:',
+    ['Cobra a diferença com multa, por meio de lançamento de ofício.', 'Nada pode fazer.', 'Devolve o valor pago.', 'Concede imunidade ao contribuinte.'],
+    'Cobra la diferencia con multa (lançamento de ofício suplementar).');
+  q('l12', 'lanc', 'Associe corretamente: IPVA, ITBI e ICMS são lançados, respectivamente:',
+    ['De ofício, por declaração e por homologação.', 'Por declaração, de ofício e por homologação.', 'Por homologação, por declaração e de ofício.', 'De ofício, por homologação e por declaração.'],
+    'IPVA ofício; ITBI declaração; ICMS homologação.', true);
+  q('l13', 'lanc', 'Um contribuinte compra um carro. O Estado, que já possui todos os dados do veículo, calcula o IPVA e emite a guia. Essa modalidade é:',
+    ['De ofício.', 'Por declaração.', 'Por homologação.', 'Por arbitramento.'],
+    'Ejemplo de la clase: el Estado ya tiene los datos y genera la guía.', true);
+  q('l14', 'lanc', 'Assinale a alternativa INCORRETA sobre as modalidades de lançamento:',
+    ['No lançamento de ofício, o contribuinte calcula e paga o tributo antes de qualquer exame do fisco.', 'No lançamento por declaração, o contribuinte presta informações e a autoridade calcula.', 'No arbitramento, o fisco estima o valor quando os documentos são falhos.', 'No lançamento por homologação, o fisco verifica depois o que o contribuinte fez.'],
+    'Incorrecta: eso describe homologação, no ofício.');
+
+  /* ---------- Suspensão / extinção / exclusão ---------- */
+  q('v1', 'vida', 'A sigla MODERCOPA reúne as hipóteses de:',
+    ['Suspensão da exigibilidade do crédito tributário (art. 151 do CTN).', 'Extinção do crédito tributário (art. 156 do CTN).', 'Exclusão do crédito tributário (art. 175 do CTN).', 'Imunidade tributária.'],
+    'MODERCOPA = suspensão: Moratória, Depósito, Reclamações/recursos, Concessão de liminar, Parcelamento.', true);
+  q('v2', 'vida', 'São hipóteses de suspensão da exigibilidade do crédito tributário, EXCETO:',
+    ['Pagamento.', 'Moratória.', 'Depósito do montante integral.', 'Parcelamento.'],
+    'El pago extingue; no suspende.');
+  q('v3', 'vida', 'Na suspensão da exigibilidade:',
+    ['O crédito continua existindo, mas o Estado fica temporariamente impedido de cobrar.', 'O crédito deixa de existir definitivamente.', 'O crédito nunca chega a nascer.', 'O contribuinte passa a ser imune.'],
+    'Suspensão = pausa. El crédito existe.');
+  q('v4', 'vida', 'Decadência é:',
+    ['A perda do prazo do fisco para lançar (constituir) o crédito tributário.', 'A perda do prazo para cobrar judicialmente o crédito já constituído.', 'O perdão legal da dívida.', 'A divisão da dívida em parcelas.'],
+    'Decadência = perder el plazo para LANÇAR (5 años).');
+  q('v5', 'vida', 'Prescrição é:',
+    ['A perda do prazo para cobrar judicialmente o crédito já constituído.', 'A perda do prazo para lançar o crédito.', 'A dispensa legal do pagamento.', 'Um acordo com concessões mútuas.'],
+    'Prescrição = perder el plazo para COBRAR en juicio (5 años).');
+  q('v6', 'vida', 'Remissão é:',
+    ['O perdão legal, total ou parcial, da dívida tributária, sendo forma de extinção.', 'O perdão apenas das multas, sendo forma de exclusão.', 'A divisão da dívida em parcelas.', 'O depósito judicial do valor discutido.'],
+    'Remissão perdona la deuda (extinção). Anistia perdona solo multas (exclusão).');
+  q('v7', 'vida', 'A anistia:',
+    ['Perdoa apenas as multas e infrações, não o tributo, e é hipótese de exclusão.', 'Perdoa o tributo e as multas e extingue o crédito.', 'É hipótese de suspensão.', 'É uma forma de imunidade.'],
+    'Anistia = solo multas; exclusão (art. 175).');
+  q('v8', 'vida', 'Isenção e anistia são hipóteses de:',
+    ['Exclusão do crédito tributário.', 'Extinção do crédito tributário.', 'Suspensão da exigibilidade.', 'Lançamento por arbitramento.'],
+    'Art. 175 CTN: exclusão.');
+  q('v9', 'vida', 'A compensação extingue o crédito tributário quando:',
+    ['O contribuinte deve ao fisco e o fisco também deve ao contribuinte (acerto de contas).', 'O contribuinte divide a dívida em parcelas.', 'O juiz suspende a cobrança.', 'A lei perdoa as multas.'],
+    'Compensação: deudas cruzadas que se "empatan".');
+  q('v10', 'vida', 'A dação em pagamento, como forma de extinção, ocorre quando o contribuinte quita a dívida entregando:',
+    ['Bens imóveis.', 'Quaisquer bens móveis.', 'Serviços ao Estado.', 'Ações de outra empresa.'],
+    'El material: dação em pagamento de bens imóveis.');
+  q('v11', 'vida', 'O parcelamento, enquanto pago em dia, provoca:',
+    ['A suspensão da exigibilidade do crédito.', 'A extinção imediata do crédito.', 'A exclusão do crédito.', 'A decadência do crédito.'],
+    'PA de MODERCOPA: suspende mientras pagas.');
+  q('v12', 'vida', 'Transação, como forma de extinção do crédito, é:',
+    ['Acordo previsto em lei, com concessões mútuas, para encerrar um litígio.', 'O perdão total da dívida.', 'A perda do prazo para cobrar.', 'O depósito integral em juízo.'],
+    'Transação = acuerdo con concesiones mutuas.');
+  q('v13', 'vida', 'Os prazos de decadência e de prescrição tributárias são, em regra, de:',
+    ['5 anos.', '90 dias.', '2 anos.', '10 anos.'],
+    'Ambos 5 años.');
+  q('v14', 'vida', 'Qual alternativa traz SOMENTE formas de extinção do crédito tributário?',
+    ['Pagamento, compensação, remissão e prescrição.', 'Moratória, pagamento e isenção.', 'Parcelamento, transação e anistia.', 'Depósito integral, decadência e liminar.'],
+    'Las otras mezclan suspensão (moratória, parcelamento, depósito, liminar) y exclusão (isenção, anistia).');
+  q('v15', 'vida', 'Uma empresa obtém liminar em mandado de segurança mandando o fisco parar a cobrança durante o processo. O crédito tributário fica:',
+    ['Suspenso.', 'Extinto.', 'Excluído.', 'Prescrito.'],
+    'CO de MODERCOPA: concessão de liminar suspende.');
+  q('v16', 'vida', 'O fisco ficou mais de 5 anos sem lançar um tributo. Ocorreu:',
+    ['Decadência, que extingue o crédito.', 'Prescrição, que suspende o crédito.', 'Anistia, que exclui o crédito.', 'Moratória, que suspende o crédito.'],
+    'Sin lançamento en 5 años: decadência. Extingue.');
+  q('v17', 'vida', 'O crédito foi constituído, mas a Fazenda ficou mais de 5 anos sem cobrar judicialmente. Ocorreu:',
+    ['Prescrição.', 'Decadência.', 'Remissão.', 'Isenção.'],
+    'Crédito ya constituido + 5 años sin cobrar en juicio = prescrição.');
+
+  /* ---------- Imunidade × isenção ---------- */
+  q('i1', 'imun', 'A imunidade tributária está prevista:',
+    ['Na Constituição Federal, retirando do Estado a competência para tributar.', 'Em lei ordinária de cada ente.', 'Em decreto do Poder Executivo.', 'Em instrução normativa da Receita Federal.'],
+    'Imunidade = "filtro constitucional": está en la CF.', true);
+  q('i2', 'imun', 'A isenção tributária:',
+    ['É concedida por lei; o fato gerador ocorre e a obrigação nasce, mas a lei dispensa o pagamento.', 'Está prevista na Constituição e impede o fato gerador.', 'É concedida livremente pelo fiscal.', 'Perdoa apenas multas já aplicadas.'],
+    'Isenção = ley común; exclusão do crédito.');
+  q('i3', 'imun', 'Templos de qualquer culto não pagam IPTU sobre o imóvel do templo porque há:',
+    ['Imunidade.', 'Isenção.', 'Anistia.', 'Remissão.'],
+    'Art. 150, VI, b CF. Ejemplo del profesor y del material.', true);
+  q('i4', 'imun', 'Pessoas com doenças graves listadas em lei não pagam Imposto de Renda sobre seus proventos. Trata-se de:',
+    ['Isenção.', 'Imunidade.', 'Não incidência constitucional.', 'Anistia.'],
+    'La dispensa viene de una ley: isenção. Es el ejemplo del material del profesor.', true);
+  q('i5', 'imun', 'São imunes a impostos, entre outros:',
+    ['Livros, jornais, periódicos e o papel destinado à sua impressão.', 'Veículos de luxo.', 'Bebidas alcoólicas.', 'Imóveis de empresas comerciais.'],
+    'Imunidade cultural, art. 150, VI, d.');
+  q('i6', 'imun', 'Quanto à fase em que atuam, imunidade e isenção diferem porque:',
+    ['Na imunidade não há competência para tributar; na isenção a obrigação nasce, mas a lei dispensa o pagamento.', 'Na isenção não há competência; na imunidade a obrigação nasce e é perdoada.', 'Ambas atuam somente depois do pagamento.', 'Não há diferença entre elas.'],
+    '"Embora pareçam sinônimos, atuam em fases completamente diferentes" (material del profesor).', true);
+  q('i7', 'imun', 'A imunidade recíproca impede que:',
+    ['União, Estados, DF e Municípios cobrem impostos sobre o patrimônio, a renda ou os serviços uns dos outros.', 'O contribuinte pague dois impostos sobre o mesmo fato.', 'Os Municípios cobrem taxas.', 'A União crie impostos residuais.'],
+    'Recíproca: los entes no se cobran impuestos entre sí (no vale para taxas).');
+  q('i8', 'imun', 'Para gozar de imunidade, instituições de educação e assistência social sem fins lucrativos devem, entre outros requisitos:',
+    ['Não distribuir lucros e manter a contabilidade regular.', 'Distribuir lucros aos diretores.', 'Ter sede no exterior.', 'Pagar todos os impostos em dia por 5 anos.'],
+    'Requisitos (art. 14 CTN): no distribuir lucros, aplicar recursos en el país y llevar contabilidad regular.');
+  q('i9', 'imun', 'A isenção de IPVA para taxistas é exemplo de:',
+    ['Isenção, hipótese de exclusão do crédito.', 'Imunidade constitucional.', 'Remissão.', 'Suspensão da exigibilidade.'],
+    'Ejemplo de la apostila: viene de ley estadual, es isenção.');
+  q('i10', 'imun', 'Assinale a alternativa INCORRETA:',
+    ['A isenção está prevista na Constituição e retira do Estado a competência para tributar.', 'A imunidade está na Constituição Federal.', 'Na isenção, o fato gerador chega a ocorrer.', 'A isenção é hipótese de exclusão do crédito tributário.'],
+    'Incorrecta: quien está en la CF y quita competencia es la imunidade, no la isenção.');
+
+  /* ---------- Reforma tributária ---------- */
+  q('r1', 'ref', 'A Reforma Tributária sobre o consumo foi promovida pela:',
+    ['Emenda Constitucional nº 132/2023.', 'Emenda Constitucional nº 45/2004.', 'Lei Complementar nº 87/1996.', 'Lei nº 5.172/1966.'],
+    'EC 132/2023. (La LC 87/1996 es la Lei Kandir del ICMS; la Lei 5.172/1966 es el CTN.)');
+  q('r2', 'ref', 'O modelo adotado pela Reforma Tributária sobre o consumo é o:',
+    ['IVA Dual, com CBS federal e IBS subnacional.', 'Imposto único federal sobre movimentação financeira.', 'IVA único municipal.', 'Imposto sobre grandes fortunas.'],
+    'IVA Dual: un IVA federal (CBS) y uno subnacional (IBS).');
+  q('r3', 'ref', 'A CBS (Contribuição sobre Bens e Serviços) substitui:',
+    ['PIS e COFINS.', 'ICMS e ISS.', 'IPTU e ITBI.', 'IR e CSLL.'],
+    'CBS = IVA federal: reemplaza PIS y COFINS.');
+  q('r4', 'ref', 'O IBS (Imposto sobre Bens e Serviços) substitui:',
+    ['ICMS e ISS.', 'PIS e COFINS.', 'IPVA e ITCMD.', 'IR e IOF.'],
+    'IBS = IVA subnacional: reemplaza ICMS (estadual) e ISS (municipal).');
+  q('r5', 'ref', 'O IBS é gerido de forma centralizada pelo:',
+    ['Comitê Gestor do IBS.', 'Banco Central do Brasil.', 'CARF.', 'Ministério do Trabalho.'],
+    'Comitê Gestor do IBS, compartido por Estados, DF y Municípios.');
+  q('r6', 'ref', 'A CBS é de competência:',
+    ['Da União, sendo arrecadada e fiscalizada pela Receita Federal.', 'Dos Estados.', 'Dos Municípios.', 'Do Comitê Gestor do IBS.'],
+    'CBS es federal.');
+  q('r7', 'ref', 'O Imposto Seletivo (IS), conhecido como "imposto do pecado", incide sobre:',
+    ['Bens e serviços prejudiciais à saúde ou ao meio ambiente.', 'Alimentos da cesta básica.', 'Livros e jornais.', 'Serviços de educação.'],
+    'IS: bienes y servicios dañinos a la salud o al medio ambiente.');
+  q('r8', 'ref', 'No ano de teste da Reforma (2026), as alíquotas são:',
+    ['CBS de 0,9% e IBS de 0,1%.', 'CBS de 9% e IBS de 1%.', 'CBS de 0,1% e IBS de 0,9%.', 'CBS e IBS de 17% cada.'],
+    '2026: CBS 0,9% + IBS 0,1% = 1% simbólico.');
+  q('r9', 'ref', 'Em 2027, segundo o cronograma da Reforma:',
+    ['A CBS passa a ser cobrada plenamente e PIS e COFINS são extintos.', 'ICMS e ISS são totalmente extintos.', 'O IBS passa a ter alíquota integral.', 'A Reforma é revogada.'],
+    '2027: CBS plena, fin de PIS/COFINS, comienza el IS, IPI a cero (salvo ZFM).');
+  q('r10', 'ref', 'A extinção total do ICMS e do ISS, com o IBS em vigor pleno, está prevista para:',
+    ['2033.', '2026.', '2027.', '2029.'],
+    '2033, según el cronograma del Manual. Ojo: en clase se dijo "ano que vem não tem mais ICMS", pero el cronograma oficial es 2033.', true);
+  q('r11', 'ref', 'Entre 2029 e 2032, o cronograma da Reforma prevê:',
+    ['A redução gradual das alíquotas do ICMS e do ISS.', 'A extinção imediata do IR.', 'O início do ano de teste.', 'A criação da CBS.'],
+    'Transición: ICMS e ISS bajan un poco cada año hasta desaparecer en 2033.');
+  q('r12', 'ref', 'Em 2026, os valores de CBS e IBS destacados nos documentos fiscais:',
+    ['Têm caráter de teste, podendo ser compensados com PIS/COFINS.', 'Devem ser pagos em dobro.', 'Substituem integralmente o IR.', 'São cobrados apenas de pessoas físicas.'],
+    'Año de prueba: valores compensables con PIS/COFINS; la LC 214/2025 dispensa el pago a quien cumple las obligaciones acessórias.');
+  q('r13', 'ref', 'O principal objetivo do ano de teste (2026) é:',
+    ['Testar sistemas das empresas (ERP), documentos fiscais e a apuração antes da cobrança plena.', 'Aumentar a arrecadação federal.', 'Extinguir o ICMS.', 'Criar novos impostos municipais.'],
+    'Probar sistemas, notas con campos nuevos y apuración antes de 2027.');
+  q('r14', 'ref', 'O split payment, citado em aula, consiste em:',
+    ['Separar automaticamente o valor do tributo no momento do pagamento da operação.', 'Parcelar dívidas tributárias antigas.', 'Perdoar multas por atraso.', 'Emitir nota fiscal em papel.'],
+    'Split payment: el impuesto se separa en el momento del pago.', true);
+  q('r15', 'ref', 'Com a Reforma, o IPVA poderá incidir também sobre:',
+    ['Veículos aquáticos e aéreos (embarcações e aeronaves).', 'Bicicletas.', 'Imóveis rurais.', 'Serviços de transporte.'],
+    'El Manual: IPVA ampliado a embarcaciones y aeronaves.');
+  q('r16', 'ref', 'Quanto ao IPI, a Reforma prevê que:',
+    ['Suas alíquotas sejam zeradas a partir de 2027, salvo para produtos da Zona Franca de Manaus.', 'Ele substitua o IBS.', 'Ele passe a ser municipal.', 'Sua alíquota dobre em 2027.'],
+    'IPI a cero desde 2027, salvo ZFM.');
+  q('r17', 'ref', 'A Reforma é chamada de IVA "dual" porque:',
+    ['Há um IVA federal (CBS) e um IVA subnacional (IBS, de Estados e Municípios).', 'O imposto é cobrado duas vezes sobre o mesmo produto.', 'Cada produto tem duas alíquotas.', 'É dividido entre Brasil e Mercosul.'],
+    'Dual = dos niveles: federal y subnacional.');
+  q('r18', 'ref', 'Assinale a alternativa INCORRETA sobre a Reforma Tributária:',
+    ['A partir de 2027, o ICMS deixa de existir completamente.', 'A CBS substitui PIS e COFINS.', 'O IBS é gerido pelo Comitê Gestor.', 'Em 2026 há alíquotas de teste de CBS e IBS.'],
+    'Incorrecta: el ICMS se extingue en 2033, no en 2027.', true);
+  q('r19', 'ref', 'Com a Reforma, o ITCMD passa a ser:',
+    ['Progressivo.', 'Extinto.', 'Federal.', 'Substituído pela CBS.'],
+    'El Manual: ITCMD progresivo tras la reforma.');
+
+  window.QUESTIONS = Q;
+
+  /* ---------- Generadores: variantes que cambian en cada intento ---------- */
+  var MOD = ['De ofício (direto)', 'Por declaração (misto)', 'Por homologação (autolançamento)', 'Por arbitramento'];
+  var VIDA = ['Suspensão da exigibilidade do crédito (art. 151)', 'Extinção do crédito tributário (art. 156)', 'Exclusão do crédito tributário (art. 175)', 'Constituição do crédito pelo lançamento'];
+  var COMP = ['Municípios', 'Estados e DF', 'União', 'Todos os entes (competência comum)'];
+  var ESP = ['Imposto', 'Taxa pelo exercício do poder de polícia', 'Taxa por serviço público específico e divisível', 'Contribuição de melhoria'];
+  var IMU = ['Imunidade', 'Isenção', 'Anistia', 'Remissão'];
+
+  function gen(key, t, items, stem, opts, expFn, prof) {
+    items.forEach(function (it, i) {
+      var correct = opts[it[1]];
+      var others = opts.filter(function (_, j) { return j !== it[1]; });
+      Q.push({ id: 'g-' + key + '-' + i, t: t, gen: key, q: stem.replace('{x}', it[0]), a: [correct].concat(others), exp: expFn(it), prof: !!(prof || it[3]) });
+    });
+  }
+
+  gen('lanc', 'lanc', [
+    ['IPVA', 0, 'El Estado ya tiene los datos del vehículo.'],
+    ['IPTU', 0, 'La prefeitura ya tiene los datos del inmueble.'],
+    ['ITBI', 1, 'Informas la compra; la prefeitura calcula.'],
+    ['Imposto de Importação', 1, 'Declaración en la aduana; la autoridad calcula.'],
+    ['ITCMD', 1, 'El profesor lo citó como declaração.', true],
+    ['Imposto de Renda', 2, 'Calculas, declaras y pagas; el fisco revisa.'],
+    ['ICMS', 2, 'La empresa apura y paga sola.'],
+    ['ISS', 2, 'Autolançamento de la empresa prestadora.'],
+    ['PIS e COFINS', 2, 'Tributos sobre facturación: homologação.'],
+    ['IPI', 2, 'La industria apura y paga: homologação.']
+  ], 'Segundo o material da disciplina, o {x} é, em regra, lançado:', MOD, function (it) { return it[2]; });
+
+  gen('vida', 'vida', [
+    ['A moratória', 0, 'MO de MODERCOPA.'],
+    ['O depósito do montante integral', 0, 'DE de MODERCOPA.'],
+    ['A reclamação ou recurso administrativo', 0, 'R de MODERCOPA.'],
+    ['A concessão de medida liminar', 0, 'CO de MODERCOPA.'],
+    ['O parcelamento', 0, 'PA de MODERCOPA.'],
+    ['O pagamento', 1, 'La forma más común de extinción.'],
+    ['A compensação', 1, 'Acerto de contas: extinção.'],
+    ['A transação', 1, 'Acuerdo con concesiones mutuas: extinção.'],
+    ['A remissão', 1, 'Perdón de la deuda: extinção.'],
+    ['A prescrição', 1, 'Pierde el plazo para cobrar: extinção.'],
+    ['A decadência', 1, 'Pierde el plazo para lançar: extinção.'],
+    ['A dação em pagamento de bem imóvel', 1, 'Pagar entregando un inmueble: extinção.'],
+    ['A isenção', 2, 'Exclusão (art. 175).'],
+    ['A anistia', 2, 'Exclusão: perdona multas.']
+  ], '{x} é hipótese de:', VIDA, function (it) { return it[2]; });
+
+  gen('comp', 'princ', [
+    ['IPTU', 0], ['ISS', 0], ['ITBI', 0],
+    ['ICMS', 1], ['IPVA', 1], ['ITCMD', 1],
+    ['Imposto de Renda', 2], ['IPI', 2], ['IOF', 2], ['ITR', 2],
+    ['taxas e contribuições de melhoria', 3]
+  ], 'A competência para instituir {x} pertence a:', COMP, function (it) {
+    return ['Impuesto municipal.', 'Impuesto estadual (Estados y DF).', 'Impuesto federal (União).', 'Competencia comum: cada ente, en su ámbito.'][it[1]];
+  });
+
+  gen('esp', 'esp', [
+    ['Ser proprietário de imóvel urbano gera a cobrança de IPTU. Trata-se de', 0],
+    ['Auferir renda gera a cobrança do IR. Trata-se de', 0],
+    ['A Prefeitura cobra pela vistoria anual exigida para manter o alvará de funcionamento. Trata-se de', 1],
+    ['A vigilância sanitária fiscaliza um restaurante e cobra por isso. Trata-se de', 1],
+    ['O município cobra pelo serviço de coleta de lixo domiciliar. Trata-se de', 2],
+    ['A União cobra pela emissão de passaporte. Trata-se de', 2],
+    ['O município constrói um parque e cobra dos imóveis vizinhos que se valorizaram. Trata-se de', 3],
+    ['A prefeitura asfalta a rua e cobra dos proprietários dos imóveis valorizados. Trata-se de', 3]
+  ], '{x}:', ESP, function (it) {
+    return ['No vinculado: situación del contribuinte.', 'Fiscalizar es poder de polícia.', 'Servicio específico y divisible.', 'Obra pública + valorización.'][it[1]];
+  });
+
+  gen('imun', 'imun', [
+    ['Um templo religioso não paga IPTU sobre o imóvel onde funciona o culto', 0],
+    ['Uma editora não paga imposto sobre o papel destinado à impressão de livros', 0],
+    ['Um Estado não paga IPTU ao Município pelo prédio de sua secretaria', 0],
+    ['Um sindicato de trabalhadores não paga imposto sobre sua renda', 0],
+    ['Uma lei estadual dispensa taxistas do pagamento de IPVA', 1],
+    ['Uma lei federal dispensa portadores de doença grave do IR sobre aposentadoria', 1],
+    ['Uma lei municipal dispensa aposentados de baixa renda do IPTU', 1]
+  ], '{x}. Trata-se de:', IMU, function (it) {
+    return it[1] === 0 ? 'Viene de la Constitución (art. 150, VI): imunidade.' : 'Viene de una ley: isenção (exclusão do crédito).';
+  });
+
+  gen('ano', 'ref', [
+    ['2026', 0], ['2027', 1], ['2029 a 2032', 2], ['2033', 3]
+  ], 'Segundo o cronograma da Reforma Tributária, o que ocorre em {x}?', [
+    'Ano de teste: CBS de 0,9% e IBS de 0,1%.',
+    'CBS cobrada plenamente e extinção de PIS e COFINS.',
+    'Redução gradual das alíquotas de ICMS e ISS.',
+    'IBS pleno e extinção total de ICMS e ISS.'
+  ], function () { return 'Cronograma: 2026 prueba · 2027 CBS plena y fin de PIS/COFINS · 2029–2032 ICMS/ISS bajan · 2033 fin de ICMS/ISS.'; });
+
+  window.QUESTIONS = Q;
+
+  window.TOPICS = {
+    fund: { name: 'Fundamentos', mod: 'fundamentos' },
+    trib: { name: 'Tributo × multa', mod: 'tributo' },
+    esp: { name: 'Espécies tributárias', mod: 'especies' },
+    princ: { name: 'Princípios e competência', mod: 'principios' },
+    obr: { name: 'Obrigação tributária', mod: 'obrigacao' },
+    ciclo: { name: 'Ciclo do crédito', mod: 'ciclo' },
+    lanc: { name: 'Modalidades de lançamento', mod: 'lancamento' },
+    vida: { name: 'Suspensão, extinção, exclusão', mod: 'vida' },
+    imun: { name: 'Imunidade × isenção', mod: 'imunidade' },
+    ref: { name: 'Reforma tributária', mod: 'reforma' }
+  };
+
+  /* Reparto del simulacro de 20 preguntas, según el énfasis del profesor */
+  window.EXAM_QUOTA = { ciclo: 2, lanc: 3, esp: 3, trib: 2, vida: 3, ref: 3, imun: 1, fund: 1, princ: 1, obr: 1 };
+
+  /* ---------- Tarjetas ---------- */
+  window.CARDS = [
+    ['fund', 'Direito Tributário', 'Rama del Direito Público que regula la relación fisco–contribuinte. Objeto: tributos (creación, cobranza y control).'],
+    ['fund', 'Balança de dupla função', 'Autoriza al Estado a cobrar tributos y, a la vez, limita ese poder para proteger al ciudadano.'],
+    ['fund', 'Trilogia', 'Instituição, arrecadação y fiscalização.'],
+    ['fund', 'Receita originária', 'Viene del propio patrimonio del Estado. Ej.: alquiler de un inmueble público.'],
+    ['fund', 'Receita derivada', 'Viene de la imposición sobre el patrimonio del particular. Ej.: tributos.'],
+    ['trib', 'Art. 3º CTN', 'Prestação pecuniária compulsória, em moeda, que não constitua sanção de ato ilícito, instituída em lei e cobrada por atividade administrativa plenamente vinculada.'],
+    ['trib', 'Tributo × multa (finalidad)', 'Tributo: arrecadatória. Multa: punitiva.'],
+    ['trib', 'Origen del tributo / de la multa', 'Tributo: fato gerador lícito. Multa: descumprimento de una obligación (sanção).'],
+    ['trib', 'Natureza jurídica do tributo', 'La define el fato gerador (art. 4º CTN), no el nombre ni el destino del dinero.'],
+    ['esp', 'Imposto (art. 16)', 'No vinculado: el fato gerador es una situación del contribuinte. Ej.: IPTU, IR.'],
+    ['esp', 'Taxa (art. 77)', 'Vinculada: poder de polícia o serviço público específico e divisível. No puede tener base de cálculo de imposto.'],
+    ['esp', 'Contribuição de melhoria (art. 81)', 'Obra pública que valoriza el inmueble. Límite total: costo de la obra. Individual: valorización de cada inmueble.'],
+    ['esp', 'Poder de polícia', 'Fiscalizar, controlar y limitar actividades privadas. Ej.: alvará, vigilância sanitária.'],
+    ['esp', 'Extrafiscal', 'Tributo que interviene en la economía. Ej.: Imposto de Importação protege la industria nacional.'],
+    ['princ', 'Legalidade', 'Sin ley no se crea ni se aumenta tributo (art. 150, I CF).'],
+    ['princ', 'Isonomia', 'Misma situación, mismo trato (art. 150, II CF).'],
+    ['princ', 'Irretroatividade', 'La ley no cobra sobre hechos anteriores a su vigencia.'],
+    ['princ', 'Anterioridade', 'Anual: ejercicio siguiente. Noventena: 90 días. II, IE e IOF son excepción a las dos.'],
+    ['princ', 'Competência residual', 'Solo la União crea impuestos nuevos, por lei complementar.'],
+    ['princ', 'Competência comum', 'Todos los entes cobran taxas y contribuições de melhoria.'],
+    ['obr', 'Hipótese × fato gerador', 'Hipótese: lo que la ley prevé. Fato gerador: cuando ocurre en el mundo real.'],
+    ['obr', 'Obrigação principal × acessória', 'Principal: pagar (tributo o multa). Acessória: emitir nota, SPED, declaraciones.'],
+    ['obr', 'Art. 113, §3º', 'La acessória incumplida genera multa, que se convierte en principal.'],
+    ['obr', 'Sujeito ativo × passivo', 'Ativo: ente público credor. Passivo: contribuinte o responsável.'],
+    ['obr', 'Responsável', 'No practicó el fato gerador, pero la ley lo obliga. Ej.: empresa que retiene el IR del salario.'],
+    ['ciclo', 'Orden del ciclo', 'Hipótese → fato gerador → obrigação → lançamento → crédito → extinção.'],
+    ['ciclo', 'Obrigação tributária', 'Vínculo automático con el fato gerador. Debe, pero sin valor formalizado.'],
+    ['ciclo', 'Crédito tributário', 'Valor líquido, certo e exigível. El Estado puede cobrar. Lo crea el lançamento.'],
+    ['lanc', 'Lançamento (art. 142)', 'Verifica el fato gerador, identifica al deudor, calcula el monto y aplica la penalidad.'],
+    ['lanc', 'De ofício (direto)', 'El fisco hace todo. IPVA, IPTU.'],
+    ['lanc', 'Por declaração (misto)', 'Tú informas, el fisco calcula. ITBI, Imposto de Importação, ITCMD.'],
+    ['lanc', 'Por homologação (autolançamento)', 'Tú calculas, declaras y pagas; el fisco revisa en 5 años. IR, ICMS, ISS, CBS, IBS.'],
+    ['lanc', 'Por arbitramento', 'El fisco estima cuando los datos son omisos, falsos o hay fraude.'],
+    ['vida', 'MODERCOPA', 'Suspensão: Moratória, Depósito integral, Reclamações e recursos, Concessão de liminar, Parcelamento.'],
+    ['vida', 'Extinção (art. 156)', 'Pagamento, compensação, transação, remissão, prescrição, decadência, dação de imóveis, decisão definitiva.'],
+    ['vida', 'Exclusão (art. 175)', 'Isenção y anistia: la ley impide que nazca el crédito.'],
+    ['vida', 'Decadência × prescrição', 'Decadência: 5 años para lançar. Prescrição: 5 años para cobrar en juicio.'],
+    ['vida', 'Remissão × anistia', 'Remissão: perdona la deuda (extinção). Anistia: perdona solo multas (exclusão).'],
+    ['imun', 'Imunidade', 'Está en la CF; quita la competencia. Ej.: templos, libros, entes entre sí.'],
+    ['imun', 'Isenção', 'Está en ley; el fato gerador ocurre, pero se dispensa el pago. Ej.: enfermedad grave en el IR.'],
+    ['ref', 'EC 132/2023', 'Reforma tributaria del consumo: IVA Dual (CBS + IBS) e Imposto Seletivo.'],
+    ['ref', 'CBS', 'IVA federal (União, Receita Federal). Reemplaza PIS y COFINS.'],
+    ['ref', 'IBS', 'IVA subnacional (Estados, DF, Municípios; Comitê Gestor). Reemplaza ICMS e ISS.'],
+    ['ref', 'Imposto Seletivo', '"Imposto do pecado": bienes y servicios dañinos a la salud o al medio ambiente.'],
+    ['ref', 'Cronograma', '2026 prueba (CBS 0,9% · IBS 0,1%) · 2027 CBS plena, fin de PIS/COFINS · 2029–2032 ICMS/ISS bajan · 2033 fin de ICMS e ISS.']
+  ];
+})();
+
+</script>
+<script>
+(function () {
+  'use strict';
+  var MODS = window.MODULES, WID = window.WIDGETS, QS = window.QUESTIONS, TOP = window.TOPICS, QUOTA = window.EXAM_QUOTA, CARDS = window.CARDS;
+  var QMAP = {}; QS.forEach(function (q) { QMAP[q.id] = q; });
+  var MMAP = {}; MODS.forEach(function (m) { MMAP[m.id] = m; });
+  var LS = 'trib-estudo-v1', LS_SESS = 'trib-sesion-v1';
+  var L = 'ABCD';
+  var view = document.getElementById('view');
+
+  /* ---------------- utilidades ---------------- */
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function nota(x) { return (Math.round(x * 10) / 10).toFixed(1).replace('.', ','); }
+  function mmss(s) { s = Math.max(0, Math.round(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+  function pctColor(p) { return p < 0.5 ? 'var(--bad)' : p < 0.75 ? 'var(--warn)' : 'var(--good)'; }
+  function fmtDate(ts) { try { return new Date(ts).toLocaleDateString('es', { day: 'numeric', month: 'short' }) + ' · ' + new Date(ts).toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+  var toastT;
+  function toast(msg) {
+    var t = document.querySelector('.toast');
+    if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }
+    t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 2400);
+  }
+
+  /* ---------------- estado y guardado ---------------- */
+  function blank() { return { v: 1, updatedAt: 0, mods: {}, notes: {}, exams: [], wrong: {}, stats: {}, seen: {}, cards: {}, examDate: '' }; }
+  function norm(s) {
+    var b = blank();
+    if (!s || typeof s !== 'object' || s.v !== 1) return b;
+    Object.keys(b).forEach(function (k) {
+      if (s[k] !== undefined && typeof s[k] === typeof b[k] && Array.isArray(s[k]) === Array.isArray(b[k])) b[k] = s[k];
+    });
+    return b;
+  }
+  var state = (function () { try { return norm(JSON.parse(localStorage.getItem(LS))); } catch (e) { return blank(); } })();
+  function saveLocal() { try { localStorage.setItem(LS, JSON.stringify(state)); } catch (e) { } }
+  function save() { state.updatedAt = Date.now(); saveLocal(); queueRemote(); }
+
+  var SYNC = { connecting: 'Conectando…', cloud: 'Guardado en tu cuenta', local: 'Guardado en este navegador', error: 'Sin conexión · guardado aquí' };
+  var syncMode = 'connecting';
+  function setSync(m) { syncMode = m; document.querySelectorAll('[data-sync]').forEach(function (el) { el.textContent = SYNC[m]; el.setAttribute('data-mode', m); }); }
+
+  var dbDoc = null, remoteT = null, chain = Promise.resolve(), lastSent = '';
+  function queueRemote(delay) { if (!dbDoc) return; clearTimeout(remoteT); remoteT = setTimeout(pushRemote, delay == null ? 1500 : delay); }
+  function pushRemote() {
+    if (!dbDoc) return;
+    var body = JSON.stringify(state);
+    if (body === lastSent) return;
+    var ref = dbDoc;
+    chain = chain.then(function () { return ref.set(JSON.parse(body)); })
+      .then(function () { lastSent = body; setSync('cloud'); })
+      .catch(function (e) {
+        var c = e && e.code;
+        if (c === 'invalid_argument' || c === 'revoked' || c === 'not_granted' || c === 'capability_disabled' || c === 'capability_removed') { dbDoc = null; setSync('local'); }
+        else setSync('error');
+      });
+  }
+  document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'hidden') { clearTimeout(remoteT); pushRemote(); } });
+
+  function initRemote() {
+    var tries = 0;
+    (function wait() {
+      if (window.claude && typeof window.claude.use === 'function') return connect();
+      if (++tries > 20) return setSync('local');
+      setTimeout(wait, 150);
+    })();
+    function connect() {
+      Promise.all([window.claude.use('user'), window.claude.use('db')]).then(function (r) {
+        var user = r[0], db = r[1];
+        if (!user || !db) { setSync('local'); return; }
+        return user.id().then(function (uid) {
+          if (!uid) { setSync('local'); return; }
+          var ref = db.doc('data/users/' + uid + '/estudo');
+          return ref.get().then(function (snap) {
+            dbDoc = ref;
+            var remote = snap.exists ? snap.data() : null;
+            if (remote && remote.v === 1 && (remote.updatedAt || 0) > (state.updatedAt || 0)) {
+              state = norm(JSON.parse(JSON.stringify(remote)));
+              saveLocal(); lastSent = JSON.stringify(state);
+              setSync('cloud'); render(false);
+            } else if (state.updatedAt > 0 && (!remote || state.updatedAt > (remote.updatedAt || 0))) {
+              setSync('cloud'); queueRemote(0);
+            } else { lastSent = JSON.stringify(state); setSync('cloud'); }
+          });
+        });
+      }).catch(function () { setSync('local'); });
+    }
+  }
+
+  /* ---------------- sesión de preguntas ---------------- */
+  var sess = (function () { try { var s = JSON.parse(localStorage.getItem(LS_SESS)); return s && s.items && s.items.every(function (it) { return QMAP[it.id]; }) ? s : null; } catch (e) { return null; } })();
+  function saveSess() { try { if (sess) localStorage.setItem(LS_SESS, JSON.stringify(sess)); else localStorage.removeItem(LS_SESS); } catch (e) { } }
+
+  function record(q, ok) {
+    var s = state.stats[q.t] || [0, 0]; s = [s[0] + (ok ? 1 : 0), s[1] + 1]; state.stats[q.t] = s;
+    state.seen[q.id] = (state.seen[q.id] || 0) + 1;
+    if (ok) delete state.wrong[q.id]; else state.wrong[q.id] = 1;
+  }
+
+  function pickFrom(pool, n, gens) {
+    var scored = pool.map(function (q) { return { q: q, s: (state.seen[q.id] || 0) + Math.random() * 1.6 - (state.wrong[q.id] ? 0.6 : 0) }; });
+    scored.sort(function (a, b) { return a.s - b.s; });
+    var out = [];
+    scored.forEach(function (o) {
+      if (out.length >= n) return;
+      if (o.q.gen) { if (gens.has(o.q.gen)) return; gens.add(o.q.gen); }
+      out.push(o.q);
+    });
+    scored.forEach(function (o) { if (out.length < n && out.indexOf(o.q) < 0) out.push(o.q); });
+    return out;
+  }
+  function makeItems(qs) { return qs.map(function (q) { return { id: q.id, order: shuffle([0, 1, 2, 3]) }; }); }
+
+  function startSession(kind, arg) {
+    var items, title, mode = 'practice', gens = new Set();
+    if (kind === 'exam') {
+      var list = [];
+      Object.keys(QUOTA).forEach(function (t) { list = list.concat(pickFrom(QS.filter(function (q) { return q.t === t; }), QUOTA[t], gens)); });
+      items = makeItems(shuffle(list)); title = 'Simulacro de 20 preguntas'; mode = 'exam';
+    } else if (kind === 'quick') {
+      items = makeItems(pickFrom(QS.slice(), 10, gens)); title = 'Práctica rápida';
+    } else if (kind === 'topic') {
+      var pool = QS.filter(function (q) { return q.t === arg; });
+      items = makeItems(shuffle(pickFrom(pool, Math.min(10, pool.length), gens))); title = 'Práctica · ' + TOP[arg].name;
+    } else if (kind === 'wrong') {
+      var ids = Array.isArray(arg) ? arg : Object.keys(state.wrong);
+      items = makeItems(shuffle(ids.filter(function (id) { return QMAP[id]; }).map(function (id) { return QMAP[id]; })).slice(0, 20));
+      title = 'Repaso de errores';
+    }
+    if (!items || !items.length) { toast('No hay preguntas para este modo todavía.'); return; }
+    var replaced = sess && !sess.fin;
+    sess = { mode: mode, title: title, items: items, ans: items.map(function () { return null; }), cur: 0, start: Date.now(), fin: false };
+    saveSess();
+    if (replaced) toast('Empezaste un simulacro nuevo.');
+    go('simulado');
+  }
+
+  function finishSession() {
+    var byTopic = {}, ok = 0;
+    sess.items.forEach(function (it, i) {
+      var q = QMAP[it.id], a = sess.ans[i], good = a != null && it.order[a] === 0;
+      if (good) ok++;
+      var b = byTopic[q.t] || [0, 0]; byTopic[q.t] = [b[0] + (good ? 1 : 0), b[1] + 1];
+      if (sess.mode === 'exam') record(q, good);
+    });
+    var n = sess.items.length, secs = Math.round((Date.now() - sess.start) / 1000);
+    sess.fin = true; sess.res = { ok: ok, n: n, score: ok / n * 10, secs: secs, byTopic: byTopic };
+    state.exams.push({ at: Date.now(), mode: sess.mode, title: sess.title, ok: ok, n: n, score: Math.round(ok / n * 100) / 10, secs: secs, byTopic: byTopic });
+    if (state.exams.length > 40) state.exams = state.exams.slice(-40);
+    save(); saveSess();
+  }
+
+  /* ---------------- navegación ---------------- */
+  var VIEWS = ['panel', 'estudiar', 'simulado', 'tarjetas', 'notas'];
+  function parse(h) { h = (h || '').replace(/^#/, ''); if (h.indexOf('m-') === 0 && MMAP[h.slice(2)]) return { v: 'modulo', id: h.slice(2) }; if (VIEWS.indexOf(h) >= 0) return { v: h }; return { v: 'panel' }; }
+  var route = parse(location.hash);
+  function go(token) {
+    route = parse(token);
+    try { history.pushState(null, '', '#' + token); } catch (e) { }
+    render(true);
+  }
+  window.addEventListener('popstate', function () { route = parse(location.hash); render(true); });
+  window.addEventListener('hashchange', function () { var r = parse(location.hash); if (r.v !== route.v || r.id !== route.id) { route = r; render(true); } });
+
+  function render(top) {
+    var navKey = route.v === 'modulo' ? 'estudiar' : route.v;
+    document.querySelectorAll('[data-nav]').forEach(function (a) { if (a.getAttribute('data-nav') === navKey) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    var html = route.v === 'estudiar' ? studyHTML() : route.v === 'modulo' ? moduleHTML(MMAP[route.id]) : route.v === 'simulado' ? simHTML() : route.v === 'tarjetas' ? cardsHTML() : route.v === 'notas' ? notesHTML() : panelHTML();
+    view.innerHTML = '<div class="wrap">' + html + '</div>';
+    bind();
+    if (top) { window.scrollTo(0, 0); }
+    setSync(syncMode);
+  }
+
+  /* ---------------- PANEL ---------------- */
+  function countdownHTML() {
+    if (!state.examDate) {
+      return '<div class="count"><div style="display:grid;gap:4px"><b>¿Cuándo es la prueba?</b><p>El profesor dijo "a semana que vem". Pon la fecha y te muestro cuántos días faltan.</p></div>' +
+        '<input type="date" id="exam-date" aria-label="Fecha de la prueba"></div>';
+    }
+    var d = new Date(state.examDate + 'T00:00:00'), t = new Date(); t.setHours(0, 0, 0, 0);
+    var days = Math.round((d - t) / 864e5), big, label;
+    if (days > 1) { big = days; label = 'días para la prueba'; }
+    else if (days === 1) { big = 1; label = 'día: es mañana'; }
+    else if (days === 0) { big = '¡Hoy!'; label = 'es el día de la prueba'; }
+    else { big = '✓'; label = 'la prueba ya pasó'; }
+    var when = ''; try { when = d.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' }); } catch (e) { when = state.examDate; }
+    return '<div class="count"><div class="count-big num">' + big + ' <small>' + label + '</small></div>' +
+      '<p>Prueba: ' + esc(when) + '</p><input type="date" id="exam-date" aria-label="Cambiar la fecha de la prueba" value="' + esc(state.examDate) + '"></div>';
+  }
+
+  function chartSVG(list) {
+    var pts = list.slice(-12);
+    if (pts.length < 2) return '';
+    var W = 600, H = 200, Lp = 36, R = 24, T = 22, B = 28;
+    function x(i) { return Lp + i * (W - Lp - R) / (pts.length - 1); }
+    function y(v) { return T + (10 - v) * (H - T - B) / 10; }
+    var s = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Notas de los últimos simulacros, de 0 a 10">';
+    [0, 5, 10].forEach(function (v) { s += '<line class="grid" x1="' + Lp + '" x2="' + (W - R) + '" y1="' + y(v) + '" y2="' + y(v) + '"/><text class="axis" x="' + (Lp - 8) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + v + '</text>'; });
+    var line = pts.map(function (e, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(e.score).toFixed(1); }).join(' ');
+    s += '<path class="area" d="' + line + ' L' + x(pts.length - 1) + ' ' + y(0) + ' L' + x(0) + ' ' + y(0) + ' Z"/>';
+    s += '<path class="ln" d="' + line + '"/>';
+    pts.forEach(function (e, i) { var last = i === pts.length - 1; s += '<circle class="pt' + (last ? ' pt-last' : '') + '" cx="' + x(i) + '" cy="' + y(e.score) + '" r="' + (last ? 5.5 : 4) + '"/>'; });
+    var lastE = pts[pts.length - 1], lx = x(pts.length - 1), ly = y(lastE.score);
+    s += '<text class="val" x="' + lx + '" y="' + (ly < T + 14 ? ly + 20 : ly - 11) + '" text-anchor="end">' + nota(lastE.score) + '</text>';
+    s += '<text class="axis" x="' + Lp + '" y="' + (H - 8) + '">1.º</text><text class="axis" x="' + (W - R) + '" y="' + (H - 8) + '" text-anchor="end">último</text>';
+    return s + '</svg>';
+  }
+
+  function panelHTML() {
+    var done = MODS.filter(function (m) { return state.mods[m.id]; }).length;
+    var ans = 0, okA = 0; Object.keys(state.stats).forEach(function (k) { okA += state.stats[k][0]; ans += state.stats[k][1]; });
+    var exams = state.exams.filter(function (e) { return e.mode === 'exam'; });
+    var best = exams.length ? Math.max.apply(null, exams.map(function (e) { return e.score; })) : null;
+    var last = exams.length ? exams[exams.length - 1] : null;
+    var wrongN = Object.keys(state.wrong).filter(function (id) { return QMAP[id]; }).length;
+    var next = MODS.filter(function (m) { return !state.mods[m.id]; })[0];
+
+    var h = '<header class="hero"><span class="eyebrow">Prova objetiva · 20 questões de marcar</span>' +
+      '<h1>Prova de Direito Tributário</h1>' +
+      '<p class="hero-sub">Todo elegido según lo que el profesor dijo en clase. Las explicaciones están en español; las preguntas de práctica, en portugués, como en la prueba.</p>' +
+      countdownHTML() + '</header>';
+
+    if (sess && !sess.fin) {
+      var answered = sess.ans.filter(function (a) { return a != null; }).length;
+      h += '<section class="card row-between"><div style="display:grid;gap:2px"><span class="eyebrow">En curso</span><b>' + esc(sess.title) + '</b><span class="muted">' + answered + ' de ' + sess.items.length + ' respondidas</span></div><a class="btn btn-primary" href="#simulado">Continuar</a></section>';
+    }
+
+    h += '<section class="tiles">' +
+      '<div class="tile"><span class="tile-n">' + done + '<small>/' + MODS.length + '</small></span><span class="tile-l">Módulos estudiados</span><div class="meter"><i style="width:' + (done / MODS.length * 100) + '%"></i></div></div>' +
+      '<div class="tile"><span class="tile-n">' + ans + '</span><span class="tile-l">Preguntas respondidas' + (ans ? ' · ' + Math.round(okA / ans * 100) + '% de acierto' : '') + '</span></div>' +
+      '<div class="tile"><span class="tile-n">' + (best != null ? nota(best) : '–') + '</span><span class="tile-l">Mejor simulacro (de 10)</span></div>' +
+      '<div class="tile"><span class="tile-n">' + (last ? nota(last.score) : '–') + '</span><span class="tile-l">Último simulacro' + (last ? ' · ' + last.ok + '/' + last.n : '') + '</span></div>' +
+      '</section>';
+
+    if (next) {
+      h += '<section class="card next"><span class="eyebrow">Siguiente paso · módulo ' + next.n + '</span><h2>' + esc(next.title) + '</h2><p>' + esc(next.sub) + ' · ' + next.min + ' min</p><div class="row"><a class="btn btn-primary" href="#m-' + next.id + '">Estudiar ahora</a></div></section>';
+    } else {
+      h += '<section class="card next"><span class="eyebrow">Estudiaste los 10 módulos</span><h2>Ahora, simulacros hasta pasar de 8</h2><p>Cada simulacro arma preguntas distintas. Repite hasta que tu nota sea estable.</p><div class="row"><button class="btn btn-primary" data-act="start-exam">Hacer un simulacro</button>' + (wrongN ? '<button class="btn" data-act="start-wrong" style="color:var(--paper);background:transparent;border-color:color-mix(in srgb,var(--paper) 40%,transparent)">Repasar ' + wrongN + ' errores</button>' : '') + '</div></section>';
+    }
+
+    function lk(id) { var m = MMAP[id]; return '<a class="lnk' + (state.mods[id] ? ' done' : '') + '" href="#m-' + id + '">' + esc(m.title) + '</a>'; }
+    h += '<section class="card"><div class="section-h"><h2>Lo que dijo el profesor</h2><span class="eyebrow">De la clase</span></div><div class="prof-list">' +
+      '<div class="prof-row"><span class="eyebrow"><span class="dot" style="background:var(--bad)"></span>Dijo que cae</span><div class="links">' + ['ciclo', 'lancamento', 'especies', 'tributo', 'vida', 'reforma'].map(lk).join('') + '</div></div>' +
+      '<div class="prof-row"><span class="eyebrow"><span class="dot" style="background:var(--warn)"></span>Explicó con énfasis</span><div class="links">' + ['fundamentos', 'principios', 'obrigacao', 'imunidade'].map(lk).join('') + '</div></div>' +
+      '<div class="prof-row"><span class="eyebrow"><span class="dot" style="background:var(--ink-2)"></span>Puedes dejarlo</span><div class="links"><span class="lnk plain">Pirámide de fuentes</span><span class="lnk plain">Responsabilidade tributária</span><span class="lnk plain">Casos STF/STJ del Manual</span><span class="lnk plain">Vigência e interpretação</span><span class="lnk plain">Empréstimos compulsórios</span></div></div>' +
+      '</div></section>';
+
+    var rows = Object.keys(TOP).map(function (t) { var s = state.stats[t] || [0, 0]; return { t: t, ok: s[0], n: s[1], p: s[1] ? s[0] / s[1] : -1 }; });
+    rows.sort(function (a, b) { var ap = a.n >= 3 ? a.p : 2, bp = b.n >= 3 ? b.p : 2; return ap - bp; });
+    h += '<section class="card"><div class="section-h"><h2>Dominio por tema</h2><span class="eyebrow">Lo más débil primero</span></div><div class="mastery">' +
+      rows.map(function (r) {
+        var has = r.n >= 3, pct = has ? Math.round(r.p * 100) : 0;
+        return '<div class="m-row"><span class="m-name">' + esc(TOP[r.t].name) + '</span>' +
+          '<div class="m-bar" aria-hidden="true"><i style="width:' + (has ? pct : 0) + '%;background:' + (has ? pctColor(r.p) : 'transparent') + '"></i></div>' +
+          '<span class="m-pct">' + (has ? pct + '% · ' + r.ok + '/' + r.n : r.n ? r.ok + '/' + r.n : 'sin datos') + '</span>' +
+          '<button class="btn btn-sm btn-quiet m-act" data-act="start-topic" data-topic="' + r.t + '">Practicar</button></div>';
+      }).join('') + '</div></section>';
+
+    h += '<section class="card"><div class="section-h"><h2>Evolución de tus simulacros</h2>' + (wrongN ? '<button class="btn btn-sm" data-act="start-wrong">Repasar ' + wrongN + ' errores</button>' : '') + '</div>';
+    if (exams.length >= 2) h += chartSVG(exams);
+    else h += '<p class="empty">' + (exams.length ? 'Haz un simulacro más para ver tu evolución.' : 'Todavía no hiciste ningún simulacro. Cuando hagas dos, aquí verás cómo sube tu nota.') + '</p>';
+    var hist = state.exams.slice(-8).reverse();
+    if (hist.length) {
+      h += '<div class="hist">' + hist.map(function (e) { return '<div class="hist-row"><span>' + esc(e.title) + '<br><span class="muted" style="font-size:12px">' + esc(fmtDate(e.at)) + '</span></span><span class="muted">' + e.ok + '/' + e.n + '</span><b style="color:' + pctColor(e.score / 10) + '">' + nota(e.score) + '</b></div>'; }).join('') + '</div>';
+    }
+    h += '</section>';
+    return h;
+  }
+
+  /* ---------------- ESTUDIAR ---------------- */
+  function prioTag(p) { return p === 3 ? '<span class="prio prio-3">Cae seguro</span>' : '<span class="prio prio-2">Importante</span>'; }
+  function studyHTML() {
+    var done = MODS.filter(function (m) { return state.mods[m.id]; }).length;
+    var h = '<header class="mod-head"><span class="eyebrow">Estudiar · ' + done + ' de ' + MODS.length + ' módulos</span><h1>Módulos</h1><p class="sub">Están en orden lógico: cada uno usa lo anterior. Cada módulo tiene un resumen de 30 segundos, la explicación visual, preguntas de control y espacio para tus notas.</p>' +
+      '<div class="fast"><span>Si tienes poco tiempo:</span>' + ['ciclo', 'lancamento', 'vida', 'especies', 'tributo', 'reforma'].map(function (id) { return '<a href="#m-' + id + '">' + MMAP[id].n + '</a>'; }).join('<span aria-hidden="true">→</span>') + '</div></header>';
+    h += '<div class="mlist">' + MODS.map(function (m) {
+      var d = state.mods[m.id];
+      return '<a class="mrow' + (d ? ' done' : '') + '" href="#m-' + m.id + '"><span class="mrow-n">' + (d ? '✓' : m.n) + '</span><span class="mrow-t">' + esc(m.title) + '</span><span class="mrow-s">' + esc(m.sub) + '</span><span class="mrow-m">' + prioTag(m.prio) + '<span class="tag">' + m.min + ' min</span>' + (state.notes[m.id] ? '<span class="tag">· con notas</span>' : '') + '</span></a>';
+    }).join('') + '</div>';
+    return h;
+  }
+
+  /* ---------------- MÓDULO ---------------- */
+  var mini = null;
+  function moduleHTML(m) {
+    var i = MODS.indexOf(m), prev = MODS[i - 1], nxt = MODS[i + 1], d = state.mods[m.id];
+    var h = '<nav class="crumbs" aria-label="Navegación del módulo"><a class="btn btn-sm btn-quiet" href="#estudiar">← Módulos</a><span class="eyebrow">Módulo ' + m.n + ' de ' + MODS.length + '</span></nav>';
+    h += '<header class="mod-head"><span class="eyebrow">' + m.min + ' min · ' + (m.prio === 3 ? 'Cae seguro' : 'Importante') + '</span><h1>' + esc(m.title) + '</h1><p class="sub">' + esc(m.sub) + '</p>' +
+      '<div class="row"><button class="btn btn-sm' + (d ? '' : ' btn-primary') + '" data-act="toggle-done" data-mod="' + m.id + '" aria-pressed="' + (!!d) + '">' + (d ? '✓ Estudiado' : 'Marcar como estudiado') + '</button>' + (d ? '<span class="stamp" style="--stamp:var(--good)">Estudado</span>' : '') + '</div></header>';
+    h += '<section class="summary"><h2>En 30 segundos <span class="eyebrow">para memorizar</span></h2><ul>' + m.summary.map(function (s) { return '<li><span>' + s + '</span></li>'; }).join('') + '</ul></section>';
+    h += '<article class="lesson">' + m.body + '</article>';
+    h += '<section class="mini-wrap"><div class="section-h"><h2>Comprueba lo que aprendiste</h2><button class="btn btn-sm btn-quiet" data-act="mini-new">Otras preguntas</button></div><p class="muted" style="margin-bottom:12px">Preguntas en portugués, como en la prueba.</p><div class="mini" data-mini></div></section>';
+    h += '<section class="note-item"><label for="note-' + m.id + '">Mis notas de este módulo <span class="saved" data-saved="' + m.id + '"></span></label><textarea id="note-' + m.id + '" data-note="' + m.id + '" placeholder="Escribe aquí lo que te cuesta recordar o una duda para el profesor"></textarea></section>';
+    h += '<div class="row-between">' + (prev ? '<a class="btn" href="#m-' + prev.id + '">← ' + esc(prev.title) + '</a>' : '<span></span>') +
+      (nxt ? '<a class="btn btn-primary" href="#m-' + nxt.id + '" data-act="next-mod" data-mod="' + m.id + '">' + esc(nxt.title) + ' →</a>' : '<a class="btn btn-primary" href="#simulado">Ir a los simulacros →</a>') + '</div>';
+    mini = null;
+    return h;
+  }
+
+  function newMini(m) {
+    var pool = QS.filter(function (q) { return m.topics.indexOf(q.t) >= 0; });
+    var pick = pickFrom(pool, 3, new Set());
+    mini = { mod: m.id, items: pick.map(function (q) { return { q: q, order: shuffle([0, 1, 2, 3]), chosen: null }; }) };
+  }
+  function renderMini(el) {
+    el.innerHTML = mini.items.map(function (it, i) { return qHTML(it.q, it.order, it.chosen, it.chosen != null, 'Pregunta ' + (i + 1) + ' de 3'); }).join('');
+  }
+
+  function qHTML(q, order, chosen, reveal, label) {
+    var h = '<div class="qcard" data-qid="' + q.id + '"><div class="q-meta"><span class="eyebrow">' + esc(TOP[q.t].name) + (label ? ' · ' + esc(label) : '') + '</span></div>' +
+      '<p class="q-text">' + esc(q.q) + '</p><div class="opts" role="group" aria-label="Alternativas">';
+    order.forEach(function (ai, di) {
+      var cls = 'opt';
+      if (reveal) { if (ai === 0) cls += ' ok'; else if (di === chosen) cls += ' no'; else cls += ' fade'; }
+      else if (di === chosen) cls += ' sel';
+      h += '<button type="button" class="' + cls + '" data-opt="' + di + '"' + (reveal ? ' disabled' : '') + ' aria-pressed="' + (di === chosen) + '"><span class="opt-l">' + L[di] + '</span><span>' + esc(q.a[ai]) + '</span></button>';
+    });
+    h += '</div>';
+    if (reveal) {
+      var ok = order[chosen] === 0;
+      h += '<div class="fb ' + (ok ? 'ok' : 'no') + '" role="status"><span class="fb-h">' + (ok ? 'Correcto' : 'Incorrecto · la correcta es la ' + L[order.indexOf(0)]) + '</span><span>' + esc(q.exp) + '</span>' +
+        (q.prof ? '<span class="badge-prof" style="justify-self:start">Respuesta según el material del profesor</span>' : '') + '</div>';
+    }
+    return h + '</div>';
+  }
+
+  /* ---------------- widgets ---------------- */
+  function wArt3(el) {
+    var segs = WID.art3, sel = -1;
+    function draw() {
+      var txt = segs.map(function (s, i) { return s.k ? '<button type="button" class="term" data-i="' + i + '" aria-pressed="' + (i === sel) + '">' + esc(s.k) + '</button>' : esc(s.t); }).join('');
+      el.innerHTML = '<div class="art3"><p class="art3-text">' + txt + '</p><div class="art3-tip" aria-live="polite">' + (sel >= 0 ? '<b>' + esc(segs[sel].k) + ':</b> ' + segs[sel].d : '<span class="muted">Toca una parte resaltada para ver qué significa.</span>') + '</div></div>';
+    }
+    el.addEventListener('click', function (e) { var b = e.target.closest('.term'); if (!b) return; sel = +b.getAttribute('data-i'); draw(); var nb = el.querySelector('.term[data-i="' + sel + '"]'); if (nb) nb.focus(); });
+    draw();
+  }
+  function wCiclo(el) {
+    var st = WID.ciclo, i = 0;
+    function draw() {
+      var s = st[i];
+      el.innerHTML = '<div class="ciclo"><div class="ciclo-steps" role="group" aria-label="Etapas del ciclo">' + st.map(function (x, j) { return '<button type="button" class="cstep" data-i="' + j + '" aria-pressed="' + (j === i) + '"><span>' + (j + 1) + ' · ' + esc(x.tag) + '</span><b>' + esc(x.k) + '</b></button>'; }).join('') + '</div>' +
+        '<div class="cdetail" aria-live="polite"><span class="eyebrow">Etapa ' + (i + 1) + ' de ' + st.length + ' · ' + esc(s.tag) + '</span><h4>' + esc(s.k) + '</h4><p>' + s.d + '</p><p class="ex">' + esc(s.ex) + '</p>' +
+        '<div class="row-between"><button type="button" class="btn btn-sm" data-step="-1"' + (i === 0 ? ' disabled' : '') + '>← Anterior</button><button type="button" class="btn btn-sm btn-primary" data-step="1"' + (i === st.length - 1 ? ' disabled' : '') + '>Siguiente etapa →</button></div></div></div>';
+    }
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('.cstep'); if (b) { i = +b.getAttribute('data-i'); draw(); return; }
+      var s = e.target.closest('[data-step]'); if (s && !s.disabled) { i = Math.max(0, Math.min(st.length - 1, i + +s.getAttribute('data-step'))); draw(); }
+    });
+    draw();
+  }
+  function wClassify(el, key) {
+    var cfg = WID.classify[key]; if (!cfg) return;
+    var order, i, score, answered;
+    function reset() { order = shuffle(cfg.items.map(function (_, k) { return k; })); i = 0; score = 0; answered = null; }
+    function cat(k) { var c = cfg.cats.filter(function (x) { return x[0] === k; })[0]; return c ? c[1] : k; }
+    function draw() {
+      if (i >= order.length) {
+        el.innerHTML = '<div class="clsf"><span class="eyebrow">Terminaste</span><p class="clsf-item">' + score + ' de ' + order.length + ' correctas</p><div class="row"><button type="button" class="btn btn-primary" data-c="again">Repetir mezclado</button></div></div>';
+        return;
+      }
+      var it = cfg.items[order[i]];
+      var h = '<div class="clsf"><div class="row-between"><span class="eyebrow">Ítem ' + (i + 1) + ' de ' + order.length + '</span><span class="m-pct">' + score + ' correctas</span></div><p class="clsf-item">' + esc(it[0]) + '</p>';
+      h += '<div class="clsf-cats">' + cfg.cats.map(function (c) {
+        var cls = 'btn';
+        if (answered) { if (c[0] === it[1]) cls += ' btn-primary'; }
+        return '<button type="button" class="' + cls + '" data-cat="' + c[0] + '"' + (answered ? ' disabled' : '') + '>' + esc(c[1]) + '</button>';
+      }).join('') + '</div>';
+      if (answered) {
+        var ok = answered === it[1];
+        h += '<div class="clsf-fb ' + (ok ? 'ok' : 'no') + '" role="status"><b>' + (ok ? 'Correcto: ' : 'No: es ') + esc(cat(it[1])) + '</b>' + esc(it[2]) + '</div><div class="row"><button type="button" class="btn btn-primary" data-c="next">Siguiente</button></div>';
+      }
+      el.innerHTML = h + '</div>';
+    }
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-cat]');
+      if (b && !answered) { answered = b.getAttribute('data-cat'); if (answered === cfg.items[order[i]][1]) score++; draw(); var n = el.querySelector('[data-c="next"]'); if (n) n.focus(); return; }
+      var c = e.target.closest('[data-c]');
+      if (c) { if (c.getAttribute('data-c') === 'next') { i++; answered = null; } else reset(); draw(); }
+    });
+    reset(); draw();
+  }
+
+  /* ---------------- SIMULACROS ---------------- */
+  var confirmFinish = false, confirmQuit = false;
+  function simHTML() {
+    if (sess && sess.fin) return resultHTML();
+    if (sess) return runnerHTML();
+    var wrongN = Object.keys(state.wrong).filter(function (id) { return QMAP[id]; }).length;
+    var h = '<header class="mod-head"><span class="eyebrow">Simulacros</span><h1>Practica como en la prueba</h1><p class="sub">Cada intento elige preguntas distintas, prioriza las que menos viste y mezcla el orden de las alternativas. Las preguntas están en portugués, como en la prueba real.</p></header>';
+    h += '<div class="modes">' +
+      '<div class="mode main-mode"><span class="eyebrow">Como la prueba · 20 preguntas</span><h3>Simulacro completo</h3><p>Reparto según lo que el profesor dijo que cae: ciclo (2), lançamento (3), espécies (3), tributo × multa (2), extinção y suspensão (3), reforma (3) y un poco del resto. Ves la corrección al final.</p><button class="btn btn-primary" data-act="start-exam">Empezar simulacro</button></div>' +
+      '<div class="mode"><span class="eyebrow">10 preguntas</span><h3>Práctica rápida</h3><p>Preguntas mezcladas de todos los temas. Ves la respuesta y la explicación al instante.</p><button class="btn" data-act="start-quick">Empezar</button></div>' +
+      '<div class="mode"><span class="eyebrow">Un tema</span><h3>Practicar por tema</h3><label class="sr" for="topic-sel">Tema</label><select id="topic-sel">' + Object.keys(TOP).map(function (t) { return '<option value="' + t + '">' + esc(TOP[t].name) + '</option>'; }).join('') + '</select><button class="btn" data-act="start-topic-sel">Empezar</button></div>' +
+      '<div class="mode"><span class="eyebrow">Mis errores · ' + wrongN + '</span><h3>Repasar errores</h3><p>Las preguntas que fallaste. Cuando aciertas una, sale de la lista.</p><button class="btn" data-act="start-wrong"' + (wrongN ? '' : ' disabled') + '>' + (wrongN ? 'Repasar ' + wrongN : 'Sin errores por ahora') + '</button></div>' +
+      '</div>';
+    h += '<p class="muted">Banco de ' + QS.length + ' preguntas y variantes. Cada respuesta cuenta para tu dominio por tema en el Panel.</p>';
+    return h;
+  }
+
+  function runnerHTML() {
+    var n = sess.items.length, cur = sess.cur, it = sess.items[cur], q = QMAP[it.id], chosen = sess.ans[cur];
+    var exam = sess.mode === 'exam', reveal = !exam && chosen != null;
+    var answered = sess.ans.filter(function (a) { return a != null; }).length;
+    var h = '<div class="runner"><div class="run-top"><div class="row-between"><span class="eyebrow">' + esc(sess.title) + '</span><span class="timer" data-timer>' + mmss((Date.now() - sess.start) / 1000) + '</span></div>' +
+      '<div class="row-between"><b>Pregunta ' + (cur + 1) + ' de ' + n + '</b><span class="muted">' + answered + ' respondidas</span></div>' +
+      '<div class="run-bar" aria-hidden="true"><i style="width:' + (answered / n * 100) + '%"></i></div></div>';
+    h += qHTML(q, it.order, chosen, reveal, exam ? 'corrección al final' : '');
+    h += '<div class="row-between"><button type="button" class="btn" data-act="prev"' + (cur === 0 ? ' disabled' : '') + '>← Anterior</button>';
+    if (exam) {
+      h += cur < n - 1 ? '<button type="button" class="btn btn-primary" data-act="next">Siguiente →</button>' : '<button type="button" class="btn btn-primary" data-act="finish">Entregar prova</button>';
+    } else {
+      if (reveal) h += cur < n - 1 ? '<button type="button" class="btn btn-primary" data-act="next">Siguiente →</button>' : '<button type="button" class="btn btn-primary" data-act="finish">Ver resultado</button>';
+      else h += '<span class="muted">Elige una alternativa</span>';
+    }
+    h += '</div>';
+    if (confirmFinish) {
+      var miss = n - answered;
+      h += '<div class="confirm" role="alertdialog" aria-label="Confirmar entrega"><b>' + (miss ? 'Te faltan ' + miss + ' preguntas sin responder.' : '¿Entregar la prova?') + '</b><span>' + (miss ? 'Las que no respondas cuentan como error.' : 'Vas a ver tu nota y la corrección.') + '</span><div class="row"><button type="button" class="btn btn-primary" data-act="finish-yes">Entregar</button><button type="button" class="btn" data-act="finish-no">Seguir respondiendo</button></div></div>';
+    }
+    if (exam) {
+      h += '<section class="card"><div class="section-h"><h3>Mapa de la prova</h3><button type="button" class="btn btn-sm" data-act="finish">Entregar</button></div><div class="qgrid">' +
+        sess.items.map(function (_, i) { return '<button type="button" class="qn' + (sess.ans[i] != null ? ' ans' : '') + (i === cur ? ' cur' : '') + '" data-jump="' + i + '" aria-label="Pregunta ' + (i + 1) + (sess.ans[i] != null ? ', respondida' : '') + '">' + (i + 1) + '</button>'; }).join('') + '</div></section>';
+    }
+    h += confirmQuit ? '<div class="confirm"><b>¿Salir sin terminar?</b><span>Se pierde este intento.</span><div class="row"><button type="button" class="btn" data-act="quit-yes">Salir</button><button type="button" class="btn btn-primary" data-act="quit-no">Seguir</button></div></div>'
+      : '<div><button type="button" class="btn btn-quiet btn-sm" data-act="quit">Salir del simulacro</button></div>';
+    return h + '</div>';
+  }
+
+  function resultHTML() {
+    var r = sess.res, p = r.ok / r.n;
+    var msg = p >= 0.8 ? 'Muy bien: estás listo. Repite un simulacro más para confirmar.' : p >= 0.6 ? 'Vas bien. Repasa los temas en rojo y amarillo.' : 'Repasa los módulos de los temas en rojo y vuelve a intentarlo.';
+    var wrongIds = sess.items.filter(function (it, i) { return !(sess.ans[i] != null && it.order[sess.ans[i]] === 0); }).map(function (it) { return it.id; });
+    var h = '<header class="result-head"><span class="eyebrow">' + esc(sess.title) + ' · terminado</span><div class="score"><span class="score-n">' + nota(r.score) + '<small>/10</small></span><span class="stamp" style="--stamp:' + pctColor(p) + '">' + r.ok + ' de ' + r.n + ' acertos</span></div><p class="muted">Tiempo: ' + mmss(r.secs) + '. ' + msg + '</p>' +
+      '<div class="row"><button type="button" class="btn btn-primary" data-act="start-exam">Otro simulacro</button>' + (wrongIds.length ? '<button type="button" class="btn" data-act="practice-these" data-ids="' + wrongIds.join(',') + '">Practicar las ' + wrongIds.length + ' que fallé</button>' : '') + '<button type="button" class="btn btn-quiet" data-act="close-result">Volver a simulacros</button></div></header>';
+    h += '<section class="card"><div class="section-h"><h2>Por tema</h2></div><div class="mastery">' + Object.keys(r.byTopic).map(function (t) {
+      var b = r.byTopic[t], pp = b[0] / b[1];
+      return '<div class="m-row"><span class="m-name">' + esc(TOP[t].name) + '</span><div class="m-bar" aria-hidden="true"><i style="width:' + Math.round(pp * 100) + '%;background:' + pctColor(pp) + '"></i></div><span class="m-pct">' + b[0] + '/' + b[1] + '</span>' + (pp < 1 ? '<a class="btn btn-sm btn-quiet m-act" href="#m-' + TOP[t].mod + '">Repasar módulo</a>' : '<span></span>') + '</div>';
+    }).join('') + '</div></section>';
+    h += '<section class="review"><h2>Corrección</h2>' + sess.items.map(function (it, i) {
+      var q = QMAP[it.id], a = sess.ans[i], ok = a != null && it.order[a] === 0;
+      return '<div class="rv ' + (ok ? 'ok' : 'no') + '"><div class="rv-h"><span class="rv-n">' + (i + 1) + '</span><b>' + esc(q.q) + '</b></div><div class="rv-a">' +
+        (ok ? '' : '<span>Tu respuesta</span><span>' + (a == null ? '<i>Sin responder</i>' : esc(q.a[it.order[a]])) + '</span>') +
+        '<span>Correcta</span><span>' + esc(q.a[0]) + '</span></div><p class="rv-exp">' + esc(q.exp) + '</p>' + (q.prof ? '<span class="badge-prof" style="justify-self:start">Según el material del profesor</span>' : '') + '</div>';
+    }).join('') + '</section>';
+    return h;
+  }
+
+  /* ---------------- TARJETAS ---------------- */
+  var fc = { topic: 'all', pend: true, deck: null, pos: 0, flip: false };
+  function buildDeck() {
+    fc.deck = shuffle(CARDS.map(function (_, i) { return i; }).filter(function (i) { return (fc.topic === 'all' || CARDS[i][0] === fc.topic) && (!fc.pend || !state.cards['c' + i]); }));
+    fc.pos = 0; fc.flip = false;
+  }
+  function cardsHTML() {
+    if (!fc.deck) buildDeck();
+    var inTopic = CARDS.filter(function (c) { return fc.topic === 'all' || c[0] === fc.topic; }).length;
+    var known = CARDS.filter(function (c, i) { return (fc.topic === 'all' || c[0] === fc.topic) && state.cards['c' + i]; }).length;
+    var h = '<header class="mod-head"><span class="eyebrow">Tarjetas · ' + CARDS.length + ' conceptos</span><h1>Repaso rápido</h1><p class="sub">Toca la tarjeta para ver la respuesta. Si la sabes, márcala y deja de aparecer en el modo "solo las que no sé".</p></header>';
+    h += '<div class="row"><label class="sr" for="fc-topic">Tema</label><select id="fc-topic"><option value="all">Todos los temas</option>' + Object.keys(TOP).map(function (t) { return '<option value="' + t + '"' + (fc.topic === t ? ' selected' : '') + '>' + esc(TOP[t].name) + '</option>'; }).join('') + '</select>' +
+      '<label class="check"><input type="checkbox" id="fc-pend"' + (fc.pend ? ' checked' : '') + '> Solo las que no sé</label></div>';
+    h += '<div class="flash-wrap">';
+    h += '<div class="row-between"><span class="eyebrow">' + (fc.deck.length ? 'Tarjeta ' + Math.min(fc.pos + 1, fc.deck.length) + ' de ' + fc.deck.length : 'Sin tarjetas pendientes') + '</span><span class="m-pct">Dominadas ' + known + ' de ' + inTopic + '</span></div>';
+    h += '<div class="meter"><i style="width:' + (inTopic ? known / inTopic * 100 : 0) + '%;background:var(--good)"></i></div>';
+    if (!fc.deck.length || fc.pos >= fc.deck.length) {
+      h += '<div class="empty" style="text-align:center;display:grid;gap:12px;justify-items:center"><b style="font-size:18px;color:var(--ink)">' + (known === inTopic ? '¡Dominaste todas las tarjetas de este tema!' : 'Terminaste esta ronda.') + '</b><div class="row" style="justify-content:center"><button type="button" class="btn btn-primary" data-act="fc-restart">Otra ronda</button>' + (known ? '<button type="button" class="btn" data-act="fc-reset">Volver a marcar todas como pendientes</button>' : '') + '</div></div>';
+    } else {
+      var c = CARDS[fc.deck[fc.pos]];
+      h += '<div class="flash' + (fc.flip ? ' flip' : '') + '"><div class="flash-in">' +
+        '<button type="button" class="face face-front" data-act="flip" aria-label="Mostrar respuesta"' + (fc.flip ? ' tabindex="-1" aria-hidden="true"' : '') + '><span class="eyebrow">' + esc(TOP[c[0]].name) + '</span><b>' + esc(c[1]) + '</b><span class="face-hint">Toca para ver la respuesta</span></button>' +
+        '<button type="button" class="face face-back" data-act="flip" aria-label="Volver a la pregunta"' + (fc.flip ? '' : ' tabindex="-1" aria-hidden="true"') + '><span class="eyebrow">' + esc(c[1]) + '</span><span>' + esc(c[2]) + '</span></button>' +
+        '</div></div>';
+      h += '<div class="row"><button type="button" class="btn" data-act="fc-again">Otra vez</button><button type="button" class="btn btn-primary" data-act="fc-know">Ya la sé</button><button type="button" class="btn btn-quiet" data-act="fc-shuffle">Mezclar</button></div>';
+    }
+    return h + '</div>';
+  }
+
+  /* ---------------- NOTAS ---------------- */
+  function notesHTML() {
+    var h = '<header class="mod-head"><span class="eyebrow">Notas</span><h1>Mis notas</h1><p class="sub">Se guardan solas mientras escribes. Son las mismas que aparecen al final de cada módulo.</p></header><div class="notes-grid">';
+    h += '<div class="note-item card"><label for="note-general">Notas generales <span class="saved" data-saved="general"></span></label><textarea id="note-general" data-note="general" placeholder="Ej.: dudas para preguntarle al profesor, fecha y sala de la prueba"></textarea></div>';
+    MODS.forEach(function (m) {
+      h += '<div class="note-item"><label for="note-' + m.id + '"><span>' + m.n + '. ' + esc(m.title) + '</span><span class="row" style="gap:10px"><span class="saved" data-saved="' + m.id + '"></span><a href="#m-' + m.id + '" style="font-weight:400;font-size:14px">Abrir módulo</a></span></label><textarea id="note-' + m.id + '" data-note="' + m.id + '" placeholder="Sin notas todavía"></textarea></div>';
+    });
+    return h + '</div>';
+  }
+
+  /* ---------------- enlaces de la vista ---------------- */
+  var noteT = {};
+  function bind() {
+    view.querySelectorAll('[data-widget]').forEach(function (el) {
+      var w = el.getAttribute('data-widget');
+      if (w === 'art3') wArt3(el); else if (w === 'ciclo') wCiclo(el); else if (w === 'classify') wClassify(el, el.getAttribute('data-key'));
+    });
+    var miniEl = view.querySelector('[data-mini]');
+    if (miniEl && route.v === 'modulo') { newMini(MMAP[route.id]); renderMini(miniEl); }
+    view.querySelectorAll('textarea[data-note]').forEach(function (ta) {
+      var k = ta.getAttribute('data-note');
+      ta.value = state.notes[k] || '';
+      ta.addEventListener('input', function () {
+        var lab = view.querySelector('[data-saved="' + k + '"]'); if (lab) lab.textContent = 'Guardando…';
+        clearTimeout(noteT[k]);
+        noteT[k] = setTimeout(function () {
+          var v = ta.value;
+          if (v.trim()) state.notes[k] = v; else delete state.notes[k];
+          save(); if (lab) lab.textContent = 'Guardado';
+        }, 700);
+      });
+    });
+    var dateIn = document.getElementById('exam-date');
+    if (dateIn) dateIn.addEventListener('change', function () { state.examDate = dateIn.value || ''; save(); render(false); });
+    var fcT = document.getElementById('fc-topic');
+    if (fcT) fcT.addEventListener('change', function () { fc.topic = fcT.value; buildDeck(); render(false); });
+    var fcP = document.getElementById('fc-pend');
+    if (fcP) fcP.addEventListener('change', function () { fc.pend = fcP.checked; buildDeck(); render(false); });
+  }
+
+  /* ---------------- clics globales ---------------- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (a && !e.defaultPrevented) { var tok = a.getAttribute('href').slice(1); if (tok && (VIEWS.indexOf(tok) >= 0 || tok.indexOf('m-') === 0)) { e.preventDefault(); confirmFinish = confirmQuit = false; go(tok); return; } }
+
+    var opt = e.target.closest('[data-opt]');
+    if (opt && !opt.disabled) {
+      var di = +opt.getAttribute('data-opt'), card = opt.closest('.qcard');
+      if (view.querySelector('[data-mini]') && card && card.closest('[data-mini]')) {
+        var it = mini.items.filter(function (x) { return x.q.id === card.getAttribute('data-qid'); })[0];
+        if (it && it.chosen == null) { it.chosen = di; record(it.q, it.order[di] === 0); save(); renderMini(view.querySelector('[data-mini]')); }
+        return;
+      }
+      if (sess && !sess.fin && route.v === 'simulado') {
+        if (sess.mode === 'exam') { sess.ans[sess.cur] = di; saveSess(); render(false); }
+        else if (sess.ans[sess.cur] == null) {
+          sess.ans[sess.cur] = di; var cq = QMAP[sess.items[sess.cur].id];
+          record(cq, sess.items[sess.cur].order[di] === 0); save(); saveSess(); render(false);
+        }
+        var fbEl = view.querySelector('.fb'); if (fbEl) fbEl.scrollIntoView({ block: 'nearest' });
+      }
+      return;
+    }
+
+    var j = e.target.closest('[data-jump]');
+    if (j && sess) { sess.cur = +j.getAttribute('data-jump'); saveSess(); render(true); return; }
+
+    var b = e.target.closest('[data-act]');
+    if (!b || b.disabled) return;
+    var act = b.getAttribute('data-act');
+    switch (act) {
+      case 'start-exam': startSession('exam'); break;
+      case 'start-quick': startSession('quick'); break;
+      case 'start-topic': startSession('topic', b.getAttribute('data-topic')); break;
+      case 'start-topic-sel': startSession('topic', document.getElementById('topic-sel').value); break;
+      case 'start-wrong': startSession('wrong'); break;
+      case 'practice-these': startSession('wrong', b.getAttribute('data-ids').split(',')); break;
+      case 'prev': if (sess.cur > 0) { sess.cur--; confirmFinish = false; saveSess(); render(true); } break;
+      case 'next': if (sess.cur < sess.items.length - 1) { sess.cur++; confirmFinish = false; saveSess(); render(true); } break;
+      case 'finish':
+        if (sess.mode === 'exam') { confirmFinish = true; render(false); var cf = view.querySelector('.confirm'); if (cf) cf.scrollIntoView({ block: 'center' }); }
+        else { finishSession(); render(true); }
+        break;
+      case 'finish-yes': confirmFinish = false; finishSession(); render(true); break;
+      case 'finish-no': confirmFinish = false; render(false); break;
+      case 'quit': confirmQuit = true; render(false); break;
+      case 'quit-no': confirmQuit = false; render(false); break;
+      case 'quit-yes': confirmQuit = false; sess = null; saveSess(); render(true); break;
+      case 'close-result': sess = null; saveSess(); render(true); break;
+      case 'toggle-done': {
+        var id = b.getAttribute('data-mod');
+        if (state.mods[id]) delete state.mods[id]; else state.mods[id] = Date.now();
+        save(); render(false); toast(state.mods[id] ? 'Módulo marcado como estudiado' : 'Módulo marcado como pendiente');
+        break;
+      }
+      case 'mini-new': { var mEl = view.querySelector('[data-mini]'); if (mEl) { newMini(MMAP[route.id]); renderMini(mEl); } break; }
+      case 'flip': fc.flip = !fc.flip; render(false); var f = view.querySelector(fc.flip ? '.face-back' : '.face-front'); if (f) f.focus(); break;
+      case 'fc-know': state.cards['c' + fc.deck[fc.pos]] = 1; save(); fc.pos++; fc.flip = false; render(false); break;
+      case 'fc-again': fc.deck.push(fc.deck[fc.pos]); fc.pos++; fc.flip = false; render(false); break;
+      case 'fc-shuffle': buildDeck(); render(false); break;
+      case 'fc-restart': buildDeck(); render(false); break;
+      case 'fc-reset':
+        CARDS.forEach(function (c, i) { if (fc.topic === 'all' || c[0] === fc.topic) delete state.cards['c' + i]; });
+        save(); buildDeck(); render(false); break;
+    }
+  });
+
+  /* "Siguiente módulo" marca el actual como estudiado si aún no lo está */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-act="next-mod"]');
+    if (b) { var id = b.getAttribute('data-mod'); if (!state.mods[id]) { state.mods[id] = Date.now(); save(); } }
+  }, true);
+
+  setInterval(function () { var t = view.querySelector('[data-timer]'); if (t && sess && !sess.fin) t.textContent = mmss((Date.now() - sess.start) / 1000); }, 1000);
+
+  render(false);
+  initRemote();
+})();
+
+</script>
+
+</body></html>
